@@ -46,8 +46,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.h = 0
         
         self.cameraFrameIsActive = True
-        self.informationFrameIsActive = True
-       
+        self.sidePanelIsActive = True
+        self.ui.frameSplitter.setSizes([16777215,300])
 
     # resizes the cam frame
     def resize_camFrame(self):
@@ -68,7 +68,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # 
         self.ui.actionCamera.triggered.connect(self.showCameraFrame)
-        self.ui.actionInformation.triggered.connect(self.showInformationFrame)
+        self.ui.actionSidePanel.triggered.connect(self.showSidePanel)
 
     def showCameraFrame(self):
         if self.cameraFrameIsActive is True:
@@ -76,20 +76,20 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.cameraFrame.setVisible(False)
             self.cameraFrameIsActive = False
         else:
-            self.ui.frameSplitter.setSizes([16777215,16777215])
+            self.ui.frameSplitter.setSizes([16777215,300])
             self.ui.cameraFrame.setVisible(True)
             self.cameraFrameIsActive = True
          
         
-    def showInformationFrame(self):
-        if self.informationFrameIsActive is True:
+    def showSidePanel(self):
+        if self.sidePanelIsActive is True:
             self.ui.frameSplitter.setSizes([16777215,0])
-            self.ui.informationFrame.setVisible(False)
-            self.informationFrameIsActive = False
+            self.ui.sidePanel.setVisible(False)
+            self.sidePanelIsActive = False
         else:
-            self.ui.frameSplitter.setSizes([16777215,16777215])
-            self.ui.informationFrame.setVisible(True)
-            self.informationFrameIsActive = True
+            self.ui.frameSplitter.setSizes([16777215,300])
+            self.ui.sidePanel.setVisible(True)
+            self.sidePanelIsActive = True
     
    
 

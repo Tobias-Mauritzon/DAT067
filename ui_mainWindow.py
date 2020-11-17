@@ -14,26 +14,75 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1180, 754)
-        MainWindow.setStyleSheet("background-color: rgb(35, 35, 38)")
+        MainWindow.resize(1000, 700)
+        MainWindow.setStyleSheet("*\n"
+"{\n"
+"    background-color: rgb(35, 35, 38);\n"
+"}\n"
+"\n"
+"/* VERTICAL SCROLLBAR */\n"
+"QScrollBar:vertical\n"
+" {\n"
+"     background-color: red;\n"
+"     width: 15px;\n"
+"     margin: 15px 3px 15px 3px;\n"
+"     border: 1px transparent #2A2929;\n"
+"     border-radius: 4px;\n"
+" }\n"
+"\n"
+"/*  HANDLE BAR VERTICAL */\n"
+" QScrollBar::handle:vertical\n"
+" {\n"
+"     background-color: #0D0D0D;         /* Handle color */\n"
+"     min-height: 5px;\n"
+"     border-radius: 4px;\n"
+" }\n"
+"\n"
+"QScrollBar::handle:vertical:hover{    \n"
+"    background-color: rgb(35, 35, 38);\n"
+"}\n"
+"QScrollBar::handle:vertical:pressed {    \n"
+"    background-color: rgb(35, 35, 38);\n"
+"}\n"
+"\n"
+" QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical\n"
+" {\n"
+"     background: none;\n"
+" }\n"
+"\n"
+"\n"
+" QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical\n"
+" {\n"
+"     background: none;\n"
+" }\n"
+"\n"
+"/* Disable top and bottom arrows*/\n"
+"QScrollBar::add-line:vertical {\n"
+"      border: none;\n"
+"      background: none;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"      border: none;\n"
+"      background: none;\n"
+"}\n"
+"\n"
+" ")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.centralwidget)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.frameSplitter = QtWidgets.QSplitter(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.frameSplitter.sizePolicy().hasHeightForWidth())
-        self.frameSplitter.setSizePolicy(sizePolicy)
-        self.frameSplitter.setStyleSheet("")
         self.frameSplitter.setOrientation(QtCore.Qt.Horizontal)
-        self.frameSplitter.setOpaqueResize(True)
-        self.frameSplitter.setHandleWidth(5)
-        self.frameSplitter.setChildrenCollapsible(True)
         self.frameSplitter.setObjectName("frameSplitter")
         self.cameraFrame = QtWidgets.QFrame(self.frameSplitter)
         self.cameraFrame.setEnabled(True)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.cameraFrame.sizePolicy().hasHeightForWidth())
+        self.cameraFrame.setSizePolicy(sizePolicy)
+        self.cameraFrame.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.cameraFrame.setStyleSheet("")
         self.cameraFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.cameraFrame.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -41,6 +90,7 @@ class Ui_MainWindow(object):
         self.verticalLayout = QtWidgets.QVBoxLayout(self.cameraFrame)
         self.verticalLayout.setObjectName("verticalLayout")
         self.image_label = QtWidgets.QLabel(self.cameraFrame)
+        self.image_label.setEnabled(True)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -71,17 +121,269 @@ class Ui_MainWindow(object):
 "border-radius: 10px")
         self.control_bt.setObjectName("control_bt")
         self.verticalLayout.addWidget(self.control_bt, 0, QtCore.Qt.AlignHCenter)
-        self.informationFrame = QtWidgets.QFrame(self.frameSplitter)
-        self.informationFrame.setMinimumSize(QtCore.QSize(0, 0))
-        self.informationFrame.setMaximumSize(QtCore.QSize(1677215, 16777215))
-        self.informationFrame.setStyleSheet("background-color:rgb(51, 55, 61); border-radius: 30px;")
+        self.sidePanel = QtWidgets.QFrame(self.frameSplitter)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.sidePanel.sizePolicy().hasHeightForWidth())
+        self.sidePanel.setSizePolicy(sizePolicy)
+        self.sidePanel.setMinimumSize(QtCore.QSize(200, 0))
+        self.sidePanel.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.sidePanel.setStyleSheet("background-color:rgb(51, 55, 61); border-radius: 15px;")
+        self.sidePanel.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.sidePanel.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.sidePanel.setObjectName("sidePanel")
+        self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.sidePanel)
+        self.verticalLayout_2.setObjectName("verticalLayout_2")
+        self.splitter_2 = QtWidgets.QSplitter(self.sidePanel)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.splitter_2.sizePolicy().hasHeightForWidth())
+        self.splitter_2.setSizePolicy(sizePolicy)
+        self.splitter_2.setOrientation(QtCore.Qt.Vertical)
+        self.splitter_2.setObjectName("splitter_2")
+        self.settingsFrame = QtWidgets.QFrame(self.splitter_2)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Ignored)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.settingsFrame.sizePolicy().hasHeightForWidth())
+        self.settingsFrame.setSizePolicy(sizePolicy)
+        self.settingsFrame.setStyleSheet("")
+        self.settingsFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.settingsFrame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.settingsFrame.setObjectName("settingsFrame")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.settingsFrame)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.label = QtWidgets.QLabel(self.settingsFrame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label.sizePolicy().hasHeightForWidth())
+        self.label.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setFamily("Rockwell")
+        font.setPointSize(16)
+        self.label.setFont(font)
+        self.label.setStyleSheet("color: white;")
+        self.label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label.setObjectName("label")
+        self.verticalLayout_3.addWidget(self.label)
+        self.line_2 = QtWidgets.QFrame(self.settingsFrame)
+        self.line_2.setMaximumSize(QtCore.QSize(16777215, 2))
+        self.line_2.setStyleSheet("background-color: rgb(35, 35, 38)")
+        self.line_2.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line_2.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_2.setObjectName("line_2")
+        self.verticalLayout_3.addWidget(self.line_2)
+        self.scrollArea = QtWidgets.QScrollArea(self.settingsFrame)
+        self.scrollArea.setAutoFillBackground(False)
+        self.scrollArea.setStyleSheet("")
+        self.scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
+        self.scrollArea.setWidgetResizable(True)
+        self.scrollArea.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.scrollArea.setObjectName("scrollArea")
+        self.scrollAreaWidgetContents = QtWidgets.QWidget()
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 470, 330))
+        self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
+        self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
+        self.verticalLayout_4.setObjectName("verticalLayout_4")
+        self.groupBox_2 = QtWidgets.QGroupBox(self.scrollAreaWidgetContents)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.groupBox_2.sizePolicy().hasHeightForWidth())
+        self.groupBox_2.setSizePolicy(sizePolicy)
+        self.groupBox_2.setMinimumSize(QtCore.QSize(0, 100))
+        self.groupBox_2.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.groupBox_2.setFont(font)
+        self.groupBox_2.setAutoFillBackground(False)
+        self.groupBox_2.setStyleSheet("\n"
+"QGroupBox {\n"
+"    border: 1px solid gray;\n"
+"    border-radius: 9px;\n"
+"    margin-top: 0.5em;\n"
+"}\n"
+"\n"
+"QGroupBox::title {\n"
+"    color: white;\n"
+"    subcontrol-origin: margin;\n"
+"    left: 10px;\n"
+"    padding: -3 3px 0 3px;\n"
+"}")
+        self.groupBox_2.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.groupBox_2.setFlat(False)
+        self.groupBox_2.setCheckable(False)
+        self.groupBox_2.setObjectName("groupBox_2")
+        self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.groupBox_2)
+        self.verticalLayout_6.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
+        self.verticalLayout_6.setContentsMargins(9, 9, -1, -1)
+        self.verticalLayout_6.setObjectName("verticalLayout_6")
+        self.radioButton_3 = QtWidgets.QRadioButton(self.groupBox_2)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.radioButton_3.sizePolicy().hasHeightForWidth())
+        self.radioButton_3.setSizePolicy(sizePolicy)
+        self.radioButton_3.setStyleSheet("color:white;")
+        self.radioButton_3.setObjectName("radioButton_3")
+        self.verticalLayout_6.addWidget(self.radioButton_3)
+        self.radioButton_4 = QtWidgets.QRadioButton(self.groupBox_2)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.radioButton_4.sizePolicy().hasHeightForWidth())
+        self.radioButton_4.setSizePolicy(sizePolicy)
+        self.radioButton_4.setStyleSheet("color:white;")
+        self.radioButton_4.setObjectName("radioButton_4")
+        self.verticalLayout_6.addWidget(self.radioButton_4)
+        self.verticalLayout_4.addWidget(self.groupBox_2)
+        self.groupBox_3 = QtWidgets.QGroupBox(self.scrollAreaWidgetContents)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.groupBox_3.sizePolicy().hasHeightForWidth())
+        self.groupBox_3.setSizePolicy(sizePolicy)
+        self.groupBox_3.setMinimumSize(QtCore.QSize(0, 100))
+        self.groupBox_3.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.groupBox_3.setFont(font)
+        self.groupBox_3.setAutoFillBackground(False)
+        self.groupBox_3.setStyleSheet("\n"
+"QGroupBox {\n"
+"    border: 1px solid gray;\n"
+"    border-radius: 9px;\n"
+"    margin-top: 0.5em;\n"
+"}\n"
+"\n"
+"QGroupBox::title {\n"
+"    color: white;\n"
+"    subcontrol-origin: margin;\n"
+"    left: 10px;\n"
+"    padding: -3 3px 0 3px;\n"
+"}")
+        self.groupBox_3.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.groupBox_3.setFlat(False)
+        self.groupBox_3.setCheckable(False)
+        self.groupBox_3.setObjectName("groupBox_3")
+        self.verticalLayout_7 = QtWidgets.QVBoxLayout(self.groupBox_3)
+        self.verticalLayout_7.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
+        self.verticalLayout_7.setContentsMargins(9, 9, -1, -1)
+        self.verticalLayout_7.setObjectName("verticalLayout_7")
+        self.radioButton_5 = QtWidgets.QRadioButton(self.groupBox_3)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.radioButton_5.sizePolicy().hasHeightForWidth())
+        self.radioButton_5.setSizePolicy(sizePolicy)
+        self.radioButton_5.setStyleSheet("color:white;")
+        self.radioButton_5.setObjectName("radioButton_5")
+        self.verticalLayout_7.addWidget(self.radioButton_5)
+        self.radioButton_6 = QtWidgets.QRadioButton(self.groupBox_3)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.radioButton_6.sizePolicy().hasHeightForWidth())
+        self.radioButton_6.setSizePolicy(sizePolicy)
+        self.radioButton_6.setStyleSheet("color:white;")
+        self.radioButton_6.setObjectName("radioButton_6")
+        self.verticalLayout_7.addWidget(self.radioButton_6)
+        self.verticalLayout_4.addWidget(self.groupBox_3)
+        self.groupBox_5 = QtWidgets.QGroupBox(self.scrollAreaWidgetContents)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.groupBox_5.sizePolicy().hasHeightForWidth())
+        self.groupBox_5.setSizePolicy(sizePolicy)
+        self.groupBox_5.setMinimumSize(QtCore.QSize(0, 100))
+        self.groupBox_5.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.groupBox_5.setFont(font)
+        self.groupBox_5.setAutoFillBackground(False)
+        self.groupBox_5.setStyleSheet("\n"
+"QGroupBox {\n"
+"    border: 1px solid gray;\n"
+"    border-radius: 9px;\n"
+"    margin-top: 0.5em;\n"
+"}\n"
+"\n"
+"QGroupBox::title {\n"
+"    color: white;\n"
+"    subcontrol-origin: margin;\n"
+"    left: 10px;\n"
+"    padding: -3 3px 0 3px;\n"
+"}")
+        self.groupBox_5.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.groupBox_5.setFlat(False)
+        self.groupBox_5.setCheckable(False)
+        self.groupBox_5.setObjectName("groupBox_5")
+        self.verticalLayout_8 = QtWidgets.QVBoxLayout(self.groupBox_5)
+        self.verticalLayout_8.setSizeConstraint(QtWidgets.QLayout.SetDefaultConstraint)
+        self.verticalLayout_8.setContentsMargins(9, 9, -1, -1)
+        self.verticalLayout_8.setObjectName("verticalLayout_8")
+        self.radioButton_9 = QtWidgets.QRadioButton(self.groupBox_5)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.radioButton_9.sizePolicy().hasHeightForWidth())
+        self.radioButton_9.setSizePolicy(sizePolicy)
+        self.radioButton_9.setStyleSheet("color:white;")
+        self.radioButton_9.setObjectName("radioButton_9")
+        self.verticalLayout_8.addWidget(self.radioButton_9)
+        self.radioButton_10 = QtWidgets.QRadioButton(self.groupBox_5)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.radioButton_10.sizePolicy().hasHeightForWidth())
+        self.radioButton_10.setSizePolicy(sizePolicy)
+        self.radioButton_10.setStyleSheet("color:white;")
+        self.radioButton_10.setObjectName("radioButton_10")
+        self.verticalLayout_8.addWidget(self.radioButton_10)
+        self.verticalLayout_4.addWidget(self.groupBox_5)
+        self.scrollArea.setWidget(self.scrollAreaWidgetContents)
+        self.verticalLayout_3.addWidget(self.scrollArea, 0, QtCore.Qt.AlignTop)
+        self.informationFrame = QtWidgets.QFrame(self.splitter_2)
+        self.informationFrame.setStyleSheet("background-color: rgb(85, 90, 97);")
         self.informationFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.informationFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.informationFrame.setObjectName("informationFrame")
+        self.verticalLayout_9 = QtWidgets.QVBoxLayout(self.informationFrame)
+        self.verticalLayout_9.setObjectName("verticalLayout_9")
+        self.label_2 = QtWidgets.QLabel(self.informationFrame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.label_2.sizePolicy().hasHeightForWidth())
+        self.label_2.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setFamily("Rockwell")
+        font.setPointSize(16)
+        self.label_2.setFont(font)
+        self.label_2.setStyleSheet("color: white;")
+        self.label_2.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
+        self.label_2.setObjectName("label_2")
+        self.verticalLayout_9.addWidget(self.label_2)
+        self.line = QtWidgets.QFrame(self.informationFrame)
+        self.line.setMaximumSize(QtCore.QSize(16777215, 2))
+        self.line.setStyleSheet("background-color: rgb(35, 35, 38)")
+        self.line.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line.setObjectName("line")
+        self.verticalLayout_9.addWidget(self.line)
+        self.frame = QtWidgets.QFrame(self.informationFrame)
+        self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame.setObjectName("frame")
+        self.verticalLayout_9.addWidget(self.frame)
+        self.verticalLayout_2.addWidget(self.splitter_2)
         self.horizontalLayout.addWidget(self.frameSplitter)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1180, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1000, 22))
         self.menubar.setStyleSheet("background-color: rgb(255, 255, 255);\n"
 "color: rgb(0,0,0);")
         self.menubar.setObjectName("menubar")
@@ -106,16 +408,32 @@ class Ui_MainWindow(object):
         self.actionHow_to_use.setObjectName("actionHow_to_use")
         self.actionAbout = QtWidgets.QAction(MainWindow)
         self.actionAbout.setObjectName("actionAbout")
-        self.actionInformation = QtWidgets.QAction(MainWindow)
-        self.actionInformation.setCheckable(True)
-        self.actionInformation.setChecked(True)
-        self.actionInformation.setObjectName("actionInformation")
         self.actionCamera = QtWidgets.QAction(MainWindow)
         self.actionCamera.setCheckable(True)
         self.actionCamera.setChecked(True)
         self.actionCamera.setObjectName("actionCamera")
+        self.actionControls = QtWidgets.QAction(MainWindow)
+        self.actionControls.setCheckable(True)
+        self.actionControls.setChecked(True)
+        self.actionControls.setObjectName("actionControls")
+        self.actionSettings = QtWidgets.QAction(MainWindow)
+        self.actionSettings.setCheckable(True)
+        self.actionSettings.setChecked(True)
+        self.actionSettings.setObjectName("actionSettings")
+        self.actionOutput = QtWidgets.QAction(MainWindow)
+        self.actionOutput.setCheckable(True)
+        self.actionOutput.setChecked(True)
+        self.actionOutput.setObjectName("actionOutput")
+        self.actionSettings_2 = QtWidgets.QAction(MainWindow)
+        self.actionSettings_2.setObjectName("actionSettings_2")
+        self.actionOutput_2 = QtWidgets.QAction(MainWindow)
+        self.actionOutput_2.setObjectName("actionOutput_2")
+        self.actionSidePanel = QtWidgets.QAction(MainWindow)
+        self.actionSidePanel.setCheckable(True)
+        self.actionSidePanel.setChecked(True)
+        self.actionSidePanel.setObjectName("actionSidePanel")
         self.menuView.addAction(self.actionCamera)
-        self.menuView.addAction(self.actionInformation)
+        self.menuView.addAction(self.actionSidePanel)
         self.menuHelp.addAction(self.actionHow_to_use)
         self.menuHelp.addAction(self.actionAbout)
         self.menuHelp.addSeparator()
@@ -129,12 +447,28 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.control_bt.setText(_translate("MainWindow", "Start"))
+        self.label.setText(_translate("MainWindow", "Settings"))
+        self.groupBox_2.setTitle(_translate("MainWindow", "Colors"))
+        self.radioButton_3.setText(_translate("MainWindow", "Normal"))
+        self.radioButton_4.setText(_translate("MainWindow", "Grayscale"))
+        self.groupBox_3.setTitle(_translate("MainWindow", "Colors"))
+        self.radioButton_5.setText(_translate("MainWindow", "Normal"))
+        self.radioButton_6.setText(_translate("MainWindow", "Grayscale"))
+        self.groupBox_5.setTitle(_translate("MainWindow", "Colors"))
+        self.radioButton_9.setText(_translate("MainWindow", "Normal"))
+        self.radioButton_10.setText(_translate("MainWindow", "Grayscale"))
+        self.label_2.setText(_translate("MainWindow", "Output"))
         self.menuView.setTitle(_translate("MainWindow", "View"))
         self.menuHelp.setTitle(_translate("MainWindow", "Help"))
         self.actionView.setText(_translate("MainWindow", "View"))
         self.actionHow_to_use.setText(_translate("MainWindow", "How to use"))
         self.actionAbout.setText(_translate("MainWindow", "About"))
-        self.actionInformation.setText(_translate("MainWindow", "Information"))
         self.actionCamera.setText(_translate("MainWindow", "Camera"))
+        self.actionControls.setText(_translate("MainWindow", "Controls"))
+        self.actionSettings.setText(_translate("MainWindow", "Settings"))
+        self.actionOutput.setText(_translate("MainWindow", "Output"))
+        self.actionSettings_2.setText(_translate("MainWindow", "Settings"))
+        self.actionOutput_2.setText(_translate("MainWindow", "Output"))
+        self.actionSidePanel.setText(_translate("MainWindow", "Side panel"))
 
 
