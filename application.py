@@ -49,6 +49,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.sidePanelIsActive = True
         self.ui.frameSplitter.setSizes([16777215,300])
 
+        self.imageColor = "RGB"
+        
+
     # resizes the cam frame
     def resize_camFrame(self):
         if self.pix is not None:
@@ -69,6 +72,26 @@ class MainWindow(QtWidgets.QMainWindow):
         # 
         self.ui.actionCamera.triggered.connect(self.showCameraFrame)
         self.ui.actionSidePanel.triggered.connect(self.showSidePanel)
+
+        self.ui.radioButton_RGB.toggled.connect(self.radioButton_RGB_clicked)
+        self.ui.radioButton_Grayscale.toggled.connect(self.radioButton_Grayscale_clicked)
+        self.ui.radioButton_Edged.toggled.connect(self.radioButton_Edged_clicked)
+    
+    def radioButton_RGB_clicked(self, enabled):
+        if enabled:
+            print("RGB!!!")
+            self.imageColor = "RGB"
+            
+    def radioButton_Grayscale_clicked(self, enabled):
+        if enabled:
+            print("GRAYSCALE!!!")
+            self.imageColor = "Grayscale"
+
+    def radioButton_Edged_clicked(self, enabled):
+        if enabled:
+            print("Edged!!!")
+            self.imageColor = "Edged"
+          
 
     def showCameraFrame(self):
         if self.cameraFrameIsActive is True:
@@ -99,36 +122,35 @@ class MainWindow(QtWidgets.QMainWindow):
         ret, image = self.cap.read()
 
         # convert image to RGB format
-        image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        
-        # get image infos
-        height, width, channel = image.shape
+        if self.imageColor is "RGB":
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            height, width, channel = image.shape
+            qiFormat = QImage.Format_RGB888
+        elif self.imageColor is "Grayscale":
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            image = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+            height, width = image.shape
+            channel = 1
+            qiFormat = QImage.Format_Grayscale8
+        elif self.imageColor is "Edged":
+            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+            gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
+            blur = cv2.GaussianBlur(gray,(5,5),0)
+            edged = cv2.Canny(blur,35,125)
+            image = edged
+            height, width = image.shape
+            channel = 1
+            qiFormat = QImage.Format_Grayscale8
+
+        # calculate step
         step = channel * width
-        
+       
         # create QImage from image
-        qImg = QImage(image.data, width, height, step, QImage.Format_RGB888)
-
-
-        # convert image to RGB format
-        #image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-        blur = cv2.GaussianBlur(gray,(5,5),0)
-        edged = cv2.Canny(blur,35,125)
-        image = edged
-
-        # get image infos
-        height, width = image.shape
-        
-        
-        step = 1 * width
-        
-        
-        # create QImage from image
-        qImg = QImage(image.data, width, height, step, QImage.Format_Grayscale8)
-
-
+        qImg = QImage(image.data, width, height, step, qiFormat)
         self.pix = QPixmap.fromImage(qImg)
         self.resize_camFrame()
+
+    
         
     # start/stop timer
     def controlTimer(self):

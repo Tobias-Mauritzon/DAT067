@@ -296,14 +296,14 @@ border-radius: 10px</string>
                  <x>0</x>
                  <y>0</y>
                  <width>470</width>
-                 <height>330</height>
+                 <height>323</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_4">
                 <item>
                  <widget class="QGroupBox" name="groupBox_2">
                   <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
@@ -311,7 +311,7 @@ border-radius: 10px</string>
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
-                    <height>100</height>
+                    <height>0</height>
                    </size>
                   </property>
                   <property name="maximumSize">
@@ -356,6 +356,9 @@ QGroupBox::title {
                    <bool>false</bool>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_6">
+                   <property name="spacing">
+                    <number>15</number>
+                   </property>
                    <property name="sizeConstraint">
                     <enum>QLayout::SetDefaultConstraint</enum>
                    </property>
@@ -363,10 +366,10 @@ QGroupBox::title {
                     <number>9</number>
                    </property>
                    <property name="topMargin">
-                    <number>9</number>
+                    <number>20</number>
                    </property>
                    <item>
-                    <widget class="QRadioButton" name="radioButton_3">
+                    <widget class="QRadioButton" name="radioButton_RGB">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                        <horstretch>0</horstretch>
@@ -377,12 +380,15 @@ QGroupBox::title {
                       <string notr="true">color:white;</string>
                      </property>
                      <property name="text">
-                      <string>Normal</string>
+                      <string>RGB</string>
+                     </property>
+                     <property name="checked">
+                      <bool>true</bool>
                      </property>
                     </widget>
                    </item>
                    <item>
-                    <widget class="QRadioButton" name="radioButton_4">
+                    <widget class="QRadioButton" name="radioButton_Grayscale">
                      <property name="sizePolicy">
                       <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
                        <horstretch>0</horstretch>
@@ -397,13 +403,23 @@ QGroupBox::title {
                      </property>
                     </widget>
                    </item>
+                   <item>
+                    <widget class="QRadioButton" name="radioButton_Edged">
+                     <property name="styleSheet">
+                      <string notr="true">color:white;</string>
+                     </property>
+                     <property name="text">
+                      <string>Edged</string>
+                     </property>
+                    </widget>
+                   </item>
                   </layout>
                  </widget>
                 </item>
                 <item>
                  <widget class="QGroupBox" name="groupBox_3">
                   <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
@@ -411,7 +427,7 @@ QGroupBox::title {
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
-                    <height>100</height>
+                    <height>0</height>
                    </size>
                   </property>
                   <property name="maximumSize">
@@ -456,6 +472,9 @@ QGroupBox::title {
                    <bool>false</bool>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_7">
+                   <property name="spacing">
+                    <number>15</number>
+                   </property>
                    <property name="sizeConstraint">
                     <enum>QLayout::SetDefaultConstraint</enum>
                    </property>
@@ -463,7 +482,7 @@ QGroupBox::title {
                     <number>9</number>
                    </property>
                    <property name="topMargin">
-                    <number>9</number>
+                    <number>20</number>
                    </property>
                    <item>
                     <widget class="QRadioButton" name="radioButton_5">
@@ -503,7 +522,7 @@ QGroupBox::title {
                 <item>
                  <widget class="QGroupBox" name="groupBox_5">
                   <property name="sizePolicy">
-                   <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                     <horstretch>0</horstretch>
                     <verstretch>0</verstretch>
                    </sizepolicy>
@@ -511,7 +530,7 @@ QGroupBox::title {
                   <property name="minimumSize">
                    <size>
                     <width>0</width>
-                    <height>100</height>
+                    <height>0</height>
                    </size>
                   </property>
                   <property name="maximumSize">
@@ -556,6 +575,9 @@ QGroupBox::title {
                    <bool>false</bool>
                   </property>
                   <layout class="QVBoxLayout" name="verticalLayout_8">
+                   <property name="spacing">
+                    <number>15</number>
+                   </property>
                    <property name="sizeConstraint">
                     <enum>QLayout::SetDefaultConstraint</enum>
                    </property>
@@ -563,7 +585,7 @@ QGroupBox::title {
                     <number>9</number>
                    </property>
                    <property name="topMargin">
-                    <number>9</number>
+                    <number>20</number>
                    </property>
                    <item>
                     <widget class="QRadioButton" name="radioButton_9">
