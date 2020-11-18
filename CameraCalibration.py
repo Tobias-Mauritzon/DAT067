@@ -1,6 +1,10 @@
 class CameraCalibration:
+    """
+    This class handles the calibration of the camera. 
+    It also handles reading and saving this information in a .ini file
+    """
 
-    def __init__(self, width, height, distance):
+    def __init__(self, width: int, height: int, distance: float):
         """
         Initiates CameraCalibration object with real dimension integer references 'width' and 'height' 
         """
@@ -21,8 +25,6 @@ class CameraCalibration:
         finally:
             file.close()
         
-        
-
     def read_from_file(self) -> (int, int):
         """ 
         Reads the relevant camera inforamtion from camera_info.ini 
@@ -40,7 +42,6 @@ class CameraCalibration:
             file.close()
             return retval
         
-
     def calibrate(self, imgwidth: int, imgheight: int) -> (int, int):
         """
         Takes the width and height of the recognised object in pixels 
