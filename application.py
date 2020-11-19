@@ -17,6 +17,9 @@ from ui_mainWindow import *
 # MainWindow inherits QWidget and creates a window with the ui(ui_mainWindow.py) made with Qt designer
 
 class MainWindow(QtWidgets.QMainWindow):
+
+   
+    
     # class constructor
     def __init__(self,windowName):
         # call QWidget constructor
@@ -47,7 +50,9 @@ class MainWindow(QtWidgets.QMainWindow):
         
         self.cameraFrameIsActive = True
         self.sidePanelIsActive = True
-        self.ui.frameSplitter.setSizes([16777215,300])
+        MAX_VALUE = 16777215
+        START_SPLITTER_WIDTH = 80000
+       
 
         self.imageColor = "RGB"
         
@@ -150,7 +155,13 @@ class MainWindow(QtWidgets.QMainWindow):
         self.pix = QPixmap.fromImage(qImg)
         self.resize_camFrame()
 
+        self.saveImages(cv2.cvtColor(image, cv2.COLOR_BGR2RGB),5)
     
+    # writes the image to _pycache_ folder
+    def saveImages(self, img, amount):
+        for i in range(amount):
+            cv2.imwrite("image-" + str(i) + ".jpg", img)
+
         
     # start/stop timer
     def controlTimer(self):
