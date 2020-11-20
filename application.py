@@ -191,16 +191,16 @@ class MainWindow(QtWidgets.QMainWindow):
             
             # start timer
             self.timer.start(20)
-            # update control_bt text
-            self.ui.control_bt.setText("Stop")
+            # update Button_startCam text
+            self.ui.Button_startCam.setText("Stop")
         # if timer is started
         else:
             # stop timer
             self.timer.stop()
             # release video capture
             self.cap.release()
-            # update control_bt text
-            self.ui.control_bt.setText("Start")
+            # update Button_startCam text
+            self.ui.Button_startCam.setText("Start")
     
 
 # this is the "main function" that makes an instance of the mainWindow
