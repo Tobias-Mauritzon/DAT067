@@ -1,4 +1,12 @@
 
+"""
+TF_CAR_Training.py
+Skappar ett CNN som sedan trännas med hjälp av databasen som laddas in av TF_Car_Model
+# Author: Greppe
+# Reviewed by:
+# Date: 2020-11-20
+"""
+
 from tensorflow.keras import datasets, layers, models
 import matplotlib.pyplot as plt
 import tensorflow as tf
