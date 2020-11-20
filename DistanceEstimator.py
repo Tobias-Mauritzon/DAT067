@@ -11,7 +11,7 @@ from typing import List
 
 class DistanceEstimator:
     """
-    This class handles estimating the distance to an object from an image.
+    This class handles estimating the distance to an object in an image.
     """
 
     def __init__(self, focal: int, real_size: float):
@@ -21,7 +21,6 @@ class DistanceEstimator:
         self.focal = focal
         self.real_size = real_size
 
-    #def estimate(self, img: numpy.array, objects: List[Tuple[int, int, int, int]], dimension: str):
     def estimate_distance(self, img: numpy.ndarray, objects: List, dimension: str):
         """
         Estimates the distance to every object in the rectangle list 'objects' by 
