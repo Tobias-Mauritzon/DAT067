@@ -1,0 +1,19 @@
+Here is how to use the application.
+
+Prerequisites:
+- A web-cam must be plugged in to your computer
+
+Video capture:
+- To start the video-stream, press the button "Start" located at the bottom of the window.
+- To stop the video-stream, press the button "Stop" located at the bottom of the window.
+
+Handling views:
+- One can simply toggle views by clicking the "Views" tab in the top-menubar.
+- Each view can be dragged to suit the users needs by hovering the mouse between the views.
+- It is also possible to close views by dragging them.
+
+Settings menu:
+- NOT IMPLEMENTED YET 
+
+Output menu:
+- NOT IMPLEMENTED YET
