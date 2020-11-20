@@ -6,7 +6,7 @@ from PyQt5.QtWidgets import QWidget
 from PyQt5.QtGui import QImage
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import QTimer
-
+import numpy as np
 from ui_mainWindow import *
 
 # TIPS: convert from ui to py, use this in terminal: pyuic5 -x ui_application.ui -o ui_application.py
@@ -50,11 +50,15 @@ class MainWindow(QtWidgets.QMainWindow):
         
         self.cameraFrameIsActive = True
         self.sidePanelIsActive = True
-        MAX_VALUE = 16777215
-        START_SPLITTER_WIDTH = 80000
-       
-
+        self.ui.Splitter_frame.setSizes([1000,500])
+        self.ui.Splitter_sidePanel.setSizes([3,2])
         self.imageColor = "RGB"
+
+        # Start values:
+        
+        self.start_brightness = 0
+        self.start_contrast = 10
+
         
 
     # resizes the cam frame
@@ -81,6 +85,15 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.radioButton_RGB.toggled.connect(self.radioButton_RGB_clicked)
         self.ui.radioButton_Grayscale.toggled.connect(self.radioButton_Grayscale_clicked)
         self.ui.radioButton_Edged.toggled.connect(self.radioButton_Edged_clicked)
+
+        self.ui.Button_reset.clicked.connect(self.resetSettingValues)
+    
+    def resetSettingValues(self):
+        self.ui.Slider_brightness.setValue(self.start_brightness)
+        self.ui.Label_brightnessValue.setNum(self.start_brightness)
+        self.ui.Slider_contrast.setValue(self.start_contrast)
+        self.ui.Label_contrastValue.setNum(self.start_contrast)
+        self.ui.radioButton_RGB.toggle()
     
     def radioButton_RGB_clicked(self, enabled):
         if enabled:
@@ -100,22 +113,22 @@ class MainWindow(QtWidgets.QMainWindow):
 
     def showCameraFrame(self):
         if self.cameraFrameIsActive is True:
-            self.ui.frameSplitter.setSizes([0,16777215])
+            self.ui.Splitter_frame.setSizes([0,16777215])
             self.ui.cameraFrame.setVisible(False)
             self.cameraFrameIsActive = False
         else:
-            self.ui.frameSplitter.setSizes([16777215,300])
+            self.ui.Splitter_frame.setSizes([1000,500])
             self.ui.cameraFrame.setVisible(True)
             self.cameraFrameIsActive = True
          
         
     def showSidePanel(self):
         if self.sidePanelIsActive is True:
-            self.ui.frameSplitter.setSizes([16777215,0])
+            self.ui.Splitter_frame.setSizes([16777215,0])
             self.ui.sidePanel.setVisible(False)
             self.sidePanelIsActive = False
         else:
-            self.ui.frameSplitter.setSizes([16777215,300])
+            self.ui.Splitter_frame.setSizes([1000,500])
             self.ui.sidePanel.setVisible(True)
             self.sidePanelIsActive = True
     
@@ -127,17 +140,17 @@ class MainWindow(QtWidgets.QMainWindow):
         ret, image = self.cap.read()
 
         # convert image to RGB format
-        if self.imageColor is "RGB":
+        if self.imageColor == "RGB":
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             height, width, channel = image.shape
             qiFormat = QImage.Format_RGB888
-        elif self.imageColor is "Grayscale":
+        elif self.imageColor == "Grayscale":
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             image = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
             height, width = image.shape
             channel = 1
             qiFormat = QImage.Format_Grayscale8
-        elif self.imageColor is "Edged":
+        elif self.imageColor == "Edged":
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
             blur = cv2.GaussianBlur(gray,(5,5),0)
@@ -150,6 +163,12 @@ class MainWindow(QtWidgets.QMainWindow):
         # calculate step
         step = channel * width
        
+        
+        contrast = self.ui.Slider_contrast.value()/10
+        self.ui.Label_contrastValue.setNum(contrast)
+        brightness = self.ui.Slider_brightness.value()
+        self.ui.Label_brightnessValue.setNum(brightness)
+        image = cv2.addWeighted(image,contrast,np.zeros(image.shape, image.dtype),0,brightness)
         # create QImage from image
         qImg = QImage(image.data, width, height, step, qiFormat)
         self.pix = QPixmap.fromImage(qImg)
