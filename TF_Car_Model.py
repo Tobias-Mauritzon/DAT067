@@ -1,29 +1,32 @@
+"""
+TF_CAR_Model.py
+Laddar in datan från den speciferade databasen och sparar labelsen och featuresen i pickle format som
+X.pickle för features
+y.pickle för labels.
+# Author: Greppe
+# Reviewed by:
+# Date: 2020-11-20
+"""
+
 import numpy as np 
 import matplotlib.pyplot as plt
+import random
 import os
 import cv2
 
 DATADIR = "CarData"
-CATEGORIES = ["Car", "Dog"]
+CATEGORIES = ["Car", "Dog", "Cat"]
 
-# Visar en bild för att testa inladningen.
-for category in CATEGORIES:
-    path = os.path.join(DATADIR, category) # path to cats or dogs dir
-    for img in os.listdir(path):
-        img_array = cv2.imread(os.path.join(path,img), cv2.IMREAD_GRAYSCALE)
-        #plt.imshow(img_array, cmap="gray")
-        #plt.show()
-        break
-    break
-print(img_array.shape)
+#Skapar Arrayen för träningsdata
+training_data = []
+
+#Storlken på Bilderna
 IMG_SIZE = 100
 
-new_array = cv2.resize(img_array, (IMG_SIZE,IMG_SIZE))
-plt.imshow(new_array, cmap = 'gray')
-plt.show()
-
-#training_data = []
-
+"""
+Läser in data från den speciferad pathen och omvandlar det till en image array
+Använder sig av grå skala.
+"""
 # Funktion för att skapa datan.
 def create_training_data():
     for category in CATEGORIES:
@@ -39,17 +42,17 @@ def create_training_data():
 
 create_training_data()
 
+#printar storlken på träningsdatan
 print(len(training_data))
 
-import random
+
 
 # Shuffelar datan så att varje epoch får olika ordningar av datan.
 random.shuffle(training_data)
 
-for sample in training_data:
-    print(sample[1])
-
+# Den tomma arrayen för features (bilder)
 X = []
+# Den tomma arrayen för labels
 y = []
 
 # Lägger labels och featuresen till tränings datan
@@ -57,7 +60,9 @@ for features, label in training_data:
     X.append(features)
     y.append(label)
 
+# gör om form och gör det till en numpy array
 X = np.array(X).reshape(-1, IMG_SIZE, IMG_SIZE, 1) # -1 tar alla storlekar, första parameteren skall man specifera storlken
+# gör om till en numpy array
 y = np.array(y) 
 
 # Exporterar data modellen till pickle formatet, så vi kan träna utan att skapa data modellen varje gång
