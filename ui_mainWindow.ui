@@ -221,7 +221,7 @@ border-radius: 7px;
          </widget>
         </item>
         <item alignment="Qt::AlignHCenter">
-         <widget class="QPushButton" name="control_bt">
+         <widget class="QPushButton" name="Button_startCam">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
             <horstretch>0</horstretch>
@@ -400,9 +400,9 @@ border-radius: 10px</string>
                <property name="geometry">
                 <rect>
                  <x>0</x>
-                 <y>-92</y>
-                 <width>539</width>
-                 <height>539</height>
+                 <y>0</y>
+                 <width>692</width>
+                 <height>493</height>
                 </rect>
                </property>
                <layout class="QVBoxLayout" name="verticalLayout_4">

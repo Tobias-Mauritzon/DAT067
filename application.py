@@ -9,17 +9,13 @@ from PyQt5.QtCore import QTimer
 import numpy as np
 from ui_mainWindow import *
 
-# TIPS: convert from ui to py, use this in terminal: pyuic5 -x ui_application.ui -o ui_application.py
 # Author: Philip
-# Version: 1.0
+# Reviewed by:
 # Date: 2020-11-16
 
 # MainWindow inherits QWidget and creates a window with the ui(ui_mainWindow.py) made with Qt designer
-
 class MainWindow(QtWidgets.QMainWindow):
-
-   
-    
+ 
     # class constructor
     def __init__(self,windowName):
         # call QWidget constructor
@@ -32,15 +28,15 @@ class MainWindow(QtWidgets.QMainWindow):
         # set window name
         self.setWindowTitle(windowName)
 
-        # create a timer
-        self.timer = QTimer()
-        # set timer timeout callback function
-        self.timer.timeout.connect(self.viewCam)
-
         self.setActions()
 
         # instantiate event filter
         self.installEventFilter(self)
+
+        # create a timer
+        self.timer = QTimer()
+        # set timer timeout callback function
+        self.timer.timeout.connect(self.viewCam)
 
         # the pixMap used to set the image on a QLabel
         self.pix = None
@@ -55,11 +51,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.imageColor = "RGB"
 
         # Start values:
-        
         self.start_brightness = 0
         self.start_contrast = 10
-
-        
 
     # resizes the cam frame
     def resize_camFrame(self):
@@ -74,20 +67,21 @@ class MainWindow(QtWidgets.QMainWindow):
             self.resize_camFrame()
         return super().eventFilter(obj, event)
     
+    # Sets actions for GUI-objects
     def setActions(self):
-        # set control_bt callback clicked  function
-        self.ui.control_bt.clicked.connect(self.controlTimer)
-
-        # 
+        # Set action for start button
+        self.ui.Button_startCam.clicked.connect(self.controlTimer)
+        # Set action for topBar menu actions
         self.ui.actionCamera.triggered.connect(self.showCameraFrame)
         self.ui.actionSidePanel.triggered.connect(self.showSidePanel)
-
+        # Set action for radioButtons
         self.ui.radioButton_RGB.toggled.connect(self.radioButton_RGB_clicked)
         self.ui.radioButton_Grayscale.toggled.connect(self.radioButton_Grayscale_clicked)
         self.ui.radioButton_Edged.toggled.connect(self.radioButton_Edged_clicked)
-
+        # Set action for reset button
         self.ui.Button_reset.clicked.connect(self.resetSettingValues)
-    
+
+    # Sets all ui-objects to default values
     def resetSettingValues(self):
         self.ui.Slider_brightness.setValue(self.start_brightness)
         self.ui.Label_brightnessValue.setNum(self.start_brightness)
@@ -95,22 +89,22 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.Label_contrastValue.setNum(self.start_contrast)
         self.ui.radioButton_RGB.toggle()
     
+    # Function for RGB-radiobutton, change the image color to edged
     def radioButton_RGB_clicked(self, enabled):
         if enabled:
-            print("RGB!!!")
             self.imageColor = "RGB"
             
+    # Function for Grayscale-radiobutton, change the image color to edged
     def radioButton_Grayscale_clicked(self, enabled):
         if enabled:
-            print("GRAYSCALE!!!")
             self.imageColor = "Grayscale"
 
+    # Function for Edged-radiobutton, change the image color to edged
     def radioButton_Edged_clicked(self, enabled):
         if enabled:
-            print("Edged!!!")
             self.imageColor = "Edged"
-          
 
+    # Funktion that enables/disables the camera frame
     def showCameraFrame(self):
         if self.cameraFrameIsActive is True:
             self.ui.Splitter_frame.setSizes([0,16777215])
@@ -121,7 +115,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.cameraFrame.setVisible(True)
             self.cameraFrameIsActive = True
          
-        
+    # Funktion that enables/disables the side panel
     def showSidePanel(self):
         if self.sidePanelIsActive is True:
             self.ui.Splitter_frame.setSizes([16777215,0])
@@ -132,8 +126,6 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.sidePanel.setVisible(True)
             self.sidePanelIsActive = True
     
-   
-
     # view camera
     def viewCam(self):
         # read image in BGR format
@@ -144,12 +136,14 @@ class MainWindow(QtWidgets.QMainWindow):
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             height, width, channel = image.shape
             qiFormat = QImage.Format_RGB888
+        # convert image to Grayscale format
         elif self.imageColor == "Grayscale":
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             image = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
             height, width = image.shape
             channel = 1
             qiFormat = QImage.Format_Grayscale8
+        # convert image to Edged format
         elif self.imageColor == "Edged":
             image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
@@ -162,25 +156,27 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # calculate step
         step = channel * width
-       
-        
+
+        # set contrast
         contrast = self.ui.Slider_contrast.value()/10
         self.ui.Label_contrastValue.setNum(contrast)
+        # set brightness
         brightness = self.ui.Slider_brightness.value()
         self.ui.Label_brightnessValue.setNum(brightness)
+
         image = cv2.addWeighted(image,contrast,np.zeros(image.shape, image.dtype),0,brightness)
         # create QImage from image
         qImg = QImage(image.data, width, height, step, qiFormat)
         self.pix = QPixmap.fromImage(qImg)
         self.resize_camFrame()
 
+        # save images
         self.saveImages(cv2.cvtColor(image, cv2.COLOR_BGR2RGB),5)
     
     # writes the image to _pycache_ folder
     def saveImages(self, img, amount):
         for i in range(amount):
             cv2.imwrite("image-" + str(i) + ".jpg", img)
-
         
     # start/stop timer
     def controlTimer(self):
@@ -205,8 +201,6 @@ class MainWindow(QtWidgets.QMainWindow):
             self.cap.release()
             # update control_bt text
             self.ui.control_bt.setText("Start")
-    
-    
     
 
 # this is the "main function" that makes an instance of the mainWindow
