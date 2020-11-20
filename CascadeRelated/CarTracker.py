@@ -1,19 +1,22 @@
+import os
 import cv2
 
-'''
+"""
 This script is a independant test file for recognition of 
 cars with haar cascades.
-'''
+
+Author Tobias
+"""
 
 # reading "good" cascade identifier
-carCascade = cv2.CascadeClassifier(
-    "DAT067/CascadeRelated/Resources/cars.xml")
+# you may need to cd in to the correct directory
+carCascade = cv2.CascadeClassifier("CascadeRelated/Resources/cars.xml")
+
 # reading "bad" cascade identifier
-carCascade2 = cv2.CascadeClassifier(
-    "Dat067/CascadeRelated/Resources/cas4.xml")
+carCascade2 = cv2.CascadeClassifier("CascadeRelated/Resources/cas4.xml")
 
 # video stream with connected webbcam
-cap = cv2.VideoCapture(0, cv2.CAP_DSHOW)
+cap = cv2.VideoCapture(0)
 
 # video stream with ip cam specific for my network
 # cap = cv2.VideoCapture('http://192.168.1.100:8080/video')
