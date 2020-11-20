@@ -1,3 +1,9 @@
+"""
+#Author: Joachim Antfolk
+#Reviewed by:
+#Date: 2020-11-19
+"""
+
 class CameraCalibration:
     """
     This class handles the calibration of the camera. 
@@ -42,14 +48,14 @@ class CameraCalibration:
             file.close()
             return retval
         
-    def calibrate(self, imgwidth: int, imgheight: int) -> (int, int):
+    def calibrate(self, img_width: int, img_height: int) -> (int, int):
         """
         Takes the width and height of the recognised object in pixels 
         and calculates the focal length using the formula: 
         Focal length = (Size in image x Distance) / Real size
         """
-        fx = (imgwidth * self.distance) / self.width
-        fy = (imgheight * self.distance) / self.height
+        fx = (img_width * self.distance) / self.width
+        fy = (img_height * self.distance) / self.height
         try:
             self.write_to_file(fx, fy)
         except Exception:

@@ -1,3 +1,9 @@
+"""
+#Author: Joachim Antfolk
+#Reviewed by:
+#Date: 2020-11-19
+"""
+
 from cv2 import cv2 
 import numpy as numpy
 from typing import Tuple
