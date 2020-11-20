@@ -1,11 +1,14 @@
 """
 #Author: Joachim Antfolk
 #Reviewed by: William Jönsson
+
+#Author: William Jönsson
+#Reviewed by: Joachim Antfolk
 #Date: 2020-11-20
 """
 
 import numpy as np
-import cv2
+from cv2 import cv2 
 
 class CameraCalibration:
     """
@@ -74,7 +77,7 @@ class CameraCalibration:
                     cv2.imshow('CalibrationImage',cv2.flip(img, 2))
                     print("Press space to use current image to calibrate. Need ", REQUIRED_IMAGE_AMOUNT - imageCounter, " more images.")
 
-                if imageCounter >= requiredImageAmount:
+                if imageCounter >= REQUIRED_IMAGE_AMOUNT:
                     break
 
         print("Calculating camera matrix etc...")
