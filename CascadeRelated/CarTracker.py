@@ -5,7 +5,9 @@ import cv2
 This script is a independant test file for recognition of 
 cars with haar cascades.
 
-Author Tobias
+Author Tobias Mauritzon
+Reviewed by: Joachim Antfolk
+Date: 2020-11-20
 """
 
 # reading "good" cascade identifier
