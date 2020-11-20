@@ -12,8 +12,8 @@ class DistanceEstimator:
         """
         Initiates DistanceEstimator object with focal length data and the real dimension of object. 
         """
-        self._focal = focal
-        self._real_size = real_size
+        self.focal = focal
+        self.real_size = real_size
 
     #def estimate(self, img: numpy.array, objects: List[Tuple[int, int, int, int]], dimension: str):
     def estimate_distance(self, img: numpy.ndarray, objects: List, dimension: str):
@@ -38,7 +38,7 @@ class DistanceEstimator:
         Calculates the distance and returns it as a string of the 
         distance in meters rounded to three places
         """
-        return str(round((self._real_size*self._focal)/dimension, 3)) + " m"
+        return str(round((self.real_size*self.focal)/dimension, 1)) + " m"
 
     def update_focal(self, new_focal: int):
         """
@@ -50,5 +50,5 @@ class DistanceEstimator:
         """
         Updates the distance estimators real size attribute
         """
-        self.size = new_size
+        self.real_size = new_size
     
