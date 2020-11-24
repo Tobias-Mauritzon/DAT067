@@ -302,7 +302,8 @@ class MainWindow(QtWidgets.QMainWindow):
         return
     """
 
-# this is the "main function" that makes an instance of the mainWindow
+# Use this if you want to start without loading window
+"""
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
@@ -311,3 +312,4 @@ if __name__ == '__main__':
     mainWindow.show()
 
     sys.exit(app.exec_())
+"""

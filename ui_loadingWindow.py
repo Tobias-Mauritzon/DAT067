@@ -11,11 +11,11 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(680, 400)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+class Ui_LoadingWindow(object):
+    def setupUi(self, LoadingWindow):
+        LoadingWindow.setObjectName("LoadingWindow")
+        LoadingWindow.resize(680, 400)
+        self.centralwidget = QtWidgets.QWidget(LoadingWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.centralwidget)
         self.verticalLayout.setContentsMargins(10, 10, 10, 10)
@@ -93,24 +93,16 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.addWidget(self.label_3, 0, QtCore.Qt.AlignRight)
         self.verticalLayout_2.addWidget(self.frame)
         self.verticalLayout.addWidget(self.frame_dropShadow)
-        MainWindow.setCentralWidget(self.centralwidget)
+        LoadingWindow.setCentralWidget(self.centralwidget)
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi(LoadingWindow)
+        QtCore.QMetaObject.connectSlotsByName(LoadingWindow)
 
-    def retranslateUi(self, MainWindow):
+    def retranslateUi(self, LoadingWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.label.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">OBJECT </span>DETECTOR</p></body></html>"))
-        self.label_2.setText(_translate("MainWindow", "Loading..."))
-        self.label_3.setText(_translate("MainWindow", "<strong>Version:</strong> 1.0"))
+        LoadingWindow.setWindowTitle(_translate("LoadingWindow", "MainWindow"))
+        self.label.setText(_translate("LoadingWindow", "<html><head/><body><p><span style=\" font-weight:600;\">OBJECT </span>DETECTOR</p></body></html>"))
+        self.label_2.setText(_translate("LoadingWindow", "Loading..."))
+        self.label_3.setText(_translate("LoadingWindow", "<strong>Version:</strong> 1.0"))
 
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())
