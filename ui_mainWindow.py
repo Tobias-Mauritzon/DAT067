@@ -191,7 +191,8 @@ class Ui_MainWindow(object):
         self.image_label.setSizePolicy(sizePolicy)
         self.image_label.setMinimumSize(QtCore.QSize(1, 1))
         font = QtGui.QFont()
-        font.setPointSize(12)
+        font.setFamily("Segoe UI")
+        font.setPointSize(14)
         self.image_label.setFont(font)
         self.image_label.setAutoFillBackground(False)
         self.image_label.setStyleSheet("color: rgb(0, 255, 127)")
@@ -292,7 +293,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 468, 563))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 468, 570))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
@@ -747,11 +748,3 @@ class Ui_MainWindow(object):
         self.action_Output.setText(_translate("MainWindow", "Output"))
 
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())

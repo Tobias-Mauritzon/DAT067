@@ -12,6 +12,10 @@ import numpy as np
 from ui_loadingWindow import *
 from application import *
 
+# Author: Philip
+# Reviewed by:
+# Date: 2020-11-24
+
 counter = 0
 
 class LoadingWindow(QtWidgets.QMainWindow):

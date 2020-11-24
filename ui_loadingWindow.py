@@ -90,7 +90,7 @@ class Ui_LoadingWindow(object):
         self.label_3.setFont(font)
         self.label_3.setStyleSheet("color: white;")
         self.label_3.setObjectName("label_3")
-        self.verticalLayout_3.addWidget(self.label_3, 0, QtCore.Qt.AlignRight)
+        self.verticalLayout_3.addWidget(self.label_3, 0, QtCore.Qt.AlignLeft)
         self.verticalLayout_2.addWidget(self.frame)
         self.verticalLayout.addWidget(self.frame_dropShadow)
         LoadingWindow.setCentralWidget(self.centralwidget)

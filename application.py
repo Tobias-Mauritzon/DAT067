@@ -1,13 +1,16 @@
 import sys
 import cv2
 
+from pathlib import Path
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtGui import QImage
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import QTimer
+from PyQt5.QtWidgets import QMessageBox
 import numpy as np
 from ui_mainWindow import *
+from dialogMenu import *
 import tensorflow as tf
 
 # Author: Philip
@@ -26,6 +29,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        #self.setWindowIcon(QtGui.QIcon('frame_icon.png'))
         # set window name
         self.setWindowTitle(windowName)
         self.resize(1200,800)
@@ -58,7 +62,26 @@ class MainWindow(QtWidgets.QMainWindow):
         self.start_contrast = 10
 
         # Laddar in den tidigare tränade modellen.
-      #  self.my_model = tf.keras.models.load_model('saved_model/car_model')
+        #self.my_model = tf.keras.models.load_model('saved_model/car_model')
+
+        # If the calibrationfile does not exist, show calibration dialog menu 
+        if not Path("CALIBRATIONFILE").is_file():
+            self.calibrate_popUp()
+        
+        
+    
+    def calibrate_popUp(self):
+        dialogMenu = DialogMenu()
+        dialogMenu.setTitle("<strong>Calibration</strong> is needed!")
+        dialogMenu.setInformationText("In order to use the distance calculation feature of the application, you need to calibrate your camera.")
+        dialogMenu.setTopButtonText("Calibrate camera")
+        dialogMenu.setBottomButtonText("Skip")
+        dialogMenu.ui.PushButton_top.clicked.connect(self.openCalibrationPage)
+        dialogMenu.ui.PushButton_top.clicked.connect(dialogMenu.close)
+        dialogMenu.ui.PushButton_bottom.clicked.connect(dialogMenu.close)
+
+        dialogMenu.exec_()
+        
 
     # resizes the cam frame
     def resize_camFrame(self):
@@ -66,6 +89,9 @@ class MainWindow(QtWidgets.QMainWindow):
             self.w = self.ui.image_label.width()
             self.h = self.ui.image_label.height()
             self.ui.image_label.setPixmap(self.pix.scaled(self.w, self.h,QtCore.Qt.KeepAspectRatio))
+
+    def openCalibrationPage(self):
+        self.ui.stackedWidget.setCurrentIndex(1)
     
     # event for when the window is resized
     def eventFilter(self, obj, event):
@@ -303,13 +329,11 @@ class MainWindow(QtWidgets.QMainWindow):
     """
 
 # Use this if you want to start without loading window
-"""
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
     # create and show mainWindow
     mainWindow = MainWindow("Application")
     mainWindow.show()
-
     sys.exit(app.exec_())
-"""

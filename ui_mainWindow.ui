@@ -214,7 +214,8 @@ QPushButton:pressed {
               </property>
               <property name="font">
                <font>
-                <pointsize>12</pointsize>
+                <family>Segoe UI</family>
+                <pointsize>14</pointsize>
                </font>
               </property>
               <property name="autoFillBackground">
@@ -438,7 +439,7 @@ QPushButton:pressed {
                      <x>0</x>
                      <y>0</y>
                      <width>468</width>
-                     <height>563</height>
+                     <height>570</height>
                     </rect>
                    </property>
                    <layout class="QVBoxLayout" name="verticalLayout_4">
