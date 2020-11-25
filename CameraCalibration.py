@@ -13,9 +13,9 @@ class CameraCalibration:
     It also handles reading and saving this information in a .ini file
     """
 
-    def __init__(self, width: int, height: int, distance: float):
+    def __init__(self, width: float, height: float, distance: float):
         """
-        Initiates CameraCalibration object with real dimension integer references 'width' and 'height' 
+        Initiates CameraCalibration object with real dimension float references 'width', 'height' and distance in meters
         """
         self.width = width
         self.height = height

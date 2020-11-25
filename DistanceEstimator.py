@@ -16,7 +16,7 @@ class DistanceEstimator:
 
     def __init__(self, focal: int, real_size: float):
         """
-        Initiates DistanceEstimator object with focal length data and the real dimension of object. 
+        Initiates DistanceEstimator object with focal length data (in pixels) and the real dimension of object (in meters). 
         """
         self.focal = focal
         self.real_size = real_size
@@ -47,13 +47,13 @@ class DistanceEstimator:
 
     def update_focal(self, new_focal: int):
         """
-        Updates the distance estimators focal length attribute
+        Updates the distance estimators focal length attribute (new_focal should be in pixels)
         """
         self.focal = new_focal
 
     def update_size(self, new_size: float):
         """
-        Updates the distance estimators real size attribute
+        Updates the distance estimators real size attribute (new_size should be in meters)
         """
         self.real_size = new_size
     
