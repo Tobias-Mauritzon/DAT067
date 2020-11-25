@@ -22,6 +22,7 @@ from pathlib import Path
 # Date: 2020-11-24
 
 counter = 0
+increments = 1
 mw = None
 
 class LoadingWindow(QtWidgets.QMainWindow):
@@ -61,7 +62,7 @@ class LoadingWindow(QtWidgets.QMainWindow):
         self.show()
 
     def progress(self):
-        global counter
+        global counter,increments
         self.ui.progressBar.setValue(counter)
         
         if counter > 100:
@@ -75,12 +76,14 @@ class LoadingWindow(QtWidgets.QMainWindow):
                     self.calibrate_popUp()
             except:
                 self.ui.label_2.setText("<strong>Error:</strong> could not load modules")
-        counter += 1
+        counter += increments
 
     def importModules(self):
-        global mw
+        global mw,increments
         self.ui.Label_information.setText("Importing modules...")
+        increments = 0.5
         from application import MainWindow as mw
+        increments = 3
         self.ui.Label_information.setText("Checking if calibration is needed...")
         if not Path("camera_info.ini").is_file():
             self.calibrationIsNeeded = True
