@@ -1,5 +1,8 @@
 import sys
 import cv2
+import time
+import threading
+import numpy as np
 
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QWidget
@@ -8,15 +11,18 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QGraphicsDropShadowEffect
 from PyQt5.QtGui import QColor
-import numpy as np
+
 from ui_loadingWindow import *
-from application import *
+from dialogMenu import *
+from pathlib import Path
+
 
 # Author: Philip
 # Reviewed by:
 # Date: 2020-11-24
 
 counter = 0
+mw = None
 
 class LoadingWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -39,28 +45,61 @@ class LoadingWindow(QtWidgets.QMainWindow):
         self.shadow.setColor(QColor(0,0,0,60))
         self.ui.frame_dropShadow.setGraphicsEffect(self.shadow)
 
+        # starting thread for imports
+        thread = threading.Thread(target=self.importModules)
+        thread.setDaemon(True)
+        thread.start()
+
         #timer
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.progress)
-        self.timer.start(20)
+        self.timer.start(30)
 
+        # boolean for checking if calibration is needed
+        self.calibrationIsNeeded = False
+        
         self.show()
 
     def progress(self):
         global counter
-
         self.ui.progressBar.setValue(counter)
-
+        
         if counter > 100:
             self.timer.stop()
-            self.main = MainWindow("Object Detector")
-            self.main.show()
-            self.close()
-        
+            try:
+                self.main = mw("Object Detector")
+                self.main.show()
+                self.close()
+
+                if self.calibrationIsNeeded:
+                    self.calibrate_popUp()
+            except:
+                self.ui.label_2.setText("<strong>Error:</strong> could not load modules")
         counter += 1
 
+    def importModules(self):
+        global mw
+        self.ui.Label_information.setText("Importing modules...")
+        from application import MainWindow as mw
+        self.ui.Label_information.setText("Checking if calibration is needed...")
+        if not Path("camera_info.ini").is_file():
+            self.calibrationIsNeeded = True
+        else: 
+            self.calibrationIsNeeded = False
 
-# this is the "main function" that makes an instance of the mainWindow
+    # Function that instantiates a dialog menu that informs the user to calibrate
+    def calibrate_popUp(self):
+        dialogMenu = DialogMenu()
+        dialogMenu.setTitle("<strong>Calibration</strong> is needed!")
+        dialogMenu.setInformationText("In order to use the distance calculation feature of the application, you need to calibrate your camera.")
+        dialogMenu.setTopButtonText("Calibrate camera")
+        dialogMenu.setBottomButtonText("Skip")
+        dialogMenu.ui.PushButton_top.clicked.connect(lambda: self.main.openPage(1))
+        dialogMenu.ui.PushButton_top.clicked.connect(dialogMenu.close)
+        dialogMenu.ui.PushButton_bottom.clicked.connect(dialogMenu.close)
+        dialogMenu.exec_()
+
+# this is the "main function"
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 

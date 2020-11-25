@@ -54,23 +54,51 @@
        <property name="bottomMargin">
         <number>0</number>
        </property>
-       <item alignment="Qt::AlignHCenter|Qt::AlignTop">
-        <widget class="QLabel" name="label">
-         <property name="font">
-          <font>
-           <family>Segoe UI</family>
-           <pointsize>40</pointsize>
-          </font>
+       <item>
+        <widget class="QFrame" name="frame_2">
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
          </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(0, 255, 127);</string>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
          </property>
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;OBJECT &lt;/span&gt;DETECTOR&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QLabel" name="label">
+            <property name="font">
+             <font>
+              <family>Segoe UI</family>
+              <pointsize>40</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: rgb(0, 255, 127);</string>
+            </property>
+            <property name="text">
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;OBJECT &lt;/span&gt;DETECTOR&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignCenter</set>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QLabel" name="Label_information">
+            <property name="font">
+             <font>
+              <family>Segoe UI</family>
+              <pointsize>12</pointsize>
+             </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color: gray;</string>
+            </property>
+            <property name="text">
+             <string> Importing stuff...</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
@@ -118,25 +146,6 @@ QProgressBar::chunk{
             </property>
             <property name="value">
              <number>24</number>
-            </property>
-            <property name="alignment">
-             <set>Qt::AlignCenter</set>
-            </property>
-           </widget>
-          </item>
-          <item alignment="Qt::AlignHCenter|Qt::AlignTop">
-           <widget class="QLabel" name="label_2">
-            <property name="font">
-             <font>
-              <family>Segoe UI</family>
-              <pointsize>8</pointsize>
-             </font>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color: white;</string>
-            </property>
-            <property name="text">
-             <string>Loading...</string>
             </property>
             <property name="alignment">
              <set>Qt::AlignCenter</set>
