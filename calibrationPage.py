@@ -13,8 +13,9 @@ from GUI.ui_calibrationPage import *
 from CameraCalibration import * 
 from threading import Thread
 from pathlib import Path
+from dialogMenu import *
 
-# Author: Philip
+# Author: Philip, William
 # Reviewed by:
 # Date: 2020-11-25
 
@@ -80,7 +81,9 @@ class CalibrationPage(QtWidgets.QWidget):
        
          # read image in BGR format
         ret, self.image = self.cap.read()
-
+        if self.image is None:
+            self.no_camera_available_popUp()
+            return
         self.update()
         self.convertToQImage()
         self.resize_camFrame()
@@ -241,19 +244,18 @@ class CalibrationPage(QtWidgets.QWidget):
             file.close()
             return retval
         
-    def calibrate(self, img_width: int, img_height: int) -> (int, int):
-        """
-        Takes the width and height of the recognised object in pixels 
-        and calculates the focal length using the formula: 
-        Focal length = (Size in image x Distance) / Real size
-        """
-        fx = (img_width * self.distance) / self.width
-        fy = (img_height * self.distance) / self.height
-        try:
-            self.write_to_file(fx, fy)
-        except Exception:
-            raise Exception("Could not write to file!")
-        return (fx, fy)
+    def no_camera_available_popUp(self):
+        dialogMenu = DialogMenu()
+        dialogMenu.setTitle("No available camera!")
+        dialogMenu.setInformationText("Cannot find an available camera, make sure it's plugged in.")
+        dialogMenu.setTopButtonText("Retry calibration")
+        dialogMenu.setBottomButtonText("Skip")
+        dialogMenu.ui.PushButton_top.clicked.connect(lambda: self.closePage())
+        dialogMenu.ui.PushButton_top.clicked.connect(lambda: self.loadPage())
+        dialogMenu.ui.PushButton_top.clicked.connect(dialogMenu.close)
+        dialogMenu.ui.PushButton_bottom.clicked.connect(lambda: self.closePage())
+        dialogMenu.ui.PushButton_bottom.clicked.connect(dialogMenu.close)
+        dialogMenu.exec_()
 
 
     
