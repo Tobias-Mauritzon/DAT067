@@ -219,13 +219,18 @@ selection-background-color: rgb(148, 212, 255);</string>
     <addaction name="actionCar_detection"/>
     <addaction name="actionFace_detection"/>
    </widget>
-   <widget class="QMenu" name="menuCalibrate">
-    <property name="title">
-     <string>Calibrate</string>
+   <widget class="QMenu" name="menuNavigation">
+    <property name="tearOffEnabled">
+     <bool>false</bool>
     </property>
+    <property name="title">
+     <string>Navigation</string>
+    </property>
+    <addaction name="action_MainScreen"/>
+    <addaction name="action_Calibration"/>
    </widget>
    <addaction name="menuView"/>
-   <addaction name="menuCalibrate"/>
+   <addaction name="menuNavigation"/>
    <addaction name="menuObject_detection"/>
    <addaction name="menuHelp"/>
   </widget>
@@ -340,6 +345,16 @@ selection-background-color: rgb(148, 212, 255);</string>
    </property>
    <property name="text">
     <string>Output</string>
+   </property>
+  </action>
+  <action name="action_MainScreen">
+   <property name="text">
+    <string>Main screen</string>
+   </property>
+  </action>
+  <action name="action_Calibration">
+   <property name="text">
+    <string>Calibration</string>
    </property>
   </action>
  </widget>

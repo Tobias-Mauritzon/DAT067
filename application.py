@@ -26,13 +26,13 @@ class MainWindow(QtWidgets.QMainWindow):
         # call QMainWindow constructor
         super().__init__()
 
-        # set window name and size
-        self.setWindowTitle(windowName)
-        self.resize(1200,800)
-
         # create mainwindow ui
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
+        
+        # set window name and size
+        self.setWindowTitle(windowName)
+        self.resize(1200,800)
 
         # add page 0
         self.page_0 = MainPage()
@@ -53,13 +53,13 @@ class MainWindow(QtWidgets.QMainWindow):
     # Funktion that opens a specific page
     def openPage(self,pageIndex):
         if pageIndex == 0:
-            self.ui.menuView.menuAction().setVisible(True)
-            self.ui.menuCalibrate.menuAction().setVisible(True)
+            self.ui.menuObject_detection.menuAction().setVisible(True)
             self.ui.stackedWidget.setCurrentIndex(0)
+            #self.page_1.stopCam()
+            #self.page_1 = CalibrationPage()
             self.currentPage = 0
         elif pageIndex == 1:
-            self.ui.menuView.menuAction().setVisible(False)
-            self.ui.menuCalibrate.menuAction().setVisible(False)
+            self.ui.menuObject_detection.menuAction().setVisible(False)
             self.ui.stackedWidget.setCurrentIndex(1)
             self.page_1.startCam()
             self.currentPage = 1
@@ -73,6 +73,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.action_Settings.triggered.connect(lambda: self.__setSidePanelAction(self.ui.action_Settings.isChecked(),self.ui.action_Output.isChecked()))
         self.ui.action_Output.triggered.connect(lambda: self.page_0.setOutPutPanel(self.ui.action_Output.isChecked(),self.ui.action_SidePanel.isChecked(),self.ui.action_Settings.isChecked()))
         self.ui.action_Output.triggered.connect(lambda: self.__setSidePanelAction(self.ui.action_Settings.isChecked(),self.ui.action_Output.isChecked()))
+        self.ui.action_MainScreen.triggered.connect(lambda: self.openPage(0))
+        self.ui.action_Calibration.triggered.connect(lambda: self.openPage(1))
+
      
     def __checkSidePanelActions(self, wantToCheck):
         self.ui.action_Settings.setChecked(wantToCheck)
@@ -89,6 +92,6 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
 
     # create and show mainWindow
-    mainWindow = MainWindow("Application")
+    mainWindow = MainWindow("test")
     mainWindow.show()
     sys.exit(app.exec_())

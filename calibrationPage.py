@@ -27,7 +27,8 @@ class CalibrationPage(QtWidgets.QWidget):
         self.ui.setupUi(self)
         
         self.cap = cv2.VideoCapture(0,cv2.CAP_DSHOW)
-
+        self.cap.set(3, 640)
+        self.cap.set(4, 480)
         # create a timer
         self.timer = QTimer()
 
@@ -36,6 +37,7 @@ class CalibrationPage(QtWidgets.QWidget):
 
 
         self.initLineEdits()
+        self.ui.stackedWidget.setCurrentIndex(0) # start with page 0 (insert values page)
 
         self.setActions()
 
@@ -59,22 +61,6 @@ class CalibrationPage(QtWidgets.QWidget):
         # release video capture
         self.cap.release()
 
-    # start/stop timer
-    def controlTimer(self):
-        # if timer is stopped
-        if not self.timer.isActive():
-            # create video capture
-            self.cap = cv2.VideoCapture(0,cv2.CAP_DSHOW)
-            self.cap.set(3, 640)
-            self.cap.set(4, 480)
-            # start timer
-            self.timer.start(20)
-        # if timer is started
-        else:
-            # stop timer
-            self.timer.stop()
-            # release video capture
-            self.cap.release()
 
     def viewCam(self):
        
@@ -100,29 +86,27 @@ class CalibrationPage(QtWidgets.QWidget):
             self.height, self.width, self.channel = self.image.shape
             self.qiFormat = QImage.Format_RGB888
         
-            ret, corners = cv2.findChessboardCorners(self.image, (6,6),None)
-            cv2.drawChessboardCorners(self.image, (6,6), corners,ret)
+            ret, corners = cv2.findChessboardCorners(self.image, (7,6),None) # Find the chess board corners
+            cv2.drawChessboardCorners(self.image, (7,6), corners,ret)# Draw and display the corners
             # Press space to use image for calibration
-            if self.capture:
+            if self.capture and ret:
                 print("pressed")
                 self.capture = False
-                # Find the chess board corners
-                ret, corners = cv2.findChessboardCorners(gray, (6,9),None)
-
-                # If found, add object points, image points (after refining them)
-                if ret == True:
-                    self.imageCounter += 1
-                    self.objpoints.append(self.objp)
-
-                    cv2.cornerSubPix(gray,corners,(11,11),(-1,-1),self.criteria)
-                    self.imgpoints.append(corners)
-
-                    # Draw and display the corners
-                    cv2.drawChessboardCorners(self.image, (7,6), corners,ret)
-                    print("Press space to use current image to calibrate. Need ", self.REQUIRED_IMAGE_AMOUNT - self.imageCounter, " more images.")
+                self.imageCounter += 1
+                self.ui.Label_TakenCaptures.setNum(self.imageCounter)
+                self.objpoints.append(self.objp)
+                gray = cv2.cvtColor(self.image,cv2.COLOR_RGB2GRAY)
+                cv2.cornerSubPix(gray,corners,(11,11),(-1,-1),self.criteria)
+                self.imgpoints.append(corners)
                 
                 if self.imageCounter >= self.REQUIRED_IMAGE_AMOUNT:
-                    print("KLAR!")
+                    self.calibrating = False
+                    print("Calculating camera matrix etc...")
+                    ret, cameraMatrix, dist, rvecs, tvecs = cv2.calibrateCamera(self.objpoints, self.imgpoints, gray.shape[::-1],None,None)
+                    print("...done calculating.")
+                    self.cameraMatrix = cameraMatrix
+                    self.ui.Label_Information.setText("<strong>Calibration</strong> was successful, return to main screen by clicking on <strong>Navigation -> Main Screen</strong> in the menubar")
+                    
                     
 
     def convertToQImage(self):
@@ -149,20 +133,16 @@ class CalibrationPage(QtWidgets.QWidget):
         self.ui.Button_Capture.clicked.connect(self.captureAction)
 
     def captureAction(self):
-        print("ASD")
         self.capture = True
-    
-    def startValueCheck(self):
-        if self.ui.lineEdit_Width.text().isnumeric() and self.ui.lineEdit_Height.text().isnumeric() and self.ui.lineEdit_SquareWidth.text().isnumeric() and self.ui.lineEdit_Distance.text().isnumeric():
-            self.startCalibration()
-        else:
-            print("ERROR not a number somewhere")
 
     def startCalibration(self):
-        width = float(self.ui.lineEdit_Width.text().replace(',','.'))
-        height = float(self.ui.lineEdit_Height.text().replace(',','.'))
-        patternSquareSize = int(self.ui.lineEdit_SquareWidth.text())
-        distance = float(self.ui.lineEdit_Distance.text().replace(',','.'))
+        try:
+            width = float(self.ui.lineEdit_Width.text().replace(',','.'))
+            height = float(self.ui.lineEdit_Height.text().replace(',','.'))
+            patternSquareSize = int(self.ui.lineEdit_SquareWidth.text())
+            distance = float(self.ui.lineEdit_Distance.text().replace(',','.'))
+        except:
+            print("ERROR not a number somewhere")
 
         """
         Calibrates camera using webcam feed with a checkerboard pattern.
@@ -185,8 +165,55 @@ class CalibrationPage(QtWidgets.QWidget):
         self.imageCounter = 0
         self.REQUIRED_IMAGE_AMOUNT = 5
 
+        self.ui.Label_NeededCaptures.setNum(self.REQUIRED_IMAGE_AMOUNT)
         print("Press space to use current image to calibrate. Need ", self.REQUIRED_IMAGE_AMOUNT - self.imageCounter, " more images.")
+        self.ui.stackedWidget.setCurrentIndex(1)
         self.calibrating = True
+
+    def write_to_file(self, fx: int, fy: int):
+        """
+        Writes the integer parameters fx and fy to camera_info.ini  
+        otherwise throws exception 
+        """
+        try:
+            file = open("camera_info.ini", "w")
+            file.write("fx:" + str(fx) + "\nfy:" + str(fy))
+        except Exception:
+            raise Exception("Could not write to file!")
+        finally:
+            file.close()
+        
+    def read_from_file(self) -> (int, int):
+        """ 
+        Reads the relevant camera inforamtion from camera_info.ini 
+        returns a tuple in the format (fx, fy) 
+        otherwise throws exception 
+        """
+        try:
+            file = open("camera_info.ini", "r")
+            fx = int(file.readline().split(":")[1])
+            fy = int(file.readline().split(":")[1])
+            retval = (fx, fy)
+        except Exception:
+            raise Exception("Could not read from file!")
+        finally:
+            file.close()
+            return retval
+        
+    def calibrate(self, img_width: int, img_height: int) -> (int, int):
+        """
+        Takes the width and height of the recognised object in pixels 
+        and calculates the focal length using the formula: 
+        Focal length = (Size in image x Distance) / Real size
+        """
+        fx = (img_width * self.distance) / self.width
+        fy = (img_height * self.distance) / self.height
+        try:
+            self.write_to_file(fx, fy)
+        except Exception:
+            raise Exception("Could not write to file!")
+        return (fx, fy)
+
 
     
 
