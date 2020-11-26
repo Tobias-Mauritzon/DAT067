@@ -8,44 +8,30 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import QTimer
 import numpy as np
 import tensorflow as tf
-from ui_mainPage import * 
+from GUI.ui_mainPage import * 
 
-class mainPage(QtWidgets.QWidget):
+# Author: Philip
+# Reviewed by:
+# Date: 2020-11-25
+
+class MainPage(QtWidgets.QWidget):
     def __init__(self):
-        # call QWidget constructor
-        super().__init__()
-
+        super().__init__() # call QWidget constructor
         self.ui = Ui_MainPage()
         self.ui.setupUi(self)
-
-        # set actions for QWidgets
-        self.setActions()
-
-        # sets start sizes for widgets in page
-        self.initPage()
-
-         # create a timer
-        self.timer = QTimer()
-
-        # set timer timeout callback function
-        self.timer.timeout.connect(self.viewCam)
-
-         # the pixMap used to set the image on a QLabel
-        self.pix = None
-
-        # the width and height of the QLabel 
-        self.w = 0
-        self.h = 0
-
-        # Booleans for page 0:
+        self.installEventFilter(self)
+        self.setActions() #set actions for QWidgets
+        self.initPage() # sets start sizes for widgets in page
+        self.timer = QTimer() # create a timer
+        self.timer.timeout.connect(self.viewCam) # set timer timeout callback function
+        self.pix = None # the pixMap used to set the image on a QLabel
+        self.w = 0 # set the width of the QLabel 
+        self.h = 0 # set the height of the QLabel
         self.cameraFrameIsActive = True
         self.sidePanelIsActive = True
         self.settingsIsActive = True
         self.outputIsActive = True
-
-        # start color of image
-        self.imageColor = "RGB"
-
+        self.imageColor = "RGB" # start color of image
         # Start values:
         self.start_brightness = 0
         self.start_contrast = 10
@@ -53,6 +39,12 @@ class mainPage(QtWidgets.QWidget):
     def initPage(self):
         self.ui.Splitter_frame.setSizes([1000,300])
         self.ui.Splitter_sidePanel.setSizes([1,1])
+    
+     # event for when the window is resized
+    def eventFilter(self, obj, event):
+        if (event.type() == QtCore.QEvent.Resize):
+            self.resize_camFrame()
+        return super().eventFilter(obj, event)
 
     def setActions(self):
         # Set action for start button
@@ -75,7 +67,6 @@ class mainPage(QtWidgets.QWidget):
         if self.pix is not None:
             self.w = self.ui.image_label.width()
             self.h = self.ui.image_label.height()
-            self.ui.image_label.setPixmap(self.pix.scaled(self.w, self.h,QtCore.Qt.KeepAspectRatio))
     
      # Sets all ui-objects to default values
     def resetSettingValues(self):
@@ -90,36 +81,25 @@ class mainPage(QtWidgets.QWidget):
         self.cap.set(3,width)
         self.cap.set(4,height)
 
-    # view camera
+    # start/stop timer
+    def controlTimer(self):
+        # if timer is stopped
+        if not self.timer.isActive():
+            self.cap = cv2.VideoCapture(0,cv2.CAP_DSHOW) # create video capture
+            self.timer.start(20) # start timer
+            self.ui.Button_startCam.setText("Stop") # update Button_startCam text
+        # if timer is started
+        else:
+            self.timer.stop() # stop timer
+            self.cap.release() # release video capture
+            self.ui.Button_startCam.setText("Start") # update Button_startCam text
+
+    # view camera (loop)
     def viewCam(self):
         # read image in BGR format
-        ret, image = self.cap.read()
+        ret, self.image = self.cap.read()
 
-        # convert image to RGB format
-        if self.imageColor == "RGB":
-            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            height, width, channel = image.shape
-            qiFormat = QImage.Format_RGB888
-        # convert image to Grayscale format
-        elif self.imageColor == "Grayscale":
-            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            image = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-            height, width = image.shape
-            channel = 1
-            qiFormat = QImage.Format_Grayscale8
-        # convert image to Edged format
-        elif self.imageColor == "Edged":
-            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-            blur = cv2.GaussianBlur(gray,(5,5),0)
-            edged = cv2.Canny(blur,35,125)
-            image = edged
-            height, width = image.shape
-            channel = 1
-            qiFormat = QImage.Format_Grayscale8
-
-        # calculate step
-        step = channel * width
+        self.update()
 
         # set contrast
         contrast = self.ui.Slider_contrast.value()/10
@@ -127,15 +107,45 @@ class mainPage(QtWidgets.QWidget):
         # set brightness
         brightness = self.ui.Slider_brightness.value()
         self.ui.Label_brightnessValue.setNum(brightness)
+        self.image = cv2.addWeighted(self.image,contrast,np.zeros(self.image.shape, self.image.dtype),0,brightness)
 
-        image = cv2.addWeighted(image,contrast,np.zeros(image.shape, image.dtype),0,brightness)
-        # create QImage from image
-        qImg = QImage(image.data, width, height, step, qiFormat)
-        self.pix = QPixmap.fromImage(qImg)
+        self.convertToQImage()
         self.resize_camFrame()
-
+        # set image to image label
+        self.ui.image_label.setPixmap(self.pix.scaled(self.w, self.h,QtCore.Qt.KeepAspectRatio))
         # save images
-        self.saveImages(cv2.cvtColor(image, cv2.COLOR_BGR2RGB),5)
+        #self.saveImages(cv2.cvtColor(image, cv2.COLOR_BGR2RGB),5)
+
+    def update(self):
+        # convert image to RGB format
+        if self.imageColor == "RGB":
+            self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
+            self.height, self.width, self.channel = self.image.shape
+            self.qiFormat = QImage.Format_RGB888
+        # convert image to Grayscale format
+        elif self.imageColor == "Grayscale":
+            self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
+            self.image = cv2.cvtColor(self.image,cv2.COLOR_BGR2GRAY)
+            self.height, self.width = self.image.shape
+            self.channel = 1
+            self.qiFormat = QImage.Format_Grayscale8
+        # convert image to Edged format
+        elif self.imageColor == "Edged":
+            self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
+            gray = cv2.cvtColor(self.image,cv2.COLOR_BGR2GRAY)
+            blur = cv2.GaussianBlur(gray,(5,5),0)
+            edged = cv2.Canny(blur,35,125)
+            self.image = edged
+            self.height, self.width = self.image.shape
+            self.channel = 1
+            self.qiFormat = QImage.Format_Grayscale8
+    
+    def convertToQImage(self):
+        # calculate step
+        step = self.channel * self.width
+        # create QImage from image
+        qImg = QImage(self.image.data, self.width, self.height, step, self.qiFormat)
+        self.pix = QPixmap.fromImage(qImg)
     
     # writes the image to _pycache_ folder
     def saveImages(self, img, amount):
@@ -145,25 +155,6 @@ class mainPage(QtWidgets.QWidget):
     # Function to change the image appearance
     def changeImageAppearance(self, appearance):
             self.imageColor = appearance
-    
-    # start/stop timer
-    def controlTimer(self):
-        # if timer is stopped
-        if not self.timer.isActive():
-            # create video capture
-            self.cap = cv2.VideoCapture(0,cv2.CAP_DSHOW)
-            # start timer
-            self.timer.start(20)
-            # update Button_startCam text
-            self.ui.Button_startCam.setText("Stop")
-        # if timer is started
-        else:
-            # stop timer
-            self.timer.stop()
-            # release video capture
-            self.cap.release()
-            # update Button_startCam text
-            self.ui.Button_startCam.setText("Start")
 
     def setCameraFrame(self, wantToOpen):
         if wantToOpen:

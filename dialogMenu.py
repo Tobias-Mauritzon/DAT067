@@ -8,7 +8,7 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QGraphicsDropShadowEffect
 from PyQt5.QtGui import QColor
-from ui_dialogMenu import *
+from GUI.ui_dialogMenu import *
 import numpy as np
 
 # Author: Philip

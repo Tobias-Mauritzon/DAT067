@@ -12,7 +12,7 @@ from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QGraphicsDropShadowEffect
 from PyQt5.QtGui import QColor
 
-from ui_loadingWindow import *
+from GUI.ui_loadingWindow import *
 from dialogMenu import *
 from pathlib import Path
 
@@ -21,8 +21,8 @@ from pathlib import Path
 # Reviewed by:
 # Date: 2020-11-24
 
-counter = 0
-increments = 1
+counter = 0.0
+increments = 1.0
 mw = None
 
 class LoadingWindow(QtWidgets.QMainWindow):
@@ -63,9 +63,9 @@ class LoadingWindow(QtWidgets.QMainWindow):
 
     def progress(self):
         global counter,increments
-        self.ui.progressBar.setValue(counter)
+        self.ui.progressBar.setValue(int(counter))
         
-        if counter > 100:
+        if counter > 100.0:
             self.timer.stop()
             try:
                 self.main = mw("Object Detector")
@@ -75,7 +75,7 @@ class LoadingWindow(QtWidgets.QMainWindow):
                 if self.calibrationIsNeeded:
                     self.calibrate_popUp()
             except:
-                self.ui.label_2.setText("<strong>Error:</strong> could not load modules")
+                self.ui.Label_information.setText("<strong>Error:</strong> could not load modules")
         counter += increments
 
     def importModules(self):
@@ -83,7 +83,7 @@ class LoadingWindow(QtWidgets.QMainWindow):
         self.ui.Label_information.setText("Importing modules...")
         increments = 0.5
         from application import MainWindow as mw
-        increments = 3
+        increments = 3.5
         self.ui.Label_information.setText("Checking if calibration is needed...")
         if not Path("camera_info.ini").is_file():
             self.calibrationIsNeeded = True
@@ -109,5 +109,4 @@ if __name__ == '__main__':
     # create and show mainWindow
     mainWindow = LoadingWindow()
     mainWindow.show()
-
     sys.exit(app.exec_())
