@@ -9,10 +9,10 @@ from PyQt5.QtGui import QIntValidator
 from PyQt5.QtGui import QDoubleValidator
 from PyQt5.QtCore import QTimer
 import numpy as np
-import tensorflow as tf
 from GUI.ui_calibrationPage import * 
 from CameraCalibration import * 
 from threading import Thread
+from pathlib import Path
 
 # Author: Philip
 # Reviewed by:
@@ -119,6 +119,7 @@ class CalibrationPage(QtWidgets.QWidget):
                     ret, cameraMatrix, dist, rvecs, tvecs = cv2.calibrateCamera(self.objpoints, self.imgpoints, gray.shape[::-1],None,None)
                     print("...done calculating.")
                     self.cameraMatrix = cameraMatrix
+                    self.saveFile()
                     self.ui.Label_Information.setText("<strong>Calibration</strong> was successful, return to main screen by clicking on <strong>Navigation -> Main Screen</strong> in the menubar")
                     
                     
@@ -148,41 +149,67 @@ class CalibrationPage(QtWidgets.QWidget):
 
     def captureAction(self):
         self.capture = True
-
-    def startCalibration(self):
+    
+    def checkValues(self):
         try:
-            width = float(self.ui.lineEdit_Width.text().replace(',','.'))
-            height = float(self.ui.lineEdit_Height.text().replace(',','.'))
-            patternSquareSize = int(self.ui.lineEdit_SquareWidth.text())
-            distance = float(self.ui.lineEdit_Distance.text().replace(',','.'))
+            self.width = float(self.ui.lineEdit_Width.text().replace(',','.'))
+            self.height = float(self.ui.lineEdit_Height.text().replace(',','.'))
+            self.patternSquareSize = int(self.ui.lineEdit_SquareWidth.text())
+            self.distance = float(self.ui.lineEdit_Distance.text().replace(',','.'))
+            return True
         except:
             print("ERROR not a number somewhere")
+            return False
 
-        """
-        Calibrates camera using webcam feed with a checkerboard pattern.
-        Parameters:
-            patternSquareSize - checkerboard square size in mm
-        """
-        # termination criteria
-        self.criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 
-        # prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0)
-        self.objp = np.zeros((7*6,3), np.float32)
-        self.objp[:,:2] = np.mgrid[0:7,0:6].T.reshape(-1,2)
-        self.objp = self.objp * patternSquareSize
+    def startCalibration(self):
+        if self.checkValues():
+            """
+            Calibrates camera using webcam feed with a checkerboard pattern.
+            Parameters:
+                patternSquareSize - checkerboard square size in mm
+            """
+            # termination criteria
+            self.criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001)
 
-        # Arrays to store object points and image points from all the images.
-        self.objpoints = [] # 3d point in real world space
-        self.imgpoints = [] # 2d points in image plane.
+            # prepare object points, like (0,0,0), (1,0,0), (2,0,0) ....,(6,5,0)
+            self.objp = np.zeros((7*6,3), np.float32)
+            self.objp[:,:2] = np.mgrid[0:7,0:6].T.reshape(-1,2)
+            self.objp = self.objp * self.patternSquareSize
 
-        # Counter to keep track of calibration images taken - needs REQUIRED_IMAGE_AMOUNT to calibrate
-        self.imageCounter = 0
-        self.REQUIRED_IMAGE_AMOUNT = 5
+            # Arrays to store object points and image points from all the images.
+            self.objpoints = [] # 3d point in real world space
+            self.imgpoints = [] # 2d points in image plane.
 
-        self.ui.Label_NeededCaptures.setNum(self.REQUIRED_IMAGE_AMOUNT)
-        print("Press space to use current image to calibrate. Need ", self.REQUIRED_IMAGE_AMOUNT - self.imageCounter, " more images.")
-        self.ui.stackedWidget.setCurrentIndex(1)
-        self.calibrating = True
+            # Counter to keep track of calibration images taken - needs REQUIRED_IMAGE_AMOUNT to calibrate
+            self.imageCounter = 0
+            self.REQUIRED_IMAGE_AMOUNT = 5
+
+            self.ui.Label_NeededCaptures.setNum(self.REQUIRED_IMAGE_AMOUNT)
+            print("Press space to use current image to calibrate. Need ", self.REQUIRED_IMAGE_AMOUNT - self.imageCounter, " more images.")
+            self.ui.stackedWidget.setCurrentIndex(1)
+            self.calibrating = True
+
+    def saveFile(self):
+        fx = self.cameraMatrix[0][0]
+        fy = self.cameraMatrix[1][1]
+        if Path("camera_info.ini").is_file():
+            print("FILEN FINNS!!")
+            try:
+                myFile = open("camera_info.ini","w")
+                myFile.write("fx:" + str(fx) + "\nfy:" + str(fy))
+            except Exception:
+                raise Exception("Could not write to file!")
+            finally:
+                myFile.close()
+        else:
+            try:
+                myFile = open("camera_info.ini","x")
+                myFile.write("fx:" + str(fx) + "\nfy:" + str(fy))
+            except Exception:
+                raise Exception("Could not write to file!")
+            finally:
+                myFile.close()
 
     def write_to_file(self, fx: int, fy: int):
         """
