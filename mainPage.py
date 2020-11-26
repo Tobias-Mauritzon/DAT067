@@ -8,6 +8,7 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import QTimer
 import numpy as np
 import tensorflow as tf
+from dialogMenu import *
 from GUI.ui_mainPage import * 
 
 # Author: Philip
@@ -112,6 +113,10 @@ class MainPage(QtWidgets.QWidget):
         # read image in BGR format
         ret, self.image = self.cap.read()
 
+        if self.image is None:
+            self.no_camera_available_popUp()
+            return
+        
         self.update()
 
         # set contrast
@@ -220,6 +225,18 @@ class MainPage(QtWidgets.QWidget):
             self.ui.sidePanel.setVisible(False)
             self.ui.outputFrame.setVisible(False)
 
+    def no_camera_available_popUp(self):
+        dialogMenu = DialogMenu()
+        dialogMenu.setTitle("No available camera!")
+        dialogMenu.setInformationText("Cannot find an available camera, make sure it's plugged in.")
+        dialogMenu.setTopButtonText("Retry")
+        dialogMenu.setBottomButtonText("Skip")
+        dialogMenu.ui.PushButton_top.clicked.connect(lambda: self.closePage())
+        dialogMenu.ui.PushButton_top.clicked.connect(lambda: self.loadPage())
+        dialogMenu.ui.PushButton_top.clicked.connect(dialogMenu.close)
+        dialogMenu.ui.PushButton_bottom.clicked.connect(lambda: self.closePage())
+        dialogMenu.ui.PushButton_bottom.clicked.connect(dialogMenu.close)
+        dialogMenu.exec_()
     
         
 
