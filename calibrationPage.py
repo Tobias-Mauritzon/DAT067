@@ -25,16 +25,11 @@ class CalibrationPage(QtWidgets.QWidget):
 
         self.ui = Ui_CalibrationPage()
         self.ui.setupUi(self)
-        
-        self.cap = cv2.VideoCapture(0,cv2.CAP_DSHOW)
-        self.cap.set(3, 640)
-        self.cap.set(4, 480)
+
         # create a timer
         self.timer = QTimer()
-
         # set timer timeout callback function
         self.timer.timeout.connect(self.viewCam)
-
 
         self.initLineEdits()
         self.ui.stackedWidget.setCurrentIndex(0) # start with page 0 (insert values page)
@@ -48,18 +43,37 @@ class CalibrationPage(QtWidgets.QWidget):
         
         self.calibrating = False
         self.capture = False
+        self.cap = None
 
         #camCal = CameraCalibration(100,200,100)
         #camCal.calibrateCamera(200)
 
-    def startCam(self):
+    def loadPage(self):
+        print("load p1")
+        self.cap = cv2.VideoCapture(0,cv2.CAP_DSHOW)
+        self.cap.set(3, 640)
+        self.cap.set(4, 480)
         self.timer.start(0)
 
-    def stopCam(self):
-        # stop timer
-        self.timer.stop()
-        # release video capture
-        self.cap.release()
+    def closePage(self):
+        if self.timer.isActive:
+            print("close p1")
+            # stop timer
+            self.timer.stop()
+            if self.cap is not None:
+                # release video capture
+                self.cap.release()
+            self.reset()
+    
+    def reset(self):
+        self.ui.stackedWidget.setCurrentIndex(0)
+        self.ui.Label_TakenCaptures.setNum(0)
+        self.ui.Label_Information.clear()
+        self.ui.lineEdit_Width.clear()
+        self.ui.lineEdit_Height.clear()
+        self.ui.lineEdit_Distance.clear()
+        self.ui.lineEdit_SquareCorners.clear()
+        self.ui.lineEdit_SquareWidth.clear()
 
 
     def viewCam(self):

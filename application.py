@@ -48,21 +48,26 @@ class MainWindow(QtWidgets.QMainWindow):
         self.__setMenuActions()
 
         # Set start page
-        self.openPage(0)
+        #self.openPage(0)
 
-    # Funktion that opens a specific page
+    # Function that opens a specific page
     def openPage(self,pageIndex):
         if pageIndex == 0:
             self.ui.menuObject_detection.menuAction().setVisible(True)
+            self.ui.menuView.menuAction().setVisible(True)
             self.ui.stackedWidget.setCurrentIndex(0)
-            #self.page_1.stopCam()
-            #self.page_1 = CalibrationPage()
+            self.page_1.closePage()
+            self.page_0.loadPage()
             self.currentPage = 0
         elif pageIndex == 1:
             self.ui.menuObject_detection.menuAction().setVisible(False)
+            self.ui.menuView.menuAction().setVisible(False)
             self.ui.stackedWidget.setCurrentIndex(1)
-            self.page_1.startCam()
+            self.page_0.closePage()
+            self.page_1.loadPage()
             self.currentPage = 1
+    
+    
     
     # Sets actions for top menus
     def __setMenuActions(self):

@@ -22,6 +22,7 @@ class MainPage(QtWidgets.QWidget):
         self.installEventFilter(self)
         self.setActions() #set actions for QWidgets
         self.initPage() # sets start sizes for widgets in page
+        self.cap = None
         self.timer = QTimer() # create a timer
         self.timer.timeout.connect(self.viewCam) # set timer timeout callback function
         self.pix = None # the pixMap used to set the image on a QLabel
@@ -81,18 +82,30 @@ class MainPage(QtWidgets.QWidget):
         self.cap.set(3,width)
         self.cap.set(4,height)
 
+    def loadPage(self):
+        print("load p0")
+        self.cap = cv2.VideoCapture(0,cv2.CAP_DSHOW) # create video capture
+        self.timer.start(20) # start timer
+        self.ui.Button_startCam.setText("Stop") # update Button_startCam text
+
+    def closePage(self):
+        if self.timer.isActive:
+            print("close p0")
+            # stop timer
+            self.timer.stop()
+            if self.cap is not None:
+                # release video capture
+                self.cap.release()
+                self.ui.Button_startCam.setText("Start") # update Button_startCam text
+
     # start/stop timer
     def controlTimer(self):
         # if timer is stopped
         if not self.timer.isActive():
-            self.cap = cv2.VideoCapture(0,cv2.CAP_DSHOW) # create video capture
-            self.timer.start(20) # start timer
-            self.ui.Button_startCam.setText("Stop") # update Button_startCam text
+            self.loadPage()
         # if timer is started
         else:
-            self.timer.stop() # stop timer
-            self.cap.release() # release video capture
-            self.ui.Button_startCam.setText("Start") # update Button_startCam text
+            self.closePage()
 
     # view camera (loop)
     def viewCam(self):

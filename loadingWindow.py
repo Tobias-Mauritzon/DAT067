@@ -94,7 +94,7 @@ class LoadingWindow(QtWidgets.QMainWindow):
     def calibrate_popUp(self):
         dialogMenu = DialogMenu()
         dialogMenu.setTitle("<strong>Calibration</strong> is needed!")
-        dialogMenu.setInformationText("In order to use the distance calculation feature of the application, you need to calibrate your camera.")
+        dialogMenu.setInformationText("In order to use the distance-calculation feature of the application, you need to calibrate your camera.")
         dialogMenu.setTopButtonText("Calibrate camera")
         dialogMenu.setBottomButtonText("Skip")
         dialogMenu.ui.PushButton_top.clicked.connect(lambda: self.main.openPage(1))
