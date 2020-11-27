@@ -16,7 +16,7 @@ carCascade = cv2.CascadeClassifier("Resources/cars.xml")
 
 # reading "bad" cascade identifier
 carCascade2 = cv2.CascadeClassifier(
-    "Resources/haarcascade_russian_plate_number.xml")
+    "Resources/plate.xml")
 
 # video stream with connected webbcam
 cap = cv2.VideoCapture(0)
@@ -24,8 +24,8 @@ cap = cv2.VideoCapture(0)
 # video stream with ip cam specific for my network
 # cap = cv2.VideoCapture('http://192.168.1.100:8080/video')
 
-cap.set(3, 960)
-cap.set(4, 520)
+#cap.set(3, 960)
+#cap.set(4, 520)
 
 # main program loop exit with q
 while (cap.isOpened()):
@@ -34,10 +34,11 @@ while (cap.isOpened()):
     success1, imgCar1 = cap.read()
 
     imgGray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    imgGray2 = cv2.cvtColor(imgCar1, cv2.COLOR_BGR2GRAY)
 
     # find obejcts with cascades
     cars = carCascade.detectMultiScale(imgGray, 1.1, 4)
-    plates = carCascade2.detectMultiScale(imgGray, 1.1, 4)
+    plates = carCascade2.detectMultiScale(imgGray2, 1.1, 4)
 
     # writes rectangel around detected objects in cars
     for(x, y, w, h) in cars:
