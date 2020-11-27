@@ -174,7 +174,7 @@ class MainPage(QtWidgets.QWidget):
 		# create QImage from image
 		qImg = QImage(self.image.data, self.width, self.height, step, self.qiFormat)
 		self.pix = QPixmap.fromImage(qImg)
-		
+
 	""" Main camera loop END"""
 
 	# Saves images
@@ -200,6 +200,9 @@ class MainPage(QtWidgets.QWidget):
 		if wantToOpen:
 			self.ui.Splitter_frame.setSizes([16777215,300])
 			self.ui.Splitter_sidePanel.setSizes([16777215,16777215])
+			self.ui.Splitter_sidePanel.setSizes([16777215,16777215])
+			self.ui.settingsFrame.setVisible(True)
+			self.ui.outputFrame.setVisible(True)
 			self.ui.sidePanel.setVisible(True)
 		else: 
 			self.ui.Splitter_frame.setSizes([16777215,0])
