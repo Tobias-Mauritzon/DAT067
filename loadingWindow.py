@@ -16,68 +16,61 @@ from GUI.ui_loadingWindow import *
 from dialogMenu import *
 from pathlib import Path
 
-
 # Author: Philip
 # Reviewed by:
 # Date: 2020-11-24
 
+# Global values
 counter = 0.0
 increments = 1.0
 mw = None
 
+"""
+This class handles the loading window that opens the program
+"""
 class LoadingWindow(QtWidgets.QMainWindow):
     def __init__(self):
-        # call QWidget constructor
-        super().__init__()
-
-        # create ui
-        self.ui = Ui_LoadingWindow()
-        self.ui.setupUi(self)
-
-        # Remove title bar
-        self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
-        self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
-
-        ## shadow effect
-        self.shadow = QGraphicsDropShadowEffect(self)
+        super().__init__() # call QWidget constructor
+        self.ui = Ui_LoadingWindow() # create ui
+        self.ui.setupUi(self) # ui setup 
+        self.setWindowFlag(QtCore.Qt.FramelessWindowHint) # remove title bar
+        self.setAttribute(QtCore.Qt.WA_TranslucentBackground) # remove title bar
+        # shadow effect
+        self.shadow = QGraphicsDropShadowEffect(self) 
         self.shadow.setBlurRadius(20)
         self.shadow.setXOffset(0)
         self.shadow.setYOffset(0)
         self.shadow.setColor(QColor(0,0,0,60))
         self.ui.frame_dropShadow.setGraphicsEffect(self.shadow)
-
         # starting thread for imports
         thread = threading.Thread(target=self.importModules)
         thread.setDaemon(True)
         thread.start()
-
-        #timer
+        # timer
         self.timer = QtCore.QTimer()
         self.timer.timeout.connect(self.progress)
         self.timer.start(30)
 
-        # boolean for checking if calibration is needed
-        self.calibrationIsNeeded = False
-        
+        self.calibrationIsNeeded = False # boolean for checking if calibration is needed
         self.show()
-
+    
+    # Funktion that loops and shows the progress of the imports
     def progress(self):
         global counter,increments
         self.ui.progressBar.setValue(int(counter))
-        
         if counter > 100.0:
             self.timer.stop()
             try:
                 self.main = mw("Object Detector")
                 self.main.show()
                 self.close()
-
                 if self.calibrationIsNeeded:
                     self.calibrate_popUp()
             except:
                 self.ui.Label_information.setText("<strong>Error:</strong> could not load modules")
         counter += increments
 
+    # Imorts the modules used in the main application
     def importModules(self):
         global mw,increments
         self.ui.Label_information.setText("Importing modules...")
@@ -105,7 +98,6 @@ class LoadingWindow(QtWidgets.QMainWindow):
 # this is the "main function"
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-
     # create and show mainWindow
     mainWindow = LoadingWindow()
     mainWindow.show()

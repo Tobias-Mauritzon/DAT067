@@ -15,40 +15,33 @@ from threading import Thread
 from pathlib import Path
 from dialogMenu import *
 
-# Author: Philip, William
+# Author: Philip
+# Authot: William
 # Reviewed by:
 # Date: 2020-11-25
 
 class CalibrationPage(QtWidgets.QWidget):
     def __init__(self):
-        # call QWidget constructor
         super().__init__()
-
         self.ui = Ui_CalibrationPage()
         self.ui.setupUi(self)
-
-        # create a timer
-        self.timer = QTimer()
-        # set timer timeout callback function
-        self.timer.timeout.connect(self.viewCam)
-
-        self.initLineEdits()
+        self.timer = QTimer() # create a timer
+        self.timer.timeout.connect(self.viewCam) # set timer timeout callback function
+        self.initLineEdits() # initialize the line edits
         self.ui.stackedWidget.setCurrentIndex(0) # start with page 0 (insert values page)
-
-        self.setActions()
-
+        self.setActions() # set actions
+        # checkerboard values
         self.objectWidth = 0
         self.objectHeight = 0
         self.squareWidth = 0
         self.objectDistance = 0.0
-        
-        self.calibrating = False
-        self.capture = False
-        self.cap = None
 
-        #camCal = CameraCalibration(100,200,100)
-        #camCal.calibrateCamera(200)
+        self.calibrating = False # boolean that is true while calibrating
+        self.capture = False # boolean that is true when the button capture is pressed
 
+        self.cap = None # the captured image
+
+    # Load this page
     def loadPage(self):
         print("load p1")
         self.cap = cv2.VideoCapture(0,cv2.CAP_DSHOW)
@@ -56,6 +49,7 @@ class CalibrationPage(QtWidgets.QWidget):
         self.cap.set(4, 480)
         self.timer.start(0)
 
+    # Close this page
     def closePage(self):
         if self.timer.isActive:
             print("close p1")
@@ -66,6 +60,7 @@ class CalibrationPage(QtWidgets.QWidget):
                 self.cap.release()
             self.reset()
     
+    # Reset page values
     def reset(self):
         self.ui.stackedWidget.setCurrentIndex(0)
         self.ui.Label_TakenCaptures.setNum(0)
@@ -76,9 +71,8 @@ class CalibrationPage(QtWidgets.QWidget):
         self.ui.lineEdit_SquareCorners.clear()
         self.ui.lineEdit_SquareWidth.clear()
 
-
+    """ Main camera loop START"""
     def viewCam(self):
-       
          # read image in BGR format
         ret, self.image = self.cap.read()
         if self.image is None:
@@ -90,6 +84,7 @@ class CalibrationPage(QtWidgets.QWidget):
         # set image to image label
         self.ui.image_label.setPixmap(self.pix.scaled(self.w, self.h,QtCore.Qt.KeepAspectRatio))
 
+    # Update funktion for the camera, this function runs in a loop
     def update(self):
          # convert image to RGB format
         self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
@@ -124,9 +119,8 @@ class CalibrationPage(QtWidgets.QWidget):
                     self.cameraMatrix = cameraMatrix
                     self.saveFile()
                     self.ui.Label_Information.setText("<strong>Calibration</strong> was successful, return to main screen by clicking on <strong>Navigation -> Main Screen</strong> in the menubar")
-                    
-                    
-
+    
+    # Converts the image to a QImage that is used to set the image on the QLabel              
     def convertToQImage(self):
         # calculate step
         step = self.channel * self.width
@@ -134,25 +128,31 @@ class CalibrationPage(QtWidgets.QWidget):
         qImg = QImage(self.image.data, self.width, self.height, step, self.qiFormat)
         self.pix = QPixmap.fromImage(qImg)
 
-    # resizes the cam frame
+    """ Main camera loop END"""
+    
+    # Resizes the cam frame
     def resize_camFrame(self):
         if self.pix is not None:
             self.w = self.ui.image_label.width()
             self.h = self.ui.image_label.height()
 
+    # Sets validators on the line edits
     def initLineEdits(self):
         self.ui.lineEdit_Width.setValidator(QDoubleValidator(0,1000,3,self)) # mm double
         self.ui.lineEdit_Height.setValidator(QDoubleValidator(0,1000,3,self)) # mm double
         self.ui.lineEdit_SquareWidth.setValidator(QIntValidator(0,1000,self)) # mm int
         self.ui.lineEdit_Distance.setValidator(QDoubleValidator(0,100,3,self)) # m double
     
+    # Sets actions on the buttons
     def setActions(self):
         self.ui.Button_Calibrate.clicked.connect(self.startCalibration)
         self.ui.Button_Capture.clicked.connect(self.captureAction)
 
+    # Sets capture boolean to true
     def captureAction(self):
         self.capture = True
     
+    # Checks and sets the inputvalues, all values must be numbers
     def checkValues(self):
         try:
             self.width = float(self.ui.lineEdit_Width.text().replace(',','.'))
@@ -164,7 +164,7 @@ class CalibrationPage(QtWidgets.QWidget):
             print("ERROR not a number somewhere")
             return False
 
-
+    # Starts the calibration if all values are numbers
     def startCalibration(self):
         if self.checkValues():
             """
@@ -193,6 +193,7 @@ class CalibrationPage(QtWidgets.QWidget):
             self.ui.stackedWidget.setCurrentIndex(1)
             self.calibrating = True
 
+    # Saves the values needed to the camera_info.ini file, if it already exists the function overwrites, else it creates a new file and writes the information to that file
     def saveFile(self):
         fx = self.cameraMatrix[0][0]
         fy = self.cameraMatrix[1][1]
@@ -213,37 +214,8 @@ class CalibrationPage(QtWidgets.QWidget):
                 raise Exception("Could not write to file!")
             finally:
                 myFile.close()
-
-    def write_to_file(self, fx: int, fy: int):
-        """
-        Writes the integer parameters fx and fy to camera_info.ini  
-        otherwise throws exception 
-        """
-        try:
-            file = open("camera_info.ini", "w")
-            file.write("fx:" + str(fx) + "\nfy:" + str(fy))
-        except Exception:
-            raise Exception("Could not write to file!")
-        finally:
-            file.close()
-        
-    def read_from_file(self) -> (int, int):
-        """ 
-        Reads the relevant camera inforamtion from camera_info.ini 
-        returns a tuple in the format (fx, fy) 
-        otherwise throws exception 
-        """
-        try:
-            file = open("camera_info.ini", "r")
-            fx = int(file.readline().split(":")[1])
-            fy = int(file.readline().split(":")[1])
-            retval = (fx, fy)
-        except Exception:
-            raise Exception("Could not read from file!")
-        finally:
-            file.close()
-            return retval
-        
+    
+    # Show no camera available pop
     def no_camera_available_popUp(self):
         dialogMenu = DialogMenu()
         dialogMenu.setTitle("No available camera!")
@@ -256,8 +228,3 @@ class CalibrationPage(QtWidgets.QWidget):
         dialogMenu.ui.PushButton_bottom.clicked.connect(lambda: self.closePage())
         dialogMenu.ui.PushButton_bottom.clicked.connect(dialogMenu.close)
         dialogMenu.exec_()
-
-
-    
-
-
