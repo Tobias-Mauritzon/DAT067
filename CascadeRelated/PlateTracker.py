@@ -16,7 +16,7 @@ carCascade = cv2.CascadeClassifier("Resources/cars.xml")
 
 # reading "bad" cascade identifier
 plate = cv2.CascadeClassifier(
-    "Resources/cascade3/cascade3.xml")
+    "Resources/cascade12/cascade12.xml")
 
 # video stream with connected webbcam
 cap = cv2.VideoCapture(0)

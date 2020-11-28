@@ -25,6 +25,9 @@ while(True):
 
         faceFound = False
 
+        cv2.putText(frame, "CAR", (x+30, y-10), cv2.FONT_HERSHEY_SIMPLEX,
+                    0.5, (11, 255, 255), 2, cv2.LINE_AA)
+
         roi_gray = gray[y:end_cord_y, x:end_cord_x]
         roi_color = frame[y:end_cord_y, x:end_cord_x]
         plates = plate_cascade.detectMultiScale(roi_gray, 1.1, 4)
