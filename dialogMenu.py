@@ -5,6 +5,7 @@ from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtGui import QImage
 from PyQt5.QtGui import QPixmap
+from PyQt5.QtWidgets import QDesktopWidget
 from PyQt5.QtCore import QTimer
 from PyQt5.QtWidgets import QGraphicsDropShadowEffect
 from PyQt5.QtGui import QColor
@@ -50,3 +51,13 @@ class DialogMenu(QtWidgets.QDialog):
     
     def setBottomButtonText(self, text):
         self.ui.PushButton_bottom.setText(text)
+    
+    def centerOnScreen(self):
+        frameGm = self.frameGeometry()
+        screen = QApplication.desktop().screenNumber(QApplication.desktop().cursor().pos())
+        centerPoint = QApplication.desktop().screenGeometry(screen).center()
+        frameGm.moveCenter(centerPoint)
+        self.move(frameGm.topLeft())
+
+    def centerText(self):
+        self.ui.Label_informationText.setAlignment(QtCore.Qt.AlignCenter)

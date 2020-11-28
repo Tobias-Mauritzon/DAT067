@@ -41,6 +41,8 @@ class MainPage(QtWidgets.QWidget):
 		self.START_BRIGHTNESS = 0
 		self.START_CONTRAST = 10
 
+		self.faceDetection = False # boolean to activate/deactivate facedetection
+
 	# Sets start sizes for widgets in page
 	def initPage(self):
 		self.ui.Splitter_frame.setSizes([1000,300])
@@ -126,7 +128,7 @@ class MainPage(QtWidgets.QWidget):
 			return
 		
 		self.update()
-
+		
 		# set contrast
 		contrast = self.ui.Slider_contrast.value()/10
 		self.ui.Label_contrastValue.setNum(contrast)
@@ -166,6 +168,9 @@ class MainPage(QtWidgets.QWidget):
 			self.height, self.width = self.image.shape
 			self.channel = 1
 			self.qiFormat = QImage.Format_Grayscale8
+
+		if self.faceDetection:
+			self.detectFaces()
 	
 	# Converts the image to a QImage that is used to set the image on the QLabel
 	def convertToQImage(self):
@@ -247,13 +252,56 @@ class MainPage(QtWidgets.QWidget):
 	# Show no camera available pop
 	def no_camera_available_popUp(self):
 		dialogMenu = DialogMenu()
-		dialogMenu.setTitle("No available camera!")
+		dialogMenu.setTitle("<strong>No available camera!</strong>")
 		dialogMenu.setInformationText("Cannot find an available camera, make sure it's plugged in.")
 		dialogMenu.setTopButtonText("Retry")
 		dialogMenu.setBottomButtonText("Skip")
+		dialogMenu.setFixedHeight(320)
+		dialogMenu.centerOnScreen()
 		dialogMenu.ui.PushButton_top.clicked.connect(lambda: self.closePage())
 		dialogMenu.ui.PushButton_top.clicked.connect(lambda: self.loadPage())
 		dialogMenu.ui.PushButton_top.clicked.connect(dialogMenu.close)
 		dialogMenu.ui.PushButton_bottom.clicked.connect(lambda: self.closePage())
 		dialogMenu.ui.PushButton_bottom.clicked.connect(dialogMenu.close)
 		dialogMenu.exec_()
+
+	""" Face detection START"""
+	def detectFaces(self):
+
+		#Filters that are searching for different things, in this case 'the front of the face and the eyes'
+		face_cascade = cv2.CascadeClassifier('cascades/haarcascade_frontalface_alt2.xml')
+		eye_cascade = cv2.CascadeClassifier('cascades/haarcascade_eye.xml')
+		#Convert to gray
+		gray = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
+		faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
+		for(x, y, w, h) in faces:
+			color = (255,0,0)
+			stroke = 2
+			end_cord_x = x + w
+			end_cord_y = y + h
+			#Draws the rectangle around the face
+			face_rectangle = cv2.rectangle(self.image, (x, y), (end_cord_x, end_cord_y), color, stroke)
+
+			font = cv2.FONT_HERSHEY_SIMPLEX
+			#Display the text
+			cv2.putText(face_rectangle,"FACE",(x, y-10), font, 0.5, (11,255,255), 2, cv2.LINE_AA)
+
+			roi_gray = gray[y:y+h, x:x+w]
+			roi_color = self.image[y:y+h, x:x+w]
+			eyes = eye_cascade.detectMultiScale(roi_gray)
+			for(ex,ey,ew,eh) in eyes:
+				#Draws a rectangle within the face and around the eyes
+				cv2.rectangle(roi_color, (ex,ey), (ex+ew,ey+eh),(0,255,0), 1)
+				#Draws a circle within the face and around the eyes
+				#cv2.circle(self.image,(int(x+ex+ew/2),int(y+ey+eh/2)),int(ey/2),(0,255,0),1)
+			#Saves a picture of the last face seen when the application is closed
+			#img_item = "lastFace.png"
+			#cv2.imwrite(img_item, roi_gray)
+
+	def activateFaceDetection(self):
+		if self.faceDetection:
+			self.faceDetection = False
+		else:
+			self.faceDetection = True
+			
+	""" Face detection END """

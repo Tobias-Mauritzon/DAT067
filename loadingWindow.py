@@ -90,6 +90,8 @@ class LoadingWindow(QtWidgets.QMainWindow):
         dialogMenu.setInformationText("In order to use the distance-calculation feature of the application, you need to calibrate your camera.")
         dialogMenu.setTopButtonText("Calibrate camera")
         dialogMenu.setBottomButtonText("Skip")
+        dialogMenu.setFixedHeight(340)
+        dialogMenu.centerOnScreen()
         dialogMenu.ui.PushButton_top.clicked.connect(lambda: self.main.openPage(1))
         dialogMenu.ui.PushButton_top.clicked.connect(dialogMenu.close)
         dialogMenu.ui.PushButton_bottom.clicked.connect(dialogMenu.close)

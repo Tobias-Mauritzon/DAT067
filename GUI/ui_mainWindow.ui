@@ -208,16 +208,24 @@ selection-background-color: rgb(148, 212, 255);</string>
     <property name="title">
      <string>Help</string>
     </property>
-    <addaction name="actionHow_to_use"/>
-    <addaction name="actionAbout"/>
+    <addaction name="action_HowToUse"/>
+    <addaction name="action_About"/>
     <addaction name="separator"/>
    </widget>
    <widget class="QMenu" name="menuObject_detection">
     <property name="title">
-     <string>Object detection</string>
+     <string>Object Detection</string>
     </property>
+    <widget class="QMenu" name="menuHaar_Cascade">
+     <property name="title">
+      <string>Haar Cascade</string>
+     </property>
+     <addaction name="action_FaceDetection"/>
+    </widget>
     <addaction name="actionCar_detection"/>
-    <addaction name="actionFace_detection"/>
+    <addaction name="menuHaar_Cascade"/>
+    <addaction name="actionYOLO"/>
+    <addaction name="actionSSD"/>
    </widget>
    <widget class="QMenu" name="menuNavigation">
     <property name="tearOffEnabled">
@@ -240,12 +248,12 @@ selection-background-color: rgb(148, 212, 255);</string>
     <string>View</string>
    </property>
   </action>
-  <action name="actionHow_to_use">
+  <action name="action_HowToUse">
    <property name="text">
     <string>How to use</string>
    </property>
   </action>
-  <action name="actionAbout">
+  <action name="action_About">
    <property name="text">
     <string>About</string>
    </property>
@@ -315,14 +323,9 @@ selection-background-color: rgb(148, 212, 255);</string>
     <string>Side panel</string>
    </property>
   </action>
-  <action name="actionFace_detection">
-   <property name="text">
-    <string>Face detection</string>
-   </property>
-  </action>
   <action name="actionCar_detection">
    <property name="text">
-    <string>Car detection</string>
+    <string>CNN</string>
    </property>
   </action>
   <action name="action_Settings">
@@ -349,12 +352,27 @@ selection-background-color: rgb(148, 212, 255);</string>
   </action>
   <action name="action_MainScreen">
    <property name="text">
-    <string>Main screen</string>
+    <string>Main</string>
    </property>
   </action>
   <action name="action_Calibration">
    <property name="text">
     <string>Calibration</string>
+   </property>
+  </action>
+  <action name="action_FaceDetection">
+   <property name="text">
+    <string>Face Detection</string>
+   </property>
+  </action>
+  <action name="actionYOLO">
+   <property name="text">
+    <string>YOLO</string>
+   </property>
+  </action>
+  <action name="actionSSD">
+   <property name="text">
+    <string>SSD</string>
    </property>
   </action>
  </widget>

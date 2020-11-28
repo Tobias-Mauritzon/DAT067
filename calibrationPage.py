@@ -215,13 +215,15 @@ class CalibrationPage(QtWidgets.QWidget):
             finally:
                 myFile.close()
     
-    # Show no camera available pop
+    # Show no camera available popup
     def no_camera_available_popUp(self):
         dialogMenu = DialogMenu()
-        dialogMenu.setTitle("No available camera!")
+        dialogMenu.setTitle("<strong>No available camera!</strong>")
         dialogMenu.setInformationText("Cannot find an available camera, make sure it's plugged in.")
         dialogMenu.setTopButtonText("Retry calibration")
         dialogMenu.setBottomButtonText("Skip")
+        dialogMenu.setFixedHeight(320)
+        dialogMenu.centerOnScreen()
         dialogMenu.ui.PushButton_top.clicked.connect(lambda: self.closePage())
         dialogMenu.ui.PushButton_top.clicked.connect(lambda: self.loadPage())
         dialogMenu.ui.PushButton_top.clicked.connect(dialogMenu.close)

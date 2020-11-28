@@ -1,19 +1,20 @@
-Here is how to use the application.
+<p><strong>Prerequisites:</strong></p>
+A web-cam must be plugged in to your computer, if not, a popup window will be displayed telling you to plug in a web-cam.
 
-Prerequisites:
-- A web-cam must be plugged in to your computer
+<p><strong>MenuBar:</strong></p>
+In the menuBar, located at the top of the window, you can change views, navigate between calibration and the main screen and choose different object detections.
 
-Video capture:
-- To start the video-stream, press the button "Start" located at the bottom of the window.
-- To stop the video-stream, press the button "Stop" located at the bottom of the window.
+<p><strong>Video capture:</strong></p>
+<p>To start the video-stream, press the button "Start" located at the bottom of the window.</p>
+To stop the video-stream, press the button "Stop" located at the bottom of the window.
 
-Handling views:
-- One can simply toggle views by clicking the "Views" tab in the top-menubar.
-- Each view can be dragged to suit the users needs by hovering the mouse between the views.
-- It is also possible to close views by dragging them.
+<p><strong>Handling views:</strong></p>
+<p>You can simply toggle views by clicking the "Views" tab in the top-menubar.</p>
+<p>Each view can be dragged to suit your needs by hovering the mouse between the views.</p>
+It is also possible to close views by dragging them.
 
-Settings menu:
-- NOT IMPLEMENTED YET 
+<p><strong>Settings menu:</strong></p>
+In the settings menu, you can change the brightness, contrast, resolution. It is also possible to change to RGB, grayscale and edged video output.
 
-Output menu:
-- NOT IMPLEMENTED YET
+<p><strong>Output menu:</strong></p>
+NOT IMPLEMENTED YET

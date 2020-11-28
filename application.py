@@ -54,6 +54,7 @@ class MainWindow(QtWidgets.QMainWindow):
     
     # Sets actions for top menus
     def __setMenuActions(self):
+        """View"""
         self.ui.action_Camera.triggered.connect(lambda: self.page_0.setCameraFrame(self.ui.action_Camera.isChecked()))
         self.ui.action_SidePanel.triggered.connect(lambda: self.page_0.setSidePanel(self.ui.action_SidePanel.isChecked()))
         self.ui.action_SidePanel.triggered.connect(lambda: self.__checkSidePanelActions(self.ui.action_SidePanel.isChecked()))
@@ -61,8 +62,14 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.action_Settings.triggered.connect(lambda: self.__setSidePanelAction(self.ui.action_Settings.isChecked(),self.ui.action_Output.isChecked()))
         self.ui.action_Output.triggered.connect(lambda: self.page_0.setOutPutPanel(self.ui.action_Output.isChecked(),self.ui.action_SidePanel.isChecked(),self.ui.action_Settings.isChecked()))
         self.ui.action_Output.triggered.connect(lambda: self.__setSidePanelAction(self.ui.action_Settings.isChecked(),self.ui.action_Output.isChecked()))
+        """Navigation"""
         self.ui.action_MainScreen.triggered.connect(lambda: self.openPage(0))
         self.ui.action_Calibration.triggered.connect(lambda: self.openPage(1))
+        """Object Detection"""
+        self.ui.action_FaceDetection.triggered.connect(self.page_0.activateFaceDetection)
+        """Help"""
+        self.ui.action_HowToUse.triggered.connect(self.__showHowToUse)
+        self.ui.action_About.triggered.connect(self.__showAbout)
 
     # Help-function that is used to check/uncheck the settings and output buttons on the menubar when the sidepanel button is pressed
     def __checkSidePanelActions(self, wantToCheck):
@@ -75,6 +82,32 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.action_SidePanel.setChecked(True)
         elif not settinsIsChecked and not outputIsChecked:
             self.ui.action_SidePanel.setChecked(False)
+
+    def __showHowToUse(self):
+        dialogMenu = DialogMenu()
+        dialogMenu.setTitle("<strong>How To Use</strong>")
+        dialogMenu.setFixedHeight(500)
+        dialogMenu.setFixedWidth(500)
+        dialogMenu.centerOnScreen()
+        f = open("How_to_use.txt","r")
+        dialogMenu.setInformationText(f.read())
+        dialogMenu.setTopButtonText("Ok")
+        dialogMenu.ui.PushButton_bottom.setVisible(False)
+        dialogMenu.ui.PushButton_top.clicked.connect(dialogMenu.close)
+        dialogMenu.exec_()
+    
+    def __showAbout(self):
+        dialogMenu = DialogMenu()
+        dialogMenu.setTitle("<strong>Written By:</strong>")
+        dialogMenu.setFixedHeight(360)
+        dialogMenu.centerOnScreen()
+        dialogMenu.centerText()
+        f = open("About.txt","r")
+        dialogMenu.setInformationText(f.read())
+        dialogMenu.setTopButtonText("Ok")
+        dialogMenu.ui.PushButton_bottom.setVisible(False)
+        dialogMenu.ui.PushButton_top.clicked.connect(dialogMenu.close)
+        dialogMenu.exec_()
 
 # Use this if you want to start without the loading window
 if __name__ == '__main__':
