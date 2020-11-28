@@ -6,12 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1209</width>
-    <height>874</height>
+    <width>399</width>
+    <height>280</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
   </property>
   <property name="styleSheet">
    <string notr="true">*
@@ -19,11 +22,21 @@
 	background-color: rgb(35, 35, 38);
 }
 
+QMenuBar{
+	background-color: rgb(35, 35, 38);
+	color: white;
+}
+
+QMenuBar::item::selected {
+	background-color: rgb(51, 55, 61);
+}
+
 /*QMenu*/
 QMenu{
-	color: rgb(0,0,0);
-	selection-color: rgb(0,0,0);
-	selection-background-color: rgb(148, 212, 255);
+	background-color: rgb(51, 55, 61);
+	color: white;
+	selection-color: black;
+	selection-background-color: #E4E4E5;
 }
 
 
@@ -165,6 +178,21 @@ QPushButton:pressed {
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <property name="spacing">
+     <number>0</number>
+    </property>
     <item row="0" column="0">
      <widget class="QStackedWidget" name="stackedWidget">
       <property name="currentIndex">
@@ -179,13 +207,12 @@ QPushButton:pressed {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1209</width>
+     <width>399</width>
      <height>22</height>
     </rect>
    </property>
    <property name="styleSheet">
-    <string notr="true">background-color: rgb(255, 255, 255);
-color: rgb(0,0,0);</string>
+    <string notr="true"/>
    </property>
    <widget class="QMenu" name="menuView">
     <property name="autoFillBackground">
@@ -200,11 +227,6 @@ color: rgb(0,0,0);</string>
     <addaction name="action_Output"/>
    </widget>
    <widget class="QMenu" name="menuHelp">
-    <property name="styleSheet">
-     <string notr="true">color: rgb(0,0,0);
-selection-color: rgb(0,0,0);
-selection-background-color: rgb(148, 212, 255);</string>
-    </property>
     <property name="title">
      <string>Help</string>
     </property>
@@ -242,7 +264,6 @@ selection-background-color: rgb(148, 212, 255);</string>
    <addaction name="menuObject_detection"/>
    <addaction name="menuHelp"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="actionView">
    <property name="text">
     <string>View</string>

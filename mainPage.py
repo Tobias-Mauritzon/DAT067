@@ -19,8 +19,9 @@ from GUI.ui_mainPage import *
 This class handles the ui for the main page
 """
 class MainPage(QtWidgets.QWidget):
-	def __init__(self):
+	def __init__(self,mainWindow):
 		super().__init__() # call QWidget constructor
+		self.mainWindow = mainWindow
 		self.ui = Ui_MainPage()
 		self.ui.setupUi(self)
 		self.installEventFilter(self) # used for event when window is resized
@@ -251,13 +252,13 @@ class MainPage(QtWidgets.QWidget):
 
 	# Show no camera available pop
 	def no_camera_available_popUp(self):
-		dialogMenu = DialogMenu()
+		dialogMenu = DialogMenu(self.mainWindow)
 		dialogMenu.setTitle("<strong>No available camera!</strong>")
 		dialogMenu.setInformationText("Cannot find an available camera, make sure it's plugged in.")
 		dialogMenu.setTopButtonText("Retry")
 		dialogMenu.setBottomButtonText("Skip")
 		dialogMenu.setFixedHeight(320)
-		dialogMenu.centerOnScreen()
+		dialogMenu.centerOnWindow()
 		dialogMenu.ui.PushButton_top.clicked.connect(lambda: self.closePage())
 		dialogMenu.ui.PushButton_top.clicked.connect(lambda: self.loadPage())
 		dialogMenu.ui.PushButton_top.clicked.connect(dialogMenu.close)

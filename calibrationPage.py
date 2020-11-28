@@ -21,8 +21,9 @@ from dialogMenu import *
 # Date: 2020-11-25
 
 class CalibrationPage(QtWidgets.QWidget):
-    def __init__(self):
+    def __init__(self,mainWindow):
         super().__init__()
+        self.mainWindow = mainWindow
         self.ui = Ui_CalibrationPage()
         self.ui.setupUi(self)
         self.timer = QTimer() # create a timer
@@ -217,13 +218,13 @@ class CalibrationPage(QtWidgets.QWidget):
     
     # Show no camera available popup
     def no_camera_available_popUp(self):
-        dialogMenu = DialogMenu()
+        dialogMenu = DialogMenu(self.mainWindow)
         dialogMenu.setTitle("<strong>No available camera!</strong>")
         dialogMenu.setInformationText("Cannot find an available camera, make sure it's plugged in.")
         dialogMenu.setTopButtonText("Retry calibration")
         dialogMenu.setBottomButtonText("Skip")
         dialogMenu.setFixedHeight(320)
-        dialogMenu.centerOnScreen()
+        dialogMenu.centerOnWindow()
         dialogMenu.ui.PushButton_top.clicked.connect(lambda: self.closePage())
         dialogMenu.ui.PushButton_top.clicked.connect(lambda: self.loadPage())
         dialogMenu.ui.PushButton_top.clicked.connect(dialogMenu.close)

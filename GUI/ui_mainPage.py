@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'mainPage.ui'
+# Form implementation generated from reading ui file 'ui_mainPage.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.1
 #
@@ -11,10 +11,10 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 
-class Ui_MainPage(QtWidgets.QWidget):
+class Ui_MainPage(object):
     def setupUi(self, MainPage):
         MainPage.setObjectName("MainPage")
-        MainPage.resize(873, 684)
+        MainPage.resize(594, 417)
         MainPage.setStyleSheet("*\n"
 "{\n"
 "    background-color: rgb(35, 35, 38);\n"
@@ -155,8 +155,10 @@ class Ui_MainPage(QtWidgets.QWidget):
 "    background-color: #bcbcbc;\n"
 "}")
         self.verticalLayout_12 = QtWidgets.QVBoxLayout(MainPage)
+        self.verticalLayout_12.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_12.setObjectName("verticalLayout_12")
         self.Splitter_frame = QtWidgets.QSplitter(MainPage)
+        self.Splitter_frame.setStyleSheet("")
         self.Splitter_frame.setOrientation(QtCore.Qt.Horizontal)
         self.Splitter_frame.setObjectName("Splitter_frame")
         self.cameraFrame = QtWidgets.QFrame(self.Splitter_frame)
@@ -167,11 +169,11 @@ class Ui_MainPage(QtWidgets.QWidget):
         sizePolicy.setHeightForWidth(self.cameraFrame.sizePolicy().hasHeightForWidth())
         self.cameraFrame.setSizePolicy(sizePolicy)
         self.cameraFrame.setMaximumSize(QtCore.QSize(16777215, 16777215))
-        self.cameraFrame.setStyleSheet("")
         self.cameraFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.cameraFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.cameraFrame.setObjectName("cameraFrame")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.cameraFrame)
+        self.verticalLayout.setContentsMargins(-1, -1, -1, 20)
         self.verticalLayout.setObjectName("verticalLayout")
         self.image_label = QtWidgets.QLabel(self.cameraFrame)
         self.image_label.setEnabled(True)
@@ -216,7 +218,7 @@ class Ui_MainPage(QtWidgets.QWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.sidePanel.sizePolicy().hasHeightForWidth())
         self.sidePanel.setSizePolicy(sizePolicy)
-        self.sidePanel.setMinimumSize(QtCore.QSize(300, 0))
+        self.sidePanel.setMinimumSize(QtCore.QSize(0, 0))
         self.sidePanel.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.sidePanel.setStyleSheet("")
         self.sidePanel.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -224,7 +226,7 @@ class Ui_MainPage(QtWidgets.QWidget):
         self.sidePanel.setObjectName("sidePanel")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.sidePanel)
         self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
-        self.verticalLayout_2.setSpacing(6)
+        self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.Splitter_sidePanel = QtWidgets.QSplitter(self.sidePanel)
         self.Splitter_sidePanel.setEnabled(True)
@@ -233,19 +235,27 @@ class Ui_MainPage(QtWidgets.QWidget):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.Splitter_sidePanel.sizePolicy().hasHeightForWidth())
         self.Splitter_sidePanel.setSizePolicy(sizePolicy)
+        self.Splitter_sidePanel.setStyleSheet("")
+        self.Splitter_sidePanel.setLineWidth(1)
         self.Splitter_sidePanel.setOrientation(QtCore.Qt.Vertical)
+        self.Splitter_sidePanel.setHandleWidth(5)
         self.Splitter_sidePanel.setObjectName("Splitter_sidePanel")
         self.settingsFrame = QtWidgets.QFrame(self.Splitter_sidePanel)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.settingsFrame.sizePolicy().hasHeightForWidth())
         self.settingsFrame.setSizePolicy(sizePolicy)
-        self.settingsFrame.setStyleSheet("background-color:rgb(51, 55, 61); border-radius: 15px;")
+        self.settingsFrame.setMinimumSize(QtCore.QSize(300, 0))
+        self.settingsFrame.setStyleSheet("background-color: rgb(51, 55, 61); \n"
+"border-top-left-radius: 15;\n"
+"border-bottom-left-radius: 15;\n"
+"")
         self.settingsFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.settingsFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.settingsFrame.setObjectName("settingsFrame")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.settingsFrame)
+        self.verticalLayout_3.setContentsMargins(-1, 9, -1, -1)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.label = QtWidgets.QLabel(self.settingsFrame)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Maximum)
@@ -284,13 +294,30 @@ class Ui_MainPage(QtWidgets.QWidget):
         self.scrollArea.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 273, 546))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -6, 267, 509))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.scrollAreaWidgetContents.sizePolicy().hasHeightForWidth())
+        self.scrollAreaWidgetContents.setSizePolicy(sizePolicy)
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.frame_2 = QtWidgets.QFrame(self.scrollAreaWidgetContents)
         self.frame_2.setMinimumSize(QtCore.QSize(0, 0))
         self.frame_2.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.frame_2.setStyleSheet("QGroupBox {\n"
+"    border: 1px solid gray;\n"
+"    border-radius: 5px;\n"
+"    margin-top: 0.5em;\n"
+"}\n"
+"\n"
+"QGroupBox::title {\n"
+"    color: white;\n"
+"    subcontrol-origin: margin;\n"
+"    left: 10px;\n"
+"    padding: -3 3px 0 3px;\n"
+"}")
         self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_2.setObjectName("frame_2")
@@ -309,19 +336,7 @@ class Ui_MainPage(QtWidgets.QWidget):
         font.setPointSize(10)
         self.groupBox_3.setFont(font)
         self.groupBox_3.setAutoFillBackground(False)
-        self.groupBox_3.setStyleSheet("\n"
-"QGroupBox {\n"
-"    border: 1px solid gray;\n"
-"    border-radius: 9px;\n"
-"    margin-top: 0.5em;\n"
-"}\n"
-"\n"
-"QGroupBox::title {\n"
-"    color: white;\n"
-"    subcontrol-origin: margin;\n"
-"    left: 10px;\n"
-"    padding: -3 3px 0 3px;\n"
-"}")
+        self.groupBox_3.setStyleSheet("")
         self.groupBox_3.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.groupBox_3.setFlat(False)
         self.groupBox_3.setCheckable(False)
@@ -371,19 +386,7 @@ class Ui_MainPage(QtWidgets.QWidget):
         font.setPointSize(10)
         self.groupBox_4.setFont(font)
         self.groupBox_4.setAutoFillBackground(False)
-        self.groupBox_4.setStyleSheet("\n"
-"QGroupBox {\n"
-"    border: 1px solid gray;\n"
-"    border-radius: 9px;\n"
-"    margin-top: 0.5em;\n"
-"}\n"
-"\n"
-"QGroupBox::title {\n"
-"    color: white;\n"
-"    subcontrol-origin: margin;\n"
-"    left: 10px;\n"
-"    padding: -3 3px 0 3px;\n"
-"}")
+        self.groupBox_4.setStyleSheet("")
         self.groupBox_4.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.groupBox_4.setFlat(False)
         self.groupBox_4.setCheckable(False)
@@ -426,19 +429,7 @@ class Ui_MainPage(QtWidgets.QWidget):
         font = QtGui.QFont()
         font.setPointSize(10)
         self.groupBox.setFont(font)
-        self.groupBox.setStyleSheet("\n"
-"QGroupBox {\n"
-"    border: 1px solid gray;\n"
-"    border-radius: 9px;\n"
-"    margin-top: 0.5em;\n"
-"}\n"
-"\n"
-"QGroupBox::title {\n"
-"    color: white;\n"
-"    subcontrol-origin: margin;\n"
-"    left: 10px;\n"
-"    padding: -3 3px 0 3px;\n"
-"}")
+        self.groupBox.setStyleSheet("")
         self.groupBox.setObjectName("groupBox")
         self.verticalLayout_11 = QtWidgets.QVBoxLayout(self.groupBox)
         self.verticalLayout_11.setContentsMargins(-1, 20, -1, -1)
@@ -478,19 +469,7 @@ class Ui_MainPage(QtWidgets.QWidget):
         font.setPointSize(10)
         self.groupBox_2.setFont(font)
         self.groupBox_2.setAutoFillBackground(False)
-        self.groupBox_2.setStyleSheet("\n"
-"QGroupBox {\n"
-"    border: 1px solid gray;\n"
-"    border-radius: 9px;\n"
-"    margin-top: 0.5em;\n"
-"}\n"
-"\n"
-"QGroupBox::title {\n"
-"    color: white;\n"
-"    subcontrol-origin: margin;\n"
-"    left: 10px;\n"
-"    padding: -3 3px 0 3px;\n"
-"}")
+        self.groupBox_2.setStyleSheet("")
         self.groupBox_2.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.groupBox_2.setFlat(False)
         self.groupBox_2.setCheckable(False)
@@ -545,11 +524,15 @@ class Ui_MainPage(QtWidgets.QWidget):
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout_3.addWidget(self.scrollArea)
         self.outputFrame = QtWidgets.QFrame(self.Splitter_sidePanel)
-        self.outputFrame.setStyleSheet("background-color:rgb(51, 55, 61); border-radius: 15px;")
+        self.outputFrame.setStyleSheet("background-color: rgb(51, 55, 61);\n"
+"border-top-left-radius: 15;\n"
+"\n"
+"")
         self.outputFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.outputFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.outputFrame.setObjectName("outputFrame")
         self.verticalLayout_9 = QtWidgets.QVBoxLayout(self.outputFrame)
+        self.verticalLayout_9.setContentsMargins(-1, 9, -1, -1)
         self.verticalLayout_9.setObjectName("verticalLayout_9")
         self.label_2 = QtWidgets.QLabel(self.outputFrame)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Ignored, QtWidgets.QSizePolicy.Maximum)
@@ -617,3 +600,12 @@ class Ui_MainPage(QtWidgets.QWidget):
         self.label_2.setText(_translate("MainPage", "Output"))
         self.Label_object.setText(_translate("MainPage", "Object"))
 
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainPage = QtWidgets.QWidget()
+    ui = Ui_MainPage()
+    ui.setupUi(MainPage)
+    MainPage.show()
+    sys.exit(app.exec_())

@@ -28,9 +28,9 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.setupUi(self) # set ui
         self.setWindowTitle(windowName) # set window title
         self.resize(1200,800) # set start size of window
-        self.page_0 = MainPage() # create page 0
+        self.page_0 = MainPage(self) # create page 0
         self.ui.stackedWidget.addWidget(self.page_0) # add page 0
-        self.page_1 = CalibrationPage() # create page 1
+        self.page_1 = CalibrationPage(self) # create page 1
         self.ui.stackedWidget.addWidget(self.page_1) # add page 1
         self.currentPage = 0 # current page
         self.__setMenuActions() # set actions on menubar buttons
@@ -84,11 +84,11 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.action_SidePanel.setChecked(False)
 
     def __showHowToUse(self):
-        dialogMenu = DialogMenu()
+        dialogMenu = DialogMenu(self)
         dialogMenu.setTitle("<strong>How To Use</strong>")
         dialogMenu.setFixedHeight(500)
         dialogMenu.setFixedWidth(500)
-        dialogMenu.centerOnScreen()
+        dialogMenu.centerOnWindow()
         f = open("How_to_use.txt","r")
         dialogMenu.setInformationText(f.read())
         dialogMenu.setTopButtonText("Ok")
@@ -97,10 +97,10 @@ class MainWindow(QtWidgets.QMainWindow):
         dialogMenu.exec_()
     
     def __showAbout(self):
-        dialogMenu = DialogMenu()
+        dialogMenu = DialogMenu(self)
         dialogMenu.setTitle("<strong>Written By:</strong>")
-        dialogMenu.setFixedHeight(360)
-        dialogMenu.centerOnScreen()
+        dialogMenu.setFixedHeight(400)
+        dialogMenu.centerOnWindow()
         dialogMenu.centerText()
         f = open("About.txt","r")
         dialogMenu.setInformationText(f.read())

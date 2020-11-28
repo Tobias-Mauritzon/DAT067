@@ -17,13 +17,15 @@ import numpy as np
 # Date: 2020-11-24
 
 class DialogMenu(QtWidgets.QDialog):
-    def __init__(self):
+    def __init__(self,window):
         # call QWidget constructor
         super().__init__()
 
         # create ui
         self.ui = Ui_Dialog()
         self.ui.setupUi(self)
+
+        self.window = window
 
         self.setFixedWidth(500)
         self.setFixedHeight(300)
@@ -38,7 +40,9 @@ class DialogMenu(QtWidgets.QDialog):
         self.shadow.setXOffset(0)
         self.shadow.setYOffset(0)
         self.shadow.setColor(QColor(0,0,0,60))
-        self.ui.frame.setGraphicsEffect(self.shadow)    
+        self.ui.frame.setGraphicsEffect(self.shadow)  
+
+        self.__setButtonActions()  
 
     def setTitle(self, title):
         self.ui.Label_title.setText(title)
@@ -52,12 +56,22 @@ class DialogMenu(QtWidgets.QDialog):
     def setBottomButtonText(self, text):
         self.ui.PushButton_bottom.setText(text)
     
-    def centerOnScreen(self):
+    def centerOnWindow(self):
         frameGm = self.frameGeometry()
-        screen = QApplication.desktop().screenNumber(QApplication.desktop().cursor().pos())
-        centerPoint = QApplication.desktop().screenGeometry(screen).center()
+        centerPoint = self.window.frameGeometry().center()
         frameGm.moveCenter(centerPoint)
         self.move(frameGm.topLeft())
 
+        blur_effect = QtWidgets.QGraphicsBlurEffect(blurRadius=5)
+        self.window.setGraphicsEffect(blur_effect)
+
     def centerText(self):
         self.ui.Label_informationText.setAlignment(QtCore.Qt.AlignCenter)
+    
+    def __setButtonActions(self):
+        self.ui.PushButton_top.clicked.connect(self.__removeBlur)
+        self.ui.PushButton_bottom.clicked.connect(self.__removeBlur)
+    
+    def __removeBlur(self):
+        self.window.setGraphicsEffect(None)
+

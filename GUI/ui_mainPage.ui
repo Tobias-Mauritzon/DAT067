@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>873</width>
-    <height>684</height>
+    <width>594</width>
+    <height>417</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -155,8 +155,23 @@ QPushButton:pressed {
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_12">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QSplitter" name="Splitter_frame">
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -176,9 +191,6 @@ QPushButton:pressed {
         <height>16777215</height>
        </size>
       </property>
-      <property name="styleSheet">
-       <string notr="true"/>
-      </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
@@ -186,6 +198,9 @@ QPushButton:pressed {
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="bottomMargin">
+        <number>20</number>
+       </property>
        <item>
         <widget class="QLabel" name="image_label">
          <property name="enabled">
@@ -279,7 +294,7 @@ QPushButton:pressed {
       </property>
       <property name="minimumSize">
        <size>
-        <width>300</width>
+        <width>0</width>
         <height>0</height>
        </size>
       </property>
@@ -300,7 +315,7 @@ QPushButton:pressed {
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <property name="spacing">
-        <number>6</number>
+        <number>0</number>
        </property>
        <property name="leftMargin">
         <number>0</number>
@@ -325,18 +340,36 @@ QPushButton:pressed {
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="styleSheet">
+          <string notr="true"/>
+         </property>
+         <property name="lineWidth">
+          <number>1</number>
+         </property>
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
+         <property name="handleWidth">
+          <number>5</number>
+         </property>
          <widget class="QFrame" name="settingsFrame">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
           </property>
+          <property name="minimumSize">
+           <size>
+            <width>300</width>
+            <height>0</height>
+           </size>
+          </property>
           <property name="styleSheet">
-           <string notr="true">background-color:rgb(51, 55, 61); border-radius: 15px;</string>
+           <string notr="true">background-color: rgb(51, 55, 61); 
+border-top-left-radius: 15;
+border-bottom-left-radius: 15;
+</string>
           </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
@@ -345,6 +378,9 @@ QPushButton:pressed {
            <enum>QFrame::Raised</enum>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_3">
+           <property name="topMargin">
+            <number>9</number>
+           </property>
            <item>
             <widget class="QLabel" name="label">
              <property name="sizePolicy">
@@ -428,10 +464,16 @@ QPushButton:pressed {
               <property name="geometry">
                <rect>
                 <x>0</x>
-                <y>0</y>
-                <width>294</width>
-                <height>546</height>
+                <y>-6</y>
+                <width>267</width>
+                <height>509</height>
                </rect>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
               </property>
               <layout class="QVBoxLayout" name="verticalLayout_4">
                <item alignment="Qt::AlignTop">
@@ -447,6 +489,20 @@ QPushButton:pressed {
                    <width>16777215</width>
                    <height>16777215</height>
                   </size>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">QGroupBox {
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin-top: 0.5em;
+}
+
+QGroupBox::title {
+	color: white;
+	subcontrol-origin: margin;
+    left: 10px;
+    padding: -3 3px 0 3px;
+}</string>
                  </property>
                  <property name="frameShape">
                   <enum>QFrame::StyledPanel</enum>
@@ -487,19 +543,7 @@ QPushButton:pressed {
                      <bool>false</bool>
                     </property>
                     <property name="styleSheet">
-                     <string notr="true">
-QGroupBox {
-    border: 1px solid gray;
-    border-radius: 9px;
-    margin-top: 0.5em;
-}
-
-QGroupBox::title {
-	color: white;
-	subcontrol-origin: margin;
-    left: 10px;
-    padding: -3 3px 0 3px;
-}</string>
+                     <string notr="true"/>
                     </property>
                     <property name="title">
                      <string>Brightness</string>
@@ -623,19 +667,7 @@ QGroupBox::title {
                      <bool>false</bool>
                     </property>
                     <property name="styleSheet">
-                     <string notr="true">
-QGroupBox {
-    border: 1px solid gray;
-    border-radius: 9px;
-    margin-top: 0.5em;
-}
-
-QGroupBox::title {
-	color: white;
-	subcontrol-origin: margin;
-    left: 10px;
-    padding: -3 3px 0 3px;
-}</string>
+                     <string notr="true"/>
                     </property>
                     <property name="title">
                      <string>Contrast</string>
@@ -741,19 +773,7 @@ QGroupBox::title {
                      </font>
                     </property>
                     <property name="styleSheet">
-                     <string notr="true">
-QGroupBox {
-    border: 1px solid gray;
-    border-radius: 9px;
-    margin-top: 0.5em;
-}
-
-QGroupBox::title {
-	color: white;
-	subcontrol-origin: margin;
-    left: 10px;
-    padding: -3 3px 0 3px;
-}</string>
+                     <string notr="true"/>
                     </property>
                     <property name="title">
                      <string>Resolution</string>
@@ -850,19 +870,7 @@ QGroupBox::title {
                      <bool>false</bool>
                     </property>
                     <property name="styleSheet">
-                     <string notr="true">
-QGroupBox {
-    border: 1px solid gray;
-    border-radius: 9px;
-    margin-top: 0.5em;
-}
-
-QGroupBox::title {
-	color: white;
-	subcontrol-origin: margin;
-    left: 10px;
-    padding: -3 3px 0 3px;
-}</string>
+                     <string notr="true"/>
                     </property>
                     <property name="title">
                      <string>Image</string>
@@ -973,7 +981,10 @@ QPushButton:pressed {
          </widget>
          <widget class="QFrame" name="outputFrame">
           <property name="styleSheet">
-           <string notr="true">background-color:rgb(51, 55, 61); border-radius: 15px;</string>
+           <string notr="true">background-color: rgb(51, 55, 61);
+border-top-left-radius: 15;
+
+</string>
           </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
@@ -982,6 +993,9 @@ QPushButton:pressed {
            <enum>QFrame::Raised</enum>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_9">
+           <property name="topMargin">
+            <number>9</number>
+           </property>
            <item>
             <widget class="QLabel" name="label_2">
              <property name="sizePolicy">

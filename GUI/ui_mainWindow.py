@@ -14,17 +14,28 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1209, 874)
+        MainWindow.resize(399, 280)
+        MainWindow.setAutoFillBackground(False)
         MainWindow.setStyleSheet("*\n"
 "{\n"
 "    background-color: rgb(35, 35, 38);\n"
 "}\n"
 "\n"
+"QMenuBar{\n"
+"    background-color: rgb(35, 35, 38);\n"
+"    color: white;\n"
+"}\n"
+"\n"
+"QMenuBar::item::selected {\n"
+"    background-color: rgb(51, 55, 61);\n"
+"}\n"
+"\n"
 "/*QMenu*/\n"
 "QMenu{\n"
-"    color: rgb(0,0,0);\n"
-"    selection-color: rgb(0,0,0);\n"
-"    selection-background-color: rgb(148, 212, 255);\n"
+"    background-color: rgb(51, 55, 61);\n"
+"    color: white;\n"
+"    selection-color: black;\n"
+"    selection-background-color: #E4E4E5;\n"
 "}\n"
 "\n"
 "\n"
@@ -166,23 +177,21 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.centralwidget)
+        self.gridLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.gridLayout_2.setSpacing(0)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.stackedWidget = QtWidgets.QStackedWidget(self.centralwidget)
         self.stackedWidget.setObjectName("stackedWidget")
         self.gridLayout_2.addWidget(self.stackedWidget, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1209, 22))
-        self.menubar.setStyleSheet("background-color: rgb(255, 255, 255);\n"
-"color: rgb(0,0,0);")
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 399, 22))
+        self.menubar.setStyleSheet("")
         self.menubar.setObjectName("menubar")
         self.menuView = QtWidgets.QMenu(self.menubar)
         self.menuView.setAutoFillBackground(False)
         self.menuView.setObjectName("menuView")
         self.menuHelp = QtWidgets.QMenu(self.menubar)
-        self.menuHelp.setStyleSheet("color: rgb(0,0,0);\n"
-"selection-color: rgb(0,0,0);\n"
-"selection-background-color: rgb(148, 212, 255);")
         self.menuHelp.setObjectName("menuHelp")
         self.menuObject_detection = QtWidgets.QMenu(self.menubar)
         self.menuObject_detection.setObjectName("menuObject_detection")
@@ -192,9 +201,6 @@ class Ui_MainWindow(object):
         self.menuNavigation.setTearOffEnabled(False)
         self.menuNavigation.setObjectName("menuNavigation")
         MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
-        self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
         self.actionView = QtWidgets.QAction(MainWindow)
         self.actionView.setObjectName("actionView")
         self.action_HowToUse = QtWidgets.QAction(MainWindow)

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>695</width>
-    <height>619</height>
+    <width>800</width>
+    <height>558</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -26,8 +26,12 @@
    <string>Dialog</string>
   </property>
   <property name="styleSheet">
-   <string notr="true">/*Buttons*/
+   <string notr="true">QFrame{
+	background-color: rgb(51, 55, 61);
+	border-radius: 10;
+}
 
+/*Buttons*/
 QPushButton{
 	background-color: white;
 	color: black;
@@ -36,11 +40,6 @@ QPushButton{
 
 QPushButton:pressed {	
 	background-color: #bcbcbc;
-}
-
-*
-{
-	background-color: rgb(35, 35, 38);
 }
 
 /* VERTICAL SCROLLBAR */
@@ -176,10 +175,7 @@ border-radius: 7px;
       </sizepolicy>
      </property>
      <property name="styleSheet">
-      <string notr="true">QFrame{
-	background-color: #232326;
-	border-radius: 10;
-}</string>
+      <string notr="true"/>
      </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
@@ -286,8 +282,8 @@ border-radius: 7px;
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>626</width>
-              <height>558</height>
+              <width>731</width>
+              <height>540</height>
              </rect>
             </property>
             <property name="sizePolicy">
@@ -295,6 +291,9 @@ border-radius: 7px;
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">background-color: rgb(51, 55, 61);</string>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_6">
              <property name="spacing">
@@ -369,7 +368,7 @@ border-radius: 7px;
                    </font>
                   </property>
                   <property name="styleSheet">
-                   <string notr="true">background-color: none; color: white;</string>
+                   <string notr="true">color: white;</string>
                   </property>
                   <property name="text">
                    <string>TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT Prerequisites:

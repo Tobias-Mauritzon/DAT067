@@ -14,15 +14,19 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_Dialog(object):
     def setupUi(self, Dialog):
         Dialog.setObjectName("Dialog")
-        Dialog.resize(695, 619)
+        Dialog.resize(800, 558)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(Dialog.sizePolicy().hasHeightForWidth())
         Dialog.setSizePolicy(sizePolicy)
         Dialog.setMaximumSize(QtCore.QSize(800, 800))
-        Dialog.setStyleSheet("/*Buttons*/\n"
+        Dialog.setStyleSheet("QFrame{\n"
+"    background-color: rgb(51, 55, 61);\n"
+"    border-radius: 10;\n"
+"}\n"
 "\n"
+"/*Buttons*/\n"
 "QPushButton{\n"
 "    background-color: white;\n"
 "    color: black;\n"
@@ -31,11 +35,6 @@ class Ui_Dialog(object):
 "\n"
 "QPushButton:pressed {    \n"
 "    background-color: #bcbcbc;\n"
-"}\n"
-"\n"
-"*\n"
-"{\n"
-"    background-color: rgb(35, 35, 38);\n"
 "}\n"
 "\n"
 "/* VERTICAL SCROLLBAR */\n"
@@ -168,10 +167,7 @@ class Ui_Dialog(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.frame.sizePolicy().hasHeightForWidth())
         self.frame.setSizePolicy(sizePolicy)
-        self.frame.setStyleSheet("QFrame{\n"
-"    background-color: #232326;\n"
-"    border-radius: 10;\n"
-"}")
+        self.frame.setStyleSheet("")
         self.frame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame.setObjectName("frame")
@@ -220,12 +216,13 @@ class Ui_Dialog(object):
         self.scrollArea.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 626, 558))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 731, 540))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.scrollAreaWidgetContents.sizePolicy().hasHeightForWidth())
         self.scrollAreaWidgetContents.setSizePolicy(sizePolicy)
+        self.scrollAreaWidgetContents.setStyleSheet("background-color: rgb(51, 55, 61);")
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.scrollAreaWidgetContents)
         self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
@@ -256,7 +253,7 @@ class Ui_Dialog(object):
         font.setFamily("Segoe UI")
         font.setPointSize(10)
         self.Label_informationText.setFont(font)
-        self.Label_informationText.setStyleSheet("background-color: none; color: white;")
+        self.Label_informationText.setStyleSheet("color: white;")
         self.Label_informationText.setTextFormat(QtCore.Qt.AutoText)
         self.Label_informationText.setScaledContents(False)
         self.Label_informationText.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
