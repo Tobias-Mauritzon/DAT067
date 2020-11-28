@@ -3,7 +3,7 @@ import cv2
 
 # Filters that are searching for different things, in this case 'the front of the face and the eyes'
 car_cascade = cv2.CascadeClassifier('Resources/cars.xml')
-plate_cascade = cv2.CascadeClassifier("Resources/cascade1/cascade1.xml")
+plate_cascade = cv2.CascadeClassifier("Resources/cascade3/cascade3.xml")
 
 # Starting the camera.
 cap = cv2.VideoCapture(0)
@@ -27,14 +27,15 @@ while(True):
 
         roi_gray = gray[y:end_cord_y, x:end_cord_x]
         roi_color = frame[y:end_cord_y, x:end_cord_x]
-        plates = plate_cascade.detectMultiScale(roi_color, 1.1, 4)
+        plates = plate_cascade.detectMultiScale(roi_gray, 1.1, 4)
         for(ex, ey, ew, eh) in plates:
             print("found plate")
 
             faceFound = True
 
             # Draws a rectangle within the car and around the plate
-            cv2.rectangle(frame, (ex, ey), (ex+ew, ey+eh), (0, 255, 0), 2)
+            cv2.rectangle(frame, (x+ex, y+ey),
+                          (x+ex+ew, y+ey+eh), (0, 255, 0), 2)
 
         if faceFound:
             # Draws the rectangle around the face
