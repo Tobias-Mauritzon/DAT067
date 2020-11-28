@@ -99,8 +99,8 @@ class MainPage(QtWidgets.QWidget):
 	def resetSettingValues(self):
 		self.ui.Slider_brightness.setValue(self.START_BRIGHTNESS)
 		self.ui.Label_brightnessValue.setNum(self.START_CONTRAST)
-		self.ui.Slider_contrast.setValue(self.start_contrast)
-		self.ui.Label_contrastValue.setNum(self.start_contrast)
+		self.ui.Slider_contrast.setValue(self.START_CONTRAST)
+		self.ui.Label_contrastValue.setNum(self.START_CONTRAST)
 		self.ui.radioButton_RGB.toggle()
 
 	# Sets the resolution of the webcam
@@ -291,7 +291,7 @@ class MainPage(QtWidgets.QWidget):
 			eyes = eye_cascade.detectMultiScale(roi_gray)
 			for(ex,ey,ew,eh) in eyes:
 				#Draws a rectangle within the face and around the eyes
-				cv2.rectangle(roi_color, (ex,ey), (ex+ew,ey+eh),(0,255,0), 1)
+				cv2.rectangle(roi_color, (ex,ey), (ex+ew,ey+eh),(0,255,0), 2)
 				#Draws a circle within the face and around the eyes
 				#cv2.circle(self.image,(int(x+ex+ew/2),int(y+ey+eh/2)),int(ey/2),(0,255,0),1)
 			#Saves a picture of the last face seen when the application is closed
