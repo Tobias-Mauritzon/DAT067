@@ -15,8 +15,8 @@ Date: 2020-11-20
 carCascade = cv2.CascadeClassifier("Resources/cars.xml")
 
 # reading "bad" cascade identifier
-carCascade2 = cv2.CascadeClassifier(
-    "Resources/plate.xml")
+plate = cv2.CascadeClassifier(
+    "Resources/cascade3/cascade3.xml")
 
 # video stream with connected webbcam
 cap = cv2.VideoCapture(0)
@@ -38,23 +38,23 @@ while (cap.isOpened()):
 
     # find obejcts with cascades
     cars = carCascade.detectMultiScale(imgGray, 1.1, 4)
-    plates = carCascade2.detectMultiScale(imgGray2, 1.1, 4)
+    plates = plate.detectMultiScale(imgGray2, 1.1, 4)
 
     # writes rectangel around detected objects in cars
     for(x, y, w, h) in cars:
-        cv2.rectangle(imgCar1, (x, y), (x+w, y+h), (255, 0, 0), 1)
-        cv2.putText(imgCar1, 'Car', (x, y-5),
+        cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 0), 1)
+        cv2.putText(img, 'Car', (x, y-5),
                     cv2.FONT_HERSHEY_COMPLEX, 1, (255, 0, 0), 2)
 
     # writes rectangel around objects detected in cars and cars2
     for(x, y, w, h) in plates:
         cv2.rectangle(imgCar1, (x, y), (x+w, y+h), (255, 0, 0), 1)
-        cv2.putText(imgCar1, 'Car', (x, y-5),
+        cv2.putText(imgCar1, 'plate', (x, y-5),
                     cv2.FONT_HERSHEY_COMPLEX, 1, (255, 0, 0), 2)
 
     # output edited images to window
-    cv2.imshow("Car1", imgCar1)
-    cv2.imshow("Plate", img)
+    cv2.imshow("Plate", imgCar1)
+    cv2.imshow("Car", img)
 
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
