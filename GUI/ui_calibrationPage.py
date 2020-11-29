@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_CalibrationPage(object):
     def setupUi(self, CalibrationPage):
         CalibrationPage.setObjectName("CalibrationPage")
-        CalibrationPage.resize(1490, 858)
+        CalibrationPage.resize(1078, 696)
         CalibrationPage.setStyleSheet("*{\n"
 "    background-color: rgb(35, 35, 38);\n"
 "}\n"
@@ -143,6 +143,8 @@ class Ui_CalibrationPage(object):
 "border-radius: 7px;\n"
 "}")
         self.horizontalLayout = QtWidgets.QHBoxLayout(CalibrationPage)
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
+        self.horizontalLayout.setSpacing(0)
         self.horizontalLayout.setObjectName("horizontalLayout")
         self.splitter = QtWidgets.QSplitter(CalibrationPage)
         self.splitter.setOrientation(QtCore.Qt.Horizontal)
@@ -152,6 +154,8 @@ class Ui_CalibrationPage(object):
         self.frame_5.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_5.setObjectName("frame_5")
         self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.frame_5)
+        self.verticalLayout_3.setContentsMargins(9, 9, 9, 9)
+        self.verticalLayout_3.setSpacing(6)
         self.verticalLayout_3.setObjectName("verticalLayout_3")
         self.label_8 = QtWidgets.QLabel(self.frame_5)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
@@ -162,7 +166,7 @@ class Ui_CalibrationPage(object):
         self.label_8.setMinimumSize(QtCore.QSize(0, 30))
         font = QtGui.QFont()
         font.setFamily("Segoe UI")
-        font.setPointSize(18)
+        font.setPointSize(20)
         self.label_8.setFont(font)
         self.label_8.setStyleSheet("color: white;")
         self.label_8.setAlignment(QtCore.Qt.AlignCenter)
@@ -188,11 +192,30 @@ class Ui_CalibrationPage(object):
         self.image_label.setObjectName("image_label")
         self.verticalLayout_3.addWidget(self.image_label)
         self.stackedWidget = QtWidgets.QStackedWidget(self.splitter)
-        self.stackedWidget.setMaximumSize(QtCore.QSize(350, 16777215))
+        self.stackedWidget.setMinimumSize(QtCore.QSize(0, 0))
+        self.stackedWidget.setMaximumSize(QtCore.QSize(280, 16777215))
+        self.stackedWidget.setStyleSheet("*{\n"
+"    background-color: rgb(51, 55, 61); \n"
+"    border-top-left-radius: 15;\n"
+"}\n"
+"QGroupBox {\n"
+"    border: 1px solid gray;\n"
+"    border-radius: 5px;\n"
+"    margin-top: 0.5em;\n"
+"}\n"
+"\n"
+"QGroupBox::title {\n"
+"    color: white;\n"
+"    subcontrol-origin: margin;\n"
+"    left: 10px;\n"
+"    padding: -3 3px 0 3px;\n"
+"}")
         self.stackedWidget.setObjectName("stackedWidget")
         self.page = QtWidgets.QWidget()
         self.page.setObjectName("page")
         self.verticalLayout_2 = QtWidgets.QVBoxLayout(self.page)
+        self.verticalLayout_2.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_2.setSpacing(0)
         self.verticalLayout_2.setObjectName("verticalLayout_2")
         self.splitter_SidePanel = QtWidgets.QSplitter(self.page)
         self.splitter_SidePanel.setOrientation(QtCore.Qt.Vertical)
@@ -205,7 +228,6 @@ class Ui_CalibrationPage(object):
         self.outputFrame.setSizePolicy(sizePolicy)
         self.outputFrame.setMinimumSize(QtCore.QSize(0, 0))
         self.outputFrame.setMaximumSize(QtCore.QSize(16777215, 16777215))
-        self.outputFrame.setStyleSheet("background-color:rgb(51, 55, 61); border-radius: 15px;")
         self.outputFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.outputFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.outputFrame.setObjectName("outputFrame")
@@ -260,18 +282,9 @@ class Ui_CalibrationPage(object):
         font.setPointSize(10)
         self.groupBox_3.setFont(font)
         self.groupBox_3.setAutoFillBackground(False)
-        self.groupBox_3.setStyleSheet("\n"
-"QGroupBox {\n"
-"    border: 1px solid gray;\n"
-"    border-radius: 9px;\n"
-"    margin-top: 0.5em;\n"
-"}\n"
-"\n"
-"QGroupBox::title {\n"
-"    color: white;\n"
-"    subcontrol-origin: margin;\n"
-"    left: 10px;\n"
-"    padding: -3 3px 0 3px;\n"
+        self.groupBox_3.setStyleSheet("QLineEdit{\n"
+"    background-color: white;\n"
+"    border-top-left-radius: 0;\n"
 "}")
         self.groupBox_3.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.groupBox_3.setFlat(False)
@@ -297,7 +310,7 @@ class Ui_CalibrationPage(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.lineEdit_Width.sizePolicy().hasHeightForWidth())
         self.lineEdit_Width.setSizePolicy(sizePolicy)
-        self.lineEdit_Width.setStyleSheet("background-color: white;")
+        self.lineEdit_Width.setStyleSheet("")
         self.lineEdit_Width.setText("")
         self.lineEdit_Width.setObjectName("lineEdit_Width")
         self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.lineEdit_Width)
@@ -311,7 +324,6 @@ class Ui_CalibrationPage(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.lineEdit_Height.sizePolicy().hasHeightForWidth())
         self.lineEdit_Height.setSizePolicy(sizePolicy)
-        self.lineEdit_Height.setStyleSheet("background-color: white;")
         self.lineEdit_Height.setText("")
         self.lineEdit_Height.setObjectName("lineEdit_Height")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.lineEdit_Height)
@@ -325,7 +337,6 @@ class Ui_CalibrationPage(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.lineEdit_SquareCorners.sizePolicy().hasHeightForWidth())
         self.lineEdit_SquareCorners.setSizePolicy(sizePolicy)
-        self.lineEdit_SquareCorners.setStyleSheet("background-color: white;")
         self.lineEdit_SquareCorners.setText("")
         self.lineEdit_SquareCorners.setObjectName("lineEdit_SquareCorners")
         self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.lineEdit_SquareCorners)
@@ -339,7 +350,6 @@ class Ui_CalibrationPage(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.lineEdit_SquareWidth.sizePolicy().hasHeightForWidth())
         self.lineEdit_SquareWidth.setSizePolicy(sizePolicy)
-        self.lineEdit_SquareWidth.setStyleSheet("background-color: white;")
         self.lineEdit_SquareWidth.setText("")
         self.lineEdit_SquareWidth.setObjectName("lineEdit_SquareWidth")
         self.formLayout.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.lineEdit_SquareWidth)
@@ -356,18 +366,9 @@ class Ui_CalibrationPage(object):
         font.setPointSize(10)
         self.groupBox_4.setFont(font)
         self.groupBox_4.setAutoFillBackground(False)
-        self.groupBox_4.setStyleSheet("\n"
-"QGroupBox {\n"
-"    border: 1px solid gray;\n"
-"    border-radius: 9px;\n"
-"    margin-top: 0.5em;\n"
-"}\n"
-"\n"
-"QGroupBox::title {\n"
-"    color: white;\n"
-"    subcontrol-origin: margin;\n"
-"    left: 10px;\n"
-"    padding: -3 3px 0 3px;\n"
+        self.groupBox_4.setStyleSheet("QLineEdit{\n"
+"    background-color: white;\n"
+"    border-top-left-radius: 0;\n"
 "}")
         self.groupBox_4.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.groupBox_4.setFlat(False)
@@ -388,7 +389,6 @@ class Ui_CalibrationPage(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.lineEdit_Distance.sizePolicy().hasHeightForWidth())
         self.lineEdit_Distance.setSizePolicy(sizePolicy)
-        self.lineEdit_Distance.setStyleSheet("background-color: white;")
         self.lineEdit_Distance.setObjectName("lineEdit_Distance")
         self.formLayout_2.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.lineEdit_Distance)
         self.verticalLayout_4.addWidget(self.groupBox_4)
@@ -422,6 +422,8 @@ class Ui_CalibrationPage(object):
         self.page_2 = QtWidgets.QWidget()
         self.page_2.setObjectName("page_2")
         self.verticalLayout_6 = QtWidgets.QVBoxLayout(self.page_2)
+        self.verticalLayout_6.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_6.setSpacing(0)
         self.verticalLayout_6.setObjectName("verticalLayout_6")
         self.outputFrame_2 = QtWidgets.QFrame(self.page_2)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
@@ -431,7 +433,6 @@ class Ui_CalibrationPage(object):
         self.outputFrame_2.setSizePolicy(sizePolicy)
         self.outputFrame_2.setMinimumSize(QtCore.QSize(0, 0))
         self.outputFrame_2.setMaximumSize(QtCore.QSize(16777215, 16777215))
-        self.outputFrame_2.setStyleSheet("background-color:rgb(51, 55, 61); border-radius: 15px;")
         self.outputFrame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.outputFrame_2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.outputFrame_2.setObjectName("outputFrame_2")
@@ -487,19 +488,6 @@ class Ui_CalibrationPage(object):
         font.setPointSize(10)
         self.groupBox_5.setFont(font)
         self.groupBox_5.setAutoFillBackground(False)
-        self.groupBox_5.setStyleSheet("\n"
-"QGroupBox {\n"
-"    border: 1px solid gray;\n"
-"    border-radius: 9px;\n"
-"    margin-top: 0.5em;\n"
-"}\n"
-"\n"
-"QGroupBox::title {\n"
-"    color: white;\n"
-"    subcontrol-origin: margin;\n"
-"    left: 10px;\n"
-"    padding: -3 3px 0 3px;\n"
-"}")
         self.groupBox_5.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.groupBox_5.setFlat(False)
         self.groupBox_5.setCheckable(False)
@@ -532,19 +520,6 @@ class Ui_CalibrationPage(object):
         font.setPointSize(10)
         self.groupBox_6.setFont(font)
         self.groupBox_6.setAutoFillBackground(False)
-        self.groupBox_6.setStyleSheet("\n"
-"QGroupBox {\n"
-"    border: 1px solid gray;\n"
-"    border-radius: 9px;\n"
-"    margin-top: 0.5em;\n"
-"}\n"
-"\n"
-"QGroupBox::title {\n"
-"    color: white;\n"
-"    subcontrol-origin: margin;\n"
-"    left: 10px;\n"
-"    padding: -3 3px 0 3px;\n"
-"}")
         self.groupBox_6.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.groupBox_6.setFlat(False)
         self.groupBox_6.setCheckable(False)
@@ -627,13 +602,13 @@ class Ui_CalibrationPage(object):
         self.horizontalLayout.addWidget(self.splitter)
 
         self.retranslateUi(CalibrationPage)
-        self.stackedWidget.setCurrentIndex(1)
+        self.stackedWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(CalibrationPage)
 
     def retranslateUi(self, CalibrationPage):
         _translate = QtCore.QCoreApplication.translate
         CalibrationPage.setWindowTitle(_translate("CalibrationPage", "Form"))
-        self.label_8.setText(_translate("CalibrationPage", "Calibration"))
+        self.label_8.setText(_translate("CalibrationPage", "<strong>Calibration</strong>"))
         self.image_label.setText(_translate("CalibrationPage", "WEBCAM"))
         self.label_2.setText(_translate("CalibrationPage", "Insert known values"))
         self.groupBox_3.setTitle(_translate("CalibrationPage", "Checkerboard values"))

@@ -63,6 +63,7 @@ class CalibrationPage(QtWidgets.QWidget):
     
     # Reset page values
     def reset(self):
+        self.calibrating = False
         self.ui.stackedWidget.setCurrentIndex(0)
         self.ui.Label_TakenCaptures.setNum(0)
         self.ui.Label_Information.clear()

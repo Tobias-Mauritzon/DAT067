@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainPage(object):
     def setupUi(self, MainPage):
         MainPage.setObjectName("MainPage")
-        MainPage.resize(594, 417)
+        MainPage.resize(912, 694)
         MainPage.setStyleSheet("*\n"
 "{\n"
 "    background-color: rgb(35, 35, 38);\n"
@@ -156,6 +156,7 @@ class Ui_MainPage(object):
 "}")
         self.verticalLayout_12 = QtWidgets.QVBoxLayout(MainPage)
         self.verticalLayout_12.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_12.setSpacing(0)
         self.verticalLayout_12.setObjectName("verticalLayout_12")
         self.Splitter_frame = QtWidgets.QSplitter(MainPage)
         self.Splitter_frame.setStyleSheet("")
@@ -294,7 +295,7 @@ class Ui_MainPage(object):
         self.scrollArea.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -6, 267, 509))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 419, 513))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)

@@ -106,8 +106,9 @@ class MainPage(QtWidgets.QWidget):
 
 	# Sets the resolution of the webcam
 	def setResolution(self,width,height):
-		self.cap.set(3,width)
-		self.cap.set(4,height)
+		if self.cap is not None:
+			self.cap.set(3,width)
+			self.cap.set(4,height)
 
 	# Start/stop timer
 	def controlTimer(self):

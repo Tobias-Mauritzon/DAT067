@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1490</width>
-    <height>858</height>
+    <width>1078</width>
+    <height>696</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -143,6 +143,21 @@ border-radius: 7px;
 }</string>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
    <item>
     <widget class="QSplitter" name="splitter">
      <property name="orientation">
@@ -156,6 +171,21 @@ border-radius: 7px;
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="spacing">
+        <number>6</number>
+       </property>
+       <property name="leftMargin">
+        <number>9</number>
+       </property>
+       <property name="topMargin">
+        <number>9</number>
+       </property>
+       <property name="rightMargin">
+        <number>9</number>
+       </property>
+       <property name="bottomMargin">
+        <number>9</number>
+       </property>
        <item>
         <widget class="QLabel" name="label_8">
          <property name="sizePolicy">
@@ -173,14 +203,14 @@ border-radius: 7px;
          <property name="font">
           <font>
            <family>Segoe UI</family>
-           <pointsize>18</pointsize>
+           <pointsize>20</pointsize>
           </font>
          </property>
          <property name="styleSheet">
           <string notr="true">color: white;</string>
          </property>
          <property name="text">
-          <string>Calibration</string>
+          <string>&lt;strong&gt;Calibration&lt;/strong&gt;</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
@@ -236,17 +266,56 @@ border-radius: 7px;
       </layout>
      </widget>
      <widget class="QStackedWidget" name="stackedWidget">
+      <property name="minimumSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
       <property name="maximumSize">
        <size>
-        <width>350</width>
+        <width>280</width>
         <height>16777215</height>
        </size>
       </property>
+      <property name="styleSheet">
+       <string notr="true">*{
+	background-color: rgb(51, 55, 61); 
+	border-top-left-radius: 15;
+}
+QGroupBox {
+    border: 1px solid gray;
+    border-radius: 5px;
+    margin-top: 0.5em;
+}
+
+QGroupBox::title {
+	color: white;
+	subcontrol-origin: margin;
+    left: 10px;
+    padding: -3 3px 0 3px;
+}</string>
+      </property>
       <property name="currentIndex">
-       <number>1</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page">
        <layout class="QVBoxLayout" name="verticalLayout_2">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
         <item>
          <widget class="QSplitter" name="splitter_SidePanel">
           <property name="orientation">
@@ -270,9 +339,6 @@ border-radius: 7px;
              <width>16777215</width>
              <height>16777215</height>
             </size>
-           </property>
-           <property name="styleSheet">
-            <string notr="true">background-color:rgb(51, 55, 61); border-radius: 15px;</string>
            </property>
            <property name="frameShape">
             <enum>QFrame::StyledPanel</enum>
@@ -390,18 +456,9 @@ border-radius: 7px;
                      <bool>false</bool>
                     </property>
                     <property name="styleSheet">
-                     <string notr="true">
-QGroupBox {
-    border: 1px solid gray;
-    border-radius: 9px;
-    margin-top: 0.5em;
-}
-
-QGroupBox::title {
-	color: white;
-	subcontrol-origin: margin;
-    left: 10px;
-    padding: -3 3px 0 3px;
+                     <string notr="true">QLineEdit{
+	background-color: white;
+	border-top-left-radius: 0;
 }</string>
                     </property>
                     <property name="title">
@@ -451,7 +508,7 @@ QGroupBox::title {
                         </sizepolicy>
                        </property>
                        <property name="styleSheet">
-                        <string notr="true">background-color: white;</string>
+                        <string notr="true"/>
                        </property>
                        <property name="text">
                         <string/>
@@ -476,9 +533,6 @@ QGroupBox::title {
                          <verstretch>0</verstretch>
                         </sizepolicy>
                        </property>
-                       <property name="styleSheet">
-                        <string notr="true">background-color: white;</string>
-                       </property>
                        <property name="text">
                         <string/>
                        </property>
@@ -502,9 +556,6 @@ QGroupBox::title {
                          <verstretch>0</verstretch>
                         </sizepolicy>
                        </property>
-                       <property name="styleSheet">
-                        <string notr="true">background-color: white;</string>
-                       </property>
                        <property name="text">
                         <string/>
                        </property>
@@ -527,9 +578,6 @@ QGroupBox::title {
                          <horstretch>0</horstretch>
                          <verstretch>0</verstretch>
                         </sizepolicy>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">background-color: white;</string>
                        </property>
                        <property name="text">
                         <string/>
@@ -568,18 +616,9 @@ QGroupBox::title {
                      <bool>false</bool>
                     </property>
                     <property name="styleSheet">
-                     <string notr="true">
-QGroupBox {
-    border: 1px solid gray;
-    border-radius: 9px;
-    margin-top: 0.5em;
-}
-
-QGroupBox::title {
-	color: white;
-	subcontrol-origin: margin;
-    left: 10px;
-    padding: -3 3px 0 3px;
+                     <string notr="true">QLineEdit{
+	background-color: white;
+	border-top-left-radius: 0;
 }</string>
                     </property>
                     <property name="title">
@@ -621,9 +660,6 @@ QGroupBox::title {
                          <horstretch>0</horstretch>
                          <verstretch>0</verstretch>
                         </sizepolicy>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">background-color: white;</string>
                        </property>
                       </widget>
                      </item>
@@ -681,6 +717,21 @@ QPushButton:pressed {
       </widget>
       <widget class="QWidget" name="page_2">
        <layout class="QVBoxLayout" name="verticalLayout_6">
+        <property name="spacing">
+         <number>0</number>
+        </property>
+        <property name="leftMargin">
+         <number>0</number>
+        </property>
+        <property name="topMargin">
+         <number>0</number>
+        </property>
+        <property name="rightMargin">
+         <number>0</number>
+        </property>
+        <property name="bottomMargin">
+         <number>0</number>
+        </property>
         <item>
          <widget class="QFrame" name="outputFrame_2">
           <property name="sizePolicy">
@@ -700,9 +751,6 @@ QPushButton:pressed {
             <width>16777215</width>
             <height>16777215</height>
            </size>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">background-color:rgb(51, 55, 61); border-radius: 15px;</string>
           </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
@@ -822,21 +870,6 @@ QPushButton:pressed {
                    <property name="autoFillBackground">
                     <bool>false</bool>
                    </property>
-                   <property name="styleSheet">
-                    <string notr="true">
-QGroupBox {
-    border: 1px solid gray;
-    border-radius: 9px;
-    margin-top: 0.5em;
-}
-
-QGroupBox::title {
-	color: white;
-	subcontrol-origin: margin;
-    left: 10px;
-    padding: -3 3px 0 3px;
-}</string>
-                   </property>
                    <property name="title">
                     <string>Taken</string>
                    </property>
@@ -907,21 +940,6 @@ QGroupBox::title {
                    </property>
                    <property name="autoFillBackground">
                     <bool>false</bool>
-                   </property>
-                   <property name="styleSheet">
-                    <string notr="true">
-QGroupBox {
-    border: 1px solid gray;
-    border-radius: 9px;
-    margin-top: 0.5em;
-}
-
-QGroupBox::title {
-	color: white;
-	subcontrol-origin: margin;
-    left: 10px;
-    padding: -3 3px 0 3px;
-}</string>
                    </property>
                    <property name="title">
                     <string>Needed</string>

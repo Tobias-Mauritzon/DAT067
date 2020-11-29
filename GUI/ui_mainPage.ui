@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>594</width>
-    <height>417</height>
+    <width>912</width>
+    <height>694</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -155,6 +155,9 @@ QPushButton:pressed {
 }</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_12">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -464,9 +467,9 @@ border-bottom-left-radius: 15;
               <property name="geometry">
                <rect>
                 <x>0</x>
-                <y>-6</y>
-                <width>267</width>
-                <height>509</height>
+                <y>0</y>
+                <width>419</width>
+                <height>513</height>
                </rect>
               </property>
               <property name="sizePolicy">
