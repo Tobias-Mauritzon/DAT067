@@ -469,7 +469,7 @@ border-bottom-left-radius: 15;
                 <x>0</x>
                 <y>0</y>
                 <width>419</width>
-                <height>513</height>
+                <height>574</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -763,6 +763,36 @@ QGroupBox::title {
                          </widget>
                         </item>
                        </layout>
+                      </widget>
+                     </item>
+                    </layout>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QGroupBox" name="groupBox_5">
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
+                    </property>
+                    <property name="title">
+                     <string>Frame Rate</string>
+                    </property>
+                    <layout class="QVBoxLayout" name="verticalLayout_13">
+                     <property name="spacing">
+                      <number>15</number>
+                     </property>
+                     <property name="topMargin">
+                      <number>20</number>
+                     </property>
+                     <item>
+                      <widget class="QRadioButton" name="radioButton_showFrameRate">
+                       <property name="styleSheet">
+                        <string notr="true">color: white;</string>
+                       </property>
+                       <property name="text">
+                        <string>Show frame rate</string>
+                       </property>
                       </widget>
                      </item>
                     </layout>

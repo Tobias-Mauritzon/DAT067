@@ -1,5 +1,6 @@
 import sys
 import cv2
+import time
 
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QWidget
@@ -38,11 +39,14 @@ class MainPage(QtWidgets.QWidget):
 		self.settingsIsActive = True
 		self.outputIsActive = True
 		self.imageColor = "RGB" # start color of image
+		self.frameRateIsShown = False
+		self.prev_frame_time = 0
 		# Start values:
 		self.START_BRIGHTNESS = 0
 		self.START_CONTRAST = 10
 
 		self.faceDetection = False # boolean to activate/deactivate facedetection
+		self.customModelIsActive = False # boolean to activate/deactivate custom model
 
 	# Sets start sizes for widgets in page
 	def initPage(self):
@@ -53,6 +57,7 @@ class MainPage(QtWidgets.QWidget):
 	def loadPage(self):
 		print("load p0")
 		self.cap = cv2.VideoCapture(0,cv2.CAP_DSHOW) # create video capture
+		self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 3) # set buffer size
 		self.timer.start(20) # start timer
 		self.ui.Button_startCam.setText("Stop") # update Button_startCam text
 	
@@ -82,6 +87,7 @@ class MainPage(QtWidgets.QWidget):
 		self.ui.radioButton_Grayscale.toggled.connect(lambda: self.changeImageAppearance("Grayscale"))
 		self.ui.radioButton_Edged.toggled.connect(lambda: self.changeImageAppearance("Edged"))
 		# Set actions for radioButtons
+		self.ui.radioButton_showFrameRate.toggled.connect(self.setFrameRateVisibility)
 		self.ui.radioButton_res_0.toggled.connect(lambda: self.setResolution(160,120))
 		self.ui.radioButton_res_1.toggled.connect(lambda: self.setResolution(320,240))
 		self.ui.radioButton_res_2.toggled.connect(lambda: self.setResolution(640,480))
@@ -130,14 +136,6 @@ class MainPage(QtWidgets.QWidget):
 			return
 		
 		self.update()
-		
-		# set contrast
-		contrast = self.ui.Slider_contrast.value()/10
-		self.ui.Label_contrastValue.setNum(contrast)
-		# set brightness
-		brightness = self.ui.Slider_brightness.value()
-		self.ui.Label_brightnessValue.setNum(brightness)
-		self.image = cv2.addWeighted(self.image,contrast,np.zeros(self.image.shape, self.image.dtype),0,brightness)
 
 		self.convertToQImage()
 		self.resize_camFrame()
@@ -171,8 +169,22 @@ class MainPage(QtWidgets.QWidget):
 			self.channel = 1
 			self.qiFormat = QImage.Format_Grayscale8
 
+			# set contrast
+			contrast = self.ui.Slider_contrast.value()/10
+			self.ui.Label_contrastValue.setNum(contrast)
+			# set brightness
+			brightness = self.ui.Slider_brightness.value()
+			self.ui.Label_brightnessValue.setNum(brightness)
+			self.image = cv2.addWeighted(self.image,contrast,np.zeros(self.image.shape, self.image.dtype),0,brightness)
+
 		if self.faceDetection:
 			self.detectFaces()
+
+		if self.customModelIsActive:
+			self.customModel()
+
+		if self.frameRateIsShown:
+			self.showFrameRate()
 	
 	# Converts the image to a QImage that is used to set the image on the QLabel
 	def convertToQImage(self):
@@ -192,6 +204,29 @@ class MainPage(QtWidgets.QWidget):
 	# Function to change the image appearance
 	def changeImageAppearance(self, appearance):
 			self.imageColor = appearance
+
+	# Function that displays the frame rate
+	def showFrameRate(self):
+		position = (5, 25)
+		font = cv2.FONT_HERSHEY_SIMPLEX # font that is used for the fps output
+		fontScale = 0.8
+		color = (25, 25, 25)
+		thickness = 1
+		new_frame_time = time.time() # time when we finish processing for this frame
+        # fps will be number of frame processed in given time frame 
+        # since their will be most of time error of 0.001 second 
+        # we will be subtracting it to get more accurate result
+		fps = 1/(new_frame_time-self.prev_frame_time)
+		self.prev_frame_time = new_frame_time
+		fps = int(fps) # converting the fps into integer
+		fps = str(fps) # converting the fps into string		
+		cv2.putText(self.image, "FPS: " + fps, position, font, fontScale, color, thickness, cv2.LINE_AA) # puting the FPS count on the frame
+	
+	def setFrameRateVisibility(self):
+		if self.frameRateIsShown:
+			self.frameRateIsShown = False
+		else:
+			self.frameRateIsShown = True
 
 	# Set camera frame visibility
 	def setCameraFrame(self, wantToOpen):
@@ -307,3 +342,38 @@ class MainPage(QtWidgets.QWidget):
 			self.faceDetection = True
 			
 	""" Face detection END """
+
+	""" Custom Model START"""
+	# Funktion för att ladda in bilder så det går att testa.
+	def prepare(self):
+		IMG_SIZE = 100
+		gray = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
+		new_array = cv2.resize(gray, (IMG_SIZE, IMG_SIZE))
+		return new_array.reshape(-1, IMG_SIZE, IMG_SIZE, 1)
+
+	def customModel(self):
+		prediction = self.my_model.predict([self.prepare()])
+		self.check_categeori(prediction)
+	
+	def check_categeori(self,prediction):
+		if (int(prediction[0][0]) == 1):
+			#print("Car")
+			self.ui.Label_object.setText("CAR")
+		elif (int(prediction[0][1]) == 1):
+			#print("Dog")
+			self.ui.Label_object.setText("DOG")
+		elif (int(prediction[0][2]) == 1):
+			#print("Cat")
+			self.ui.Label_object.setText("CAT")
+		else:
+			#print("Not a Car, Cat or a Dog")
+			self.ui.Label_object.setText("Not a Car, Cat or a Dog")
+		return
+	
+	def activateCustomModel(self):
+		# Laddar in den tidigare tränade modellen.
+		self.my_model = tf.keras.models.load_model('saved_model/car_model')
+		if self.customModelIsActive:
+			self.customModelIsActive = False
+		else:
+			self.customModelIsActive = True

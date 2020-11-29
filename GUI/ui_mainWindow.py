@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(399, 280)
+        MainWindow.resize(867, 587)
         MainWindow.setAutoFillBackground(False)
         MainWindow.setStyleSheet("*\n"
 "{\n"
@@ -185,7 +185,7 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addWidget(self.stackedWidget, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 399, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 867, 22))
         self.menubar.setStyleSheet("")
         self.menubar.setObjectName("menubar")
         self.menuView = QtWidgets.QMenu(self.menubar)
@@ -251,6 +251,8 @@ class Ui_MainWindow(object):
         self.actionYOLO.setObjectName("actionYOLO")
         self.actionSSD = QtWidgets.QAction(MainWindow)
         self.actionSSD.setObjectName("actionSSD")
+        self.action_CustomModel = QtWidgets.QAction(MainWindow)
+        self.action_CustomModel.setObjectName("action_CustomModel")
         self.menuView.addAction(self.action_Camera)
         self.menuView.addAction(self.action_SidePanel)
         self.menuView.addAction(self.action_Settings)
@@ -263,6 +265,7 @@ class Ui_MainWindow(object):
         self.menuObject_detection.addAction(self.menuHaar_Cascade.menuAction())
         self.menuObject_detection.addAction(self.actionYOLO)
         self.menuObject_detection.addAction(self.actionSSD)
+        self.menuObject_detection.addAction(self.action_CustomModel)
         self.menuNavigation.addAction(self.action_MainScreen)
         self.menuNavigation.addAction(self.action_Calibration)
         self.menubar.addAction(self.menuView.menuAction())
@@ -300,13 +303,6 @@ class Ui_MainWindow(object):
         self.action_FaceDetection.setText(_translate("MainWindow", "Face Detection"))
         self.actionYOLO.setText(_translate("MainWindow", "YOLO"))
         self.actionSSD.setText(_translate("MainWindow", "SSD"))
+        self.action_CustomModel.setText(_translate("MainWindow", "Custom Model"))
 
 
-if __name__ == "__main__":
-    import sys
-    app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
-    sys.exit(app.exec_())

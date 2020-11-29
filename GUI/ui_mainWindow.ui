@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>399</width>
-    <height>280</height>
+    <width>867</width>
+    <height>587</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -207,7 +207,7 @@ QPushButton:pressed {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>399</width>
+     <width>867</width>
      <height>22</height>
     </rect>
    </property>
@@ -248,6 +248,7 @@ QPushButton:pressed {
     <addaction name="menuHaar_Cascade"/>
     <addaction name="actionYOLO"/>
     <addaction name="actionSSD"/>
+    <addaction name="action_CustomModel"/>
    </widget>
    <widget class="QMenu" name="menuNavigation">
     <property name="tearOffEnabled">
@@ -394,6 +395,11 @@ QPushButton:pressed {
   <action name="actionSSD">
    <property name="text">
     <string>SSD</string>
+   </property>
+  </action>
+  <action name="action_CustomModel">
+   <property name="text">
+    <string>Custom Model</string>
    </property>
   </action>
  </widget>
