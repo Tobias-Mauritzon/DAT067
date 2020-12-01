@@ -185,11 +185,9 @@ class MainPage(QtWidgets.QWidget):
 
 		if self.faceDetection:
 			self.__detectFaces()
-
-		if self.customModelIsActive:
+		elif self.customModelIsActive:
 			self.__customModel()
-
-		if self.frameRateIsShown:
+		elif self.frameRateIsShown:
 			self.__showFrameRate()
 	
 	# Converts the image to a QImage that is used to set the image on the QLabel
@@ -316,34 +314,22 @@ class MainPage(QtWidgets.QWidget):
 	def __detectFaces(self):
 
 		#Filters that are searching for different things, in this case 'the front of the face and the eyes'
-		face_cascade = cv2.CascadeClassifier('cascades/haarcascade_frontalface_alt2.xml')
-		eye_cascade = cv2.CascadeClassifier('cascades/haarcascade_eye.xml')
+		myCascade = cv2.CascadeClassifier('cascades/haarcascade_russian_plate_number.xml')
 		#Convert to gray
 		gray = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
-		faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
-		for(x, y, w, h) in faces:
+		objects = myCascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
+		for(x, y, w, h) in objects:
 			color = (255,0,0)
 			stroke = 2
 			end_cord_x = x + w
 			end_cord_y = y + h
 			#Draws the rectangle around the face
-			face_rectangle = cv2.rectangle(self.image, (x, y), (end_cord_x, end_cord_y), color, stroke)
+			objectRectangle = cv2.rectangle(self.image, (x, y), (end_cord_x, end_cord_y), color, stroke)
 
 			font = cv2.FONT_HERSHEY_SIMPLEX
 			#Display the text
-			cv2.putText(face_rectangle,"FACE",(x, y-10), font, 0.5, (11,255,255), 2, cv2.LINE_AA)
+			cv2.putText(objectRectangle,"FACE",(x, y-10), font, 0.5, (11,255,255), 2, cv2.LINE_AA)
 
-			roi_gray = gray[y:y+h, x:x+w]
-			roi_color = self.image[y:y+h, x:x+w]
-			eyes = eye_cascade.detectMultiScale(roi_gray)
-			for(ex,ey,ew,eh) in eyes:
-				#Draws a rectangle within the face and around the eyes
-				cv2.rectangle(roi_color, (ex,ey), (ex+ew,ey+eh),(0,255,0), 2)
-				#Draws a circle within the face and around the eyes
-				#cv2.circle(self.image,(int(x+ex+ew/2),int(y+ey+eh/2)),int(ey/2),(0,255,0),1)
-			#Saves a picture of the last face seen when the application is closed
-			#img_item = "lastFace.png"
-			#cv2.imwrite(img_item, roi_gray)
 
 	def activateFaceDetection(self):
 		if self.faceDetection:
