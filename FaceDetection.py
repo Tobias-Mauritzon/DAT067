@@ -1,9 +1,8 @@
 import numpy as np
 import cv2
 
-#Filters that are searching for different things, in this case 'the front of the face and the eyes'
-face_cascade = cv2.CascadeClassifier('cascades/haarcascade_frontalface_alt2.xml')
-eye_cascade = cv2.CascadeClassifier('cascades/haarcascade_eye.xml')
+#Filters that are searching for different things, in this case a numberplate
+plate_cascade = cv2.CascadeClassifier('cascades/haarcascade_russian_plate_number.xml')
 
 #Starting the camera.
 cap = cv2.VideoCapture(0)
@@ -12,31 +11,31 @@ cap = cv2.VideoCapture(0)
 while(True):
     #Capture frame by frame
     ret, frame = cap.read()
+
     #Convert to gray
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    faces = face_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
-    for(x, y, w, h) in faces:
+    plates = plate_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
+
+    
+    for(x, y, w, h) in plates:
         color = (255,0,0)
         stroke = 2
         end_cord_x = x + w
         end_cord_y = y + h
-        #Draws the rectangle around the face
-        face_rectangle = cv2.rectangle(frame, (x, y), (end_cord_x, end_cord_y), color, stroke)
+        #Draws the rectangle around the numberplate
+        plate_rectangle = cv2.rectangle(frame, (x, y), (end_cord_x, end_cord_y), color, stroke)
 
         
         font = cv2.FONT_HERSHEY_SIMPLEX
         #Display the text
-        cv2.putText(face_rectangle,"FACE",(x, y-10), font, 0.5, (11,255,255), 2, cv2.LINE_AA)
+        cv2.putText(plate_rectangle,"CAR",(x, y-10), font, 0.5, (11,255,255), 2, cv2.LINE_AA)
 
         roi_gray = gray[y:y+h, x:x+w]
         roi_color = frame[y:y+h, x:x+w]
-        eyes = eye_cascade.detectMultiScale(roi_gray)
-        for(ex,ey,ew,eh) in eyes:
-            #Draws a rectangle within the face and around the eyes
-            cv2.rectangle(roi_color, (ex,ey), (ex+ew,ey+eh),(0,255,0), 2)
 
-        #Saves a picture of the last face seen when the application is closed
-        img_item = "lastFace.png"
+
+        #Saves a picture of the last numberplate seen when the application is closed
+        img_item = "lastPlate.png"
         cv2.imwrite(img_item, roi_gray)
 
     #Display resulting frame    
