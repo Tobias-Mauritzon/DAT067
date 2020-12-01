@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>867</width>
+    <height>587</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">*
+{
+	background-color: rgb(35, 35, 38);
+}
+
+QMenuBar{
+	background-color: rgb(35, 35, 38);
+	color: white;
+}
+
+QMenuBar::item::selected {
+	background-color: rgb(51, 55, 61);
+}
+
+/*QMenu*/
+QMenu{
+	background-color: rgb(51, 55, 61);
+	color: white;
+	selection-color: black;
+	selection-background-color: #E4E4E5;
+}
+
+
+/* VERTICAL SCROLLBAR */
+QScrollBar:vertical
+ {
+     background-color: red;
+     width: 15px;
+     margin: 15px 3px 15px 3px;
+     border: 1px transparent #2A2929;
+     border-radius: 4px;
+ }
+
+/*  HANDLE BAR VERTICAL */
+ QScrollBar::handle:vertical
+ {
+     background-color: rgb(35, 35, 38);         /* Handle color */
+     min-height: 5px;
+     border-radius: 4px;
+ }
+
+QScrollBar::handle:vertical:hover{	
+	background-color: #0D0D0D;
+}
+QScrollBar::handle:vertical:pressed {	
+	background-color: #0D0D0D;
+}
+
+ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical
+ {
+     background: none;
+ }
+
+
+ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
+ {
+     background: none;
+ }
+
+/* Disable top and bottom arrows*/
+QScrollBar::add-line:vertical {
+      border: none;
+      background: none;
+}
+
+QScrollBar::sub-line:vertical {
+      border: none;
+      background: none;
+}
+
+
+/*Slider*/
+
+
+/*
+QSlider::groove:horizontal { 
+	background-color: black;
+	border: 0px solid; 
+	height: 5px; 
+	border-radius: 4px;
+}
+
+QSlider::handle:horizontal { 
+	background-color: white; 
+	border: 2px solid; 
+	width: 10px; 
+	height: 20px; 
+	line-height: 20px; 
+	margin-top: -5px; 
+	margin-bottom: -5px; 
+	border-radius: 7px; 
+}
+*/
+
+QSlider::groove:horizontal {
+	background: white;
+	height: 5px;
+}
+
+QSlider::sub-page:horizontal {
+background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #49BF88, stop: 1 #7289DA);
+border: 0px solid #777;
+height: 10px;
+border-radius: 7px;
+}
+
+QSlider::add-page:horizontal {
+background: #fff;
+border: 1px solid #777;
+height: 10px;
+border-radius: 7px;
+}
+
+QSlider::handle:horizontal {
+background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+    stop:0 #eee, stop:1 #ccc);
+border: 1px solid #777;
+width: 13px;
+margin-top: -5px;
+margin-bottom: -5px;
+border-radius: 7px;
+}
+
+QSlider::handle:horizontal:hover {
+background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+    stop:0 #fff, stop:1 #ddd);
+border: 1px solid #444;
+border-radius: 7px;
+}
+
+QSlider::sub-page:horizontal:disabled {
+background: #bbb;
+border-color: #999;
+}
+
+QSlider::add-page:horizontal:disabled {
+background: #eee;
+border-color: #999;
+}
+
+QSlider::handle:horizontal:disabled {
+background: #eee;
+border: 1px solid #aaa;
+border-radius: 7px;
+}
+
+
+/*Buttons*/
+
+QPushButton{
+	background-color: white;
+	border-radius: 10;
+}
+
+QPushButton:pressed {	
+	background-color: #bcbcbc;
+}
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout_2">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QStackedWidget" name="stackedWidget">
+      <property name="currentIndex">
+       <number>-1</number>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>867</width>
+     <height>22</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true"/>
+   </property>
+   <widget class="QMenu" name="menuView">
+    <property name="autoFillBackground">
+     <bool>false</bool>
+    </property>
+    <property name="title">
+     <string>View</string>
+    </property>
+    <addaction name="action_Camera"/>
+    <addaction name="action_SidePanel"/>
+    <addaction name="action_Settings"/>
+    <addaction name="action_Output"/>
+   </widget>
+   <widget class="QMenu" name="menuHelp">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="action_HowToUse"/>
+    <addaction name="action_About"/>
+    <addaction name="separator"/>
+   </widget>
+   <widget class="QMenu" name="menuObject_detection">
+    <property name="title">
+     <string>Object Detection</string>
+    </property>
+    <widget class="QMenu" name="menuHaar_Cascade">
+     <property name="title">
+      <string>Haar Cascade</string>
+     </property>
+     <addaction name="action_HaarCascade_Cars"/>
+    </widget>
+    <addaction name="actionCar_detection"/>
+    <addaction name="menuHaar_Cascade"/>
+    <addaction name="actionYOLO"/>
+    <addaction name="actionSSD"/>
+    <addaction name="action_CustomModel"/>
+   </widget>
+   <widget class="QMenu" name="menuNavigation">
+    <property name="tearOffEnabled">
+     <bool>false</bool>
+    </property>
+    <property name="title">
+     <string>Navigation</string>
+    </property>
+    <addaction name="action_MainScreen"/>
+    <addaction name="action_Calibration"/>
+   </widget>
+   <addaction name="menuView"/>
+   <addaction name="menuNavigation"/>
+   <addaction name="menuObject_detection"/>
+   <addaction name="menuHelp"/>
+  </widget>
+  <action name="actionView">
+   <property name="text">
+    <string>View</string>
+   </property>
+  </action>
+  <action name="action_HowToUse">
+   <property name="text">
+    <string>How to use</string>
+   </property>
+  </action>
+  <action name="action_About">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="action_Camera">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Camera</string>
+   </property>
+  </action>
+  <action name="actionControls">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Controls</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Settings</string>
+   </property>
+  </action>
+  <action name="actionOutput">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Output</string>
+   </property>
+  </action>
+  <action name="actionSettings_2">
+   <property name="text">
+    <string>Settings</string>
+   </property>
+  </action>
+  <action name="actionOutput_2">
+   <property name="text">
+    <string>Output</string>
+   </property>
+  </action>
+  <action name="action_SidePanel">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Side panel</string>
+   </property>
+  </action>
+  <action name="actionCar_detection">
+   <property name="text">
+    <string>CNN</string>
+   </property>
+  </action>
+  <action name="action_Settings">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Settings</string>
+   </property>
+  </action>
+  <action name="action_Output">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Output</string>
+   </property>
+  </action>
+  <action name="action_MainScreen">
+   <property name="text">
+    <string>Main</string>
+   </property>
+  </action>
+  <action name="action_Calibration">
+   <property name="text">
+    <string>Calibration</string>
+   </property>
+  </action>
+  <action name="action_HaarCascade_Cars">
+   <property name="text">
+    <string>Cars</string>
+   </property>
+  </action>
+  <action name="actionYOLO">
+   <property name="text">
+    <string>YOLO</string>
+   </property>
+  </action>
+  <action name="actionSSD">
+   <property name="text">
+    <string>SSD</string>
+   </property>
+  </action>
+  <action name="action_CustomModel">
+   <property name="text">
+    <string>Custom Model</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

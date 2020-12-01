@@ -1,214 +1,111 @@
-import sys
-import cv2
-
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWidgets import QWidget
-from PyQt5.QtGui import QImage
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import QTimer
-import numpy as np
-from ui_mainWindow import *
+from GUI.ui_mainWindow import *
+from mainPage import *
+from calibrationPage import *
 
 # Author: Philip
-# Reviewed by:
-# Date: 2020-11-16
+# Reviewed by: Andreas
+# Date: 2020-12-01
 
-# MainWindow inherits QWidget and creates a window with the ui(ui_mainWindow.py) made with Qt designer
+"""
+MainWindow creates the main window for the application. It has a topbar and a stack widget where different "pages" can be shown.
+This class inherits QMainWindow and creates a window with the ui(ui_mainWindow.py) made with Qt designer.
+Notice that a "page" is reffered to as a QWidget that is used on the MainWindow's stack widget.
+"""
 class MainWindow(QtWidgets.QMainWindow):
- 
     # class constructor
     def __init__(self,windowName):
-        # call QWidget constructor
-        super().__init__()
+        super().__init__() # call QMainWindow constructor
+        self.ui = Ui_MainWindow() # create ui
+        self.ui.setupUi(self) # set ui
+        self.setWindowTitle(windowName) # set window title
+        self.resize(1200,800) # set start size of window
+        self.page_0 = MainPage(self) # create page 0
+        self.ui.stackedWidget.addWidget(self.page_0) # add page 0
+        self.page_1 = CalibrationPage(self) # create page 1
+        self.ui.stackedWidget.addWidget(self.page_1) # add page 1
+        self.currentPage = 0 # current page
+        self.__setMenuActions() # set actions on menubar buttons
 
-        # create ui
-        self.ui = Ui_MainWindow()
-        self.ui.setupUi(self)
-
-        # set window name
-        self.setWindowTitle(windowName)
-
-        self.setActions()
-
-        # instantiate event filter
-        self.installEventFilter(self)
-
-        # create a timer
-        self.timer = QTimer()
-        # set timer timeout callback function
-        self.timer.timeout.connect(self.viewCam)
-
-        # the pixMap used to set the image on a QLabel
-        self.pix = None
-        # the width and height of the QLabel 
-        self.w = 0
-        self.h = 0
-        
-        self.cameraFrameIsActive = True
-        self.sidePanelIsActive = True
-        self.ui.Splitter_frame.setSizes([1000,500])
-        self.ui.Splitter_sidePanel.setSizes([3,2])
-        self.imageColor = "RGB"
-
-        # Start values:
-        self.start_brightness = 0
-        self.start_contrast = 10
-
-    # resizes the cam frame
-    def resize_camFrame(self):
-        if self.pix is not None:
-            self.w = self.ui.image_label.width()
-            self.h = self.ui.image_label.height()
-            self.ui.image_label.setPixmap(self.pix.scaled(self.w, self.h,QtCore.Qt.KeepAspectRatio))
+    # Function that opens a specific page
+    def openPage(self,pageIndex):
+        if pageIndex == 0:
+            self.ui.menuObject_detection.menuAction().setVisible(True)
+            self.ui.menuView.menuAction().setVisible(True)
+            self.ui.stackedWidget.setCurrentIndex(0)
+            self.page_1.closePage()
+            self.page_0.loadPage()
+            self.currentPage = 0
+        elif pageIndex == 1:
+            self.ui.menuObject_detection.menuAction().setVisible(False)
+            self.ui.menuView.menuAction().setVisible(False)
+            self.ui.stackedWidget.setCurrentIndex(1)
+            self.page_0.closePage()
+            self.page_1.loadPage()
+            self.currentPage = 1
     
-    # event for when the window is resized
-    def eventFilter(self, obj, event):
-        if (event.type() == QtCore.QEvent.Resize):
-            self.resize_camFrame()
-        return super().eventFilter(obj, event)
+    # Sets actions for top menus
+    def __setMenuActions(self):
+        """View"""
+        self.ui.action_Camera.triggered.connect(lambda: self.page_0.setCameraFrame(self.ui.action_Camera.isChecked()))
+        self.ui.action_SidePanel.triggered.connect(lambda: self.page_0.setSidePanel(self.ui.action_SidePanel.isChecked()))
+        self.ui.action_SidePanel.triggered.connect(lambda: self.__checkSidePanelActions(self.ui.action_SidePanel.isChecked()))
+        self.ui.action_Settings.triggered.connect(lambda: self.page_0.setSettingsPanel(self.ui.action_Settings.isChecked(),self.ui.action_SidePanel.isChecked(),self.ui.action_Output.isChecked()))
+        self.ui.action_Settings.triggered.connect(lambda: self.__setSidePanelAction(self.ui.action_Settings.isChecked(),self.ui.action_Output.isChecked()))
+        self.ui.action_Output.triggered.connect(lambda: self.page_0.setOutPutPanel(self.ui.action_Output.isChecked(),self.ui.action_SidePanel.isChecked(),self.ui.action_Settings.isChecked()))
+        self.ui.action_Output.triggered.connect(lambda: self.__setSidePanelAction(self.ui.action_Settings.isChecked(),self.ui.action_Output.isChecked()))
+        """Navigation"""
+        self.ui.action_MainScreen.triggered.connect(lambda: self.openPage(0))
+        self.ui.action_Calibration.triggered.connect(lambda: self.openPage(1))
+        """Object Detection"""
+        self.ui.action_HaarCascade_Cars.triggered.connect(lambda: self.page_0.activateHaarCascade("Cars"))
+        self.ui.action_CustomModel.triggered.connect(self.page_0.activateCustomModel)
+        """Help"""
+        self.ui.action_HowToUse.triggered.connect(self.__showHowToUse)
+        self.ui.action_About.triggered.connect(self.__showAbout)
+
+    # Help-function that is used to check/uncheck the settings and output buttons on the menubar when the sidepanel button is pressed
+    def __checkSidePanelActions(self, wantToCheck):
+        self.ui.action_Settings.setChecked(wantToCheck)
+        self.ui.action_Output.setChecked(wantToCheck)
     
-    # Sets actions for GUI-objects
-    def setActions(self):
-        # Set action for start button
-        self.ui.Button_startCam.clicked.connect(self.controlTimer)
-        # Set action for topBar menu actions
-        self.ui.actionCamera.triggered.connect(self.showCameraFrame)
-        self.ui.actionSidePanel.triggered.connect(self.showSidePanel)
-        # Set action for radioButtons
-        self.ui.radioButton_RGB.toggled.connect(self.radioButton_RGB_clicked)
-        self.ui.radioButton_Grayscale.toggled.connect(self.radioButton_Grayscale_clicked)
-        self.ui.radioButton_Edged.toggled.connect(self.radioButton_Edged_clicked)
-        # Set action for reset button
-        self.ui.Button_reset.clicked.connect(self.resetSettingValues)
+    # Help-function that is used to check/uncheck the action_SidePanel
+    def __setSidePanelAction(self, settinsIsChecked, outputIsChecked):
+        if settinsIsChecked or outputIsChecked:
+            self.ui.action_SidePanel.setChecked(True)
+        elif not settinsIsChecked and not outputIsChecked:
+            self.ui.action_SidePanel.setChecked(False)
 
-    # Sets all ui-objects to default values
-    def resetSettingValues(self):
-        self.ui.Slider_brightness.setValue(self.start_brightness)
-        self.ui.Label_brightnessValue.setNum(self.start_brightness)
-        self.ui.Slider_contrast.setValue(self.start_contrast)
-        self.ui.Label_contrastValue.setNum(self.start_contrast)
-        self.ui.radioButton_RGB.toggle()
+    # Shows a dialogmenu with text from the how_to_use.txt file
+    def __showHowToUse(self):
+        dialogMenu = DialogMenu(self)
+        dialogMenu.setTitle("<strong>How To Use</strong>")
+        dialogMenu.setFixedHeight(500)
+        dialogMenu.setFixedWidth(500)
+        dialogMenu.centerOnWindow()
+        dialogMenu.setInformationTextFromFile("How_to_use.txt")
+        dialogMenu.setTopButtonText("Ok")
+        dialogMenu.ui.PushButton_bottom.setVisible(False)
+        dialogMenu.ui.PushButton_top.clicked.connect(dialogMenu.close)
+        dialogMenu.exec_()
     
-    # Function for RGB-radiobutton, change the image color to edged
-    def radioButton_RGB_clicked(self, enabled):
-        if enabled:
-            self.imageColor = "RGB"
-            
-    # Function for Grayscale-radiobutton, change the image color to edged
-    def radioButton_Grayscale_clicked(self, enabled):
-        if enabled:
-            self.imageColor = "Grayscale"
+    # Shows a dialogmenu with text from the About.txt file
+    def __showAbout(self):
+        dialogMenu = DialogMenu(self)
+        dialogMenu.setTitle("<strong>Written By:</strong>")
+        dialogMenu.setFixedHeight(400)
+        dialogMenu.centerOnWindow()
+        dialogMenu.centerText()
+        dialogMenu.setInformationTextFromFile("About.txt")
+        dialogMenu.setTopButtonText("Ok")
+        dialogMenu.ui.PushButton_bottom.setVisible(False)
+        dialogMenu.ui.PushButton_top.clicked.connect(dialogMenu.close)
+        dialogMenu.exec_()
 
-    # Function for Edged-radiobutton, change the image color to edged
-    def radioButton_Edged_clicked(self, enabled):
-        if enabled:
-            self.imageColor = "Edged"
-
-    # Funktion that enables/disables the camera frame
-    def showCameraFrame(self):
-        if self.cameraFrameIsActive is True:
-            self.ui.Splitter_frame.setSizes([0,16777215])
-            self.ui.cameraFrame.setVisible(False)
-            self.cameraFrameIsActive = False
-        else:
-            self.ui.Splitter_frame.setSizes([1000,500])
-            self.ui.cameraFrame.setVisible(True)
-            self.cameraFrameIsActive = True
-         
-    # Funktion that enables/disables the side panel
-    def showSidePanel(self):
-        if self.sidePanelIsActive is True:
-            self.ui.Splitter_frame.setSizes([16777215,0])
-            self.ui.sidePanel.setVisible(False)
-            self.sidePanelIsActive = False
-        else:
-            self.ui.Splitter_frame.setSizes([1000,500])
-            self.ui.sidePanel.setVisible(True)
-            self.sidePanelIsActive = True
-    
-    # view camera
-    def viewCam(self):
-        # read image in BGR format
-        ret, image = self.cap.read()
-
-        # convert image to RGB format
-        if self.imageColor == "RGB":
-            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            height, width, channel = image.shape
-            qiFormat = QImage.Format_RGB888
-        # convert image to Grayscale format
-        elif self.imageColor == "Grayscale":
-            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            image = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-            height, width = image.shape
-            channel = 1
-            qiFormat = QImage.Format_Grayscale8
-        # convert image to Edged format
-        elif self.imageColor == "Edged":
-            image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-            gray = cv2.cvtColor(image,cv2.COLOR_BGR2GRAY)
-            blur = cv2.GaussianBlur(gray,(5,5),0)
-            edged = cv2.Canny(blur,35,125)
-            image = edged
-            height, width = image.shape
-            channel = 1
-            qiFormat = QImage.Format_Grayscale8
-
-        # calculate step
-        step = channel * width
-
-        # set contrast
-        contrast = self.ui.Slider_contrast.value()/10
-        self.ui.Label_contrastValue.setNum(contrast)
-        # set brightness
-        brightness = self.ui.Slider_brightness.value()
-        self.ui.Label_brightnessValue.setNum(brightness)
-
-        image = cv2.addWeighted(image,contrast,np.zeros(image.shape, image.dtype),0,brightness)
-        # create QImage from image
-        qImg = QImage(image.data, width, height, step, qiFormat)
-        self.pix = QPixmap.fromImage(qImg)
-        self.resize_camFrame()
-
-        # save images
-        self.saveImages(cv2.cvtColor(image, cv2.COLOR_BGR2RGB),5)
-    
-    # writes the image to _pycache_ folder
-    def saveImages(self, img, amount):
-        for i in range(amount):
-            cv2.imwrite("image-" + str(i) + ".jpg", img)
-        
-    # start/stop timer
-    def controlTimer(self):
-        # if timer is stopped
-        if not self.timer.isActive():
-            # create video capture
-            self.cap = cv2.VideoCapture(0,cv2.CAP_DSHOW)
-
-            #focus = 25  # min: 0, max: 255, increment:5
-            
-            #self.cap.set(cv2.CAP_PROP_FOCUS,focus)
-            
-            # start timer
-            self.timer.start(20)
-            # update Button_startCam text
-            self.ui.Button_startCam.setText("Stop")
-        # if timer is started
-        else:
-            # stop timer
-            self.timer.stop()
-            # release video capture
-            self.cap.release()
-            # update Button_startCam text
-            self.ui.Button_startCam.setText("Start")
-    
-
-# this is the "main function" that makes an instance of the mainWindow
+"""THIS "main" IS ONLY USED FOR TESTING PURPOSES"""
+# Use this if you want to start without the loading window.
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-
     # create and show mainWindow
-    mainWindow = MainWindow("Application")
+    mainWindow = MainWindow("TEST OF APPLICATION")
     mainWindow.show()
-
     sys.exit(app.exec_())
