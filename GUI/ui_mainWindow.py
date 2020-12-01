@@ -245,8 +245,8 @@ class Ui_MainWindow(object):
         self.action_MainScreen.setObjectName("action_MainScreen")
         self.action_Calibration = QtWidgets.QAction(MainWindow)
         self.action_Calibration.setObjectName("action_Calibration")
-        self.action_FaceDetection = QtWidgets.QAction(MainWindow)
-        self.action_FaceDetection.setObjectName("action_FaceDetection")
+        self.action_HaarCascade_Cars = QtWidgets.QAction(MainWindow)
+        self.action_HaarCascade_Cars.setObjectName("action_HaarCascade_Cars")
         self.actionYOLO = QtWidgets.QAction(MainWindow)
         self.actionYOLO.setObjectName("actionYOLO")
         self.actionSSD = QtWidgets.QAction(MainWindow)
@@ -260,7 +260,7 @@ class Ui_MainWindow(object):
         self.menuHelp.addAction(self.action_HowToUse)
         self.menuHelp.addAction(self.action_About)
         self.menuHelp.addSeparator()
-        self.menuHaar_Cascade.addAction(self.action_FaceDetection)
+        self.menuHaar_Cascade.addAction(self.action_HaarCascade_Cars)
         self.menuObject_detection.addAction(self.actionCar_detection)
         self.menuObject_detection.addAction(self.menuHaar_Cascade.menuAction())
         self.menuObject_detection.addAction(self.actionYOLO)
@@ -300,9 +300,17 @@ class Ui_MainWindow(object):
         self.action_Output.setText(_translate("MainWindow", "Output"))
         self.action_MainScreen.setText(_translate("MainWindow", "Main"))
         self.action_Calibration.setText(_translate("MainWindow", "Calibration"))
-        self.action_FaceDetection.setText(_translate("MainWindow", "Face Detection"))
+        self.action_HaarCascade_Cars.setText(_translate("MainWindow", "Cars"))
         self.actionYOLO.setText(_translate("MainWindow", "YOLO"))
         self.actionSSD.setText(_translate("MainWindow", "SSD"))
         self.action_CustomModel.setText(_translate("MainWindow", "Custom Model"))
 
 
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    MainWindow = QtWidgets.QMainWindow()
+    ui = Ui_MainWindow()
+    ui.setupUi(MainWindow)
+    MainWindow.show()
+    sys.exit(app.exec_())

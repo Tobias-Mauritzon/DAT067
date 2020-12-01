@@ -261,7 +261,7 @@ class Ui_Dialog(object):
         self.Label_informationText.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse)
         self.Label_informationText.setObjectName("Label_informationText")
         self.verticalLayout_4.addWidget(self.Label_informationText)
-        self.verticalLayout_6.addWidget(self.textFrame, 0, QtCore.Qt.AlignTop)
+        self.verticalLayout_6.addWidget(self.textFrame, 0, QtCore.Qt.AlignVCenter)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout_5.addWidget(self.scrollArea)
         self.verticalLayout_2.addWidget(self.frame_3)

@@ -1,23 +1,14 @@
-import sys
-import cv2
-
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWidgets import QWidget
-from PyQt5.QtGui import QImage
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import QTimer
-import numpy as np
-
+from GUI.ui_mainWindow import *
 from mainPage import *
 from calibrationPage import *
-from GUI.ui_mainWindow import *
 
 # Author: Philip
-# Reviewed by:
-# Date: 2020-11-25
+# Reviewed by: Andreas
+# Date: 2020-12-01
 
 """
-MainWindow inherits QMainWindow and creates a window with the ui(ui_mainWindow.py) made with Qt designer
+MainWindow creates the main window for the application. It has a topbar and a stack widget where different "pages" can be shown.
+This class inherits QMainWindow and creates a window with the ui(ui_mainWindow.py) made with Qt designer.
 Notice that a "page" is reffered to as a QWidget that is used on the MainWindow's stack widget.
 """
 class MainWindow(QtWidgets.QMainWindow):
@@ -66,7 +57,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.action_MainScreen.triggered.connect(lambda: self.openPage(0))
         self.ui.action_Calibration.triggered.connect(lambda: self.openPage(1))
         """Object Detection"""
-        self.ui.action_FaceDetection.triggered.connect(self.page_0.activateFaceDetection)
+        self.ui.action_HaarCascade_Cars.triggered.connect(lambda: self.page_0.activateHaarCascade("Cars"))
         self.ui.action_CustomModel.triggered.connect(self.page_0.activateCustomModel)
         """Help"""
         self.ui.action_HowToUse.triggered.connect(self.__showHowToUse)
@@ -84,6 +75,7 @@ class MainWindow(QtWidgets.QMainWindow):
         elif not settinsIsChecked and not outputIsChecked:
             self.ui.action_SidePanel.setChecked(False)
 
+    # Shows a dialogmenu with text from the how_to_use.txt file
     def __showHowToUse(self):
         dialogMenu = DialogMenu(self)
         dialogMenu.setTitle("<strong>How To Use</strong>")
@@ -96,6 +88,7 @@ class MainWindow(QtWidgets.QMainWindow):
         dialogMenu.ui.PushButton_top.clicked.connect(dialogMenu.close)
         dialogMenu.exec_()
     
+    # Shows a dialogmenu with text from the About.txt file
     def __showAbout(self):
         dialogMenu = DialogMenu(self)
         dialogMenu.setTitle("<strong>Written By:</strong>")
@@ -108,11 +101,11 @@ class MainWindow(QtWidgets.QMainWindow):
         dialogMenu.ui.PushButton_top.clicked.connect(dialogMenu.close)
         dialogMenu.exec_()
 
-# Use this if you want to start without the loading window
+"""THIS "main" IS ONLY USED FOR TESTING PURPOSES"""
+# Use this if you want to start without the loading window.
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-
     # create and show mainWindow
-    mainWindow = MainWindow("test")
+    mainWindow = MainWindow("TEST OF APPLICATION")
     mainWindow.show()
     sys.exit(app.exec_())

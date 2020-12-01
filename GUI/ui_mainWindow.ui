@@ -242,7 +242,7 @@ QPushButton:pressed {
      <property name="title">
       <string>Haar Cascade</string>
      </property>
-     <addaction name="action_FaceDetection"/>
+     <addaction name="action_HaarCascade_Cars"/>
     </widget>
     <addaction name="actionCar_detection"/>
     <addaction name="menuHaar_Cascade"/>
@@ -382,9 +382,9 @@ QPushButton:pressed {
     <string>Calibration</string>
    </property>
   </action>
-  <action name="action_FaceDetection">
+  <action name="action_HaarCascade_Cars">
    <property name="text">
-    <string>Face Detection</string>
+    <string>Cars</string>
    </property>
   </action>
   <action name="actionYOLO">

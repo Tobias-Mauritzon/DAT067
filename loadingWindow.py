@@ -1,11 +1,13 @@
 import threading
+import sys
+from PyQt5.QtWidgets import QApplication
 from GUI.ui_loadingWindow import *
 from dialogMenu import *
 from pathlib import Path
 
 # Author: Philip
-# Reviewed by:
-# Date: 2020-11-24
+# Reviewed by: Andreas
+# Date: 2020-12-01
 
 # Global values
 counter = 0.0
@@ -13,7 +15,8 @@ increments = 1.0
 applicationWindow = None
 
 """
-This class handles the loading window that opens the program
+LoadingWindow is class that handles the loading window that opens the program. 
+It starts the loading window, imports modules used by the application, checks if calibration is needed and boots up the main application.
 """
 class LoadingWindow(QtWidgets.QMainWindow):
     def __init__(self):

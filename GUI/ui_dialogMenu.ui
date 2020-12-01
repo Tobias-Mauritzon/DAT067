@@ -311,7 +311,7 @@ border-radius: 7px;
              <property name="bottomMargin">
               <number>0</number>
              </property>
-             <item alignment="Qt::AlignTop">
+             <item alignment="Qt::AlignVCenter">
               <widget class="QFrame" name="textFrame">
                <property name="sizePolicy">
                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">

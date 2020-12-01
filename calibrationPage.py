@@ -1,33 +1,32 @@
-import sys
 import cv2
-
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWidgets import QWidget
+import time
+import numpy as np
 from PyQt5.QtGui import QImage
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtGui import QIntValidator
 from PyQt5.QtGui import QDoubleValidator
 from PyQt5.QtCore import QTimer
-import numpy as np
-from GUI.ui_calibrationPage import * 
-from CameraCalibration import * 
-from threading import Thread
 from pathlib import Path
+from GUI.ui_calibrationPage import * 
 from dialogMenu import *
 
 # Author: Philip
-# Authot: William
-# Reviewed by:
-# Date: 2020-11-25
+# Author: William
+# Reviewed by: Andreas
+# Date: 2020-12-01
 
+"""
+CalibrationPage inherits QWidget and creates a calibration page with the ui(ui_calibrationPage.py) made with Qt designer.
+The class creates a page with all the functions for the calibraiton.
+"""
 class CalibrationPage(QtWidgets.QWidget):
-    def __init__(self,mainWindow):
+    def __init__(self, mainWindow):
         super().__init__()
-        self.mainWindow = mainWindow
-        self.ui = Ui_CalibrationPage()
-        self.ui.setupUi(self)
+        self.mainWindow = mainWindow # the main window of the application
+        self.ui = Ui_CalibrationPage() # create ui
+        self.ui.setupUi(self) # call setup funktion in ui
         self.timer = QTimer() # create a timer
-        self.timer.timeout.connect(self.__viewCam) # set timer timeout callback function
+        self.timer.timeout.connect(self.__update) # set timer timeout callback function
         self.__initLineEdits() # initialize the line edits
         self.ui.stackedWidget.setCurrentIndex(0) # start with page 0 (insert values page)
         self.__setActions() # set actions
@@ -38,8 +37,6 @@ class CalibrationPage(QtWidgets.QWidget):
         self.objectDistance = 0.0
 
         self.calibrating = False # boolean that is true while calibrating
-        self.capture = False # boolean that is true when the button capture is pressed
-
         self.cap = None # the captured image
 
     # Load this page
@@ -73,55 +70,41 @@ class CalibrationPage(QtWidgets.QWidget):
         self.ui.lineEdit_SquareCorners.clear()
         self.ui.lineEdit_SquareWidth.clear()
 
-    """ Main camera loop START"""
-    def __viewCam(self):
-         # read image in BGR format
-        ret, self.image = self.cap.read()
-        if self.image is None:
+    """Main camera loop START"""      
+    # Update function for the camera, this function runs in a loop
+    def __update(self):
+        # read image in BGR format
+        success, self.image = self.cap.read()
+
+        # if no image was received, show popup
+        if not success:
             self.__no_camera_available_popUp()
             return
-        self.__update()
-        self.__convertToQImage()
-        self.__resize_camFrame()
-        # set image to image label
-        self.ui.image_label.setPixmap(self.pix.scaled(self.w, self.h,QtCore.Qt.KeepAspectRatio))
 
-    # Update funktion for the camera, this function runs in a loop
-    def __update(self):
-         # convert image to RGB format
-        self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
+        self.__convert2Grayscale() # convert the image to grayscale format
+        if self.calibrating:
+            self.__calibrate() # calibrate if calibration is active
+        self.__convertToQImage() # convert to QImage that can be used on the QLabel
+        self.__resize_camFrame() # resize the image
+
+        self.ui.image_label.setPixmap(self.pix.scaled(self.w, self.h,QtCore.Qt.KeepAspectRatio)) # set image to image label
+
+    # Converts the image to grayscale format
+    def __convert2Grayscale(self):
         self.image = cv2.cvtColor(self.image,cv2.COLOR_BGR2GRAY)
         self.height, self.width = self.image.shape
         self.channel = 1
         self.qiFormat = QImage.Format_Grayscale8
 
-        if self.calibrating:
-            self.image = cv2.cvtColor(self.image,cv2.COLOR_GRAY2RGB)
-            self.height, self.width, self.channel = self.image.shape
-            self.qiFormat = QImage.Format_RGB888
-        
-            ret, corners = cv2.findChessboardCorners(self.image, (7,6),None) # Find the chess board corners
-            cv2.drawChessboardCorners(self.image, (7,6), corners,ret)# Draw and display the corners
-            # Press space to use image for calibration
-            if self.capture and ret:
-                print("pressed")
-                self.capture = False
-                self.imageCounter += 1
-                self.ui.Label_TakenCaptures.setNum(self.imageCounter)
-                self.objpoints.append(self.objp)
-                gray = cv2.cvtColor(self.image,cv2.COLOR_RGB2GRAY)
-                cv2.cornerSubPix(gray,corners,(11,11),(-1,-1),self.criteria)
-                self.imgpoints.append(corners)
-                
-                if self.imageCounter >= self.REQUIRED_IMAGE_AMOUNT:
-                    self.calibrating = False
-                    print("Calculating camera matrix etc...")
-                    ret, cameraMatrix, dist, rvecs, tvecs = cv2.calibrateCamera(self.objpoints, self.imgpoints, gray.shape[::-1],None,None)
-                    print("...done calculating.")
-                    self.cameraMatrix = cameraMatrix
-                    self.__saveFile()
-                    self.ui.Label_Information.setText("<strong>Calibration</strong> was successful, return to main screen by clicking on <strong>Navigation -> Main Screen</strong> in the menubar")
+    def __calibrate(self):
+        # convert to rgb in order to get the colored lines
+        self.image = cv2.cvtColor(self.image,cv2.COLOR_GRAY2RGB)
+        self.height, self.width, self.channel = self.image.shape
+        self.qiFormat = QImage.Format_RGB888
     
+        self.foundChessboardCorners, self.corners = cv2.findChessboardCorners(self.image, (7,6),None) # find the chess board corners
+        cv2.drawChessboardCorners(self.image, (7,6), self.corners,self.foundChessboardCorners) # draw and display the corners
+
     # Converts the image to a QImage that is used to set the image on the QLabel              
     def __convertToQImage(self):
         # calculate step
@@ -150,9 +133,26 @@ class CalibrationPage(QtWidgets.QWidget):
         self.ui.Button_Calibrate.clicked.connect(self.__startCalibration)
         self.ui.Button_Capture.clicked.connect(self.__captureAction)
 
-    # Sets capture boolean to true
+    # This function is called each time the user press the calirate button.
+    # If the program has found chessboard corners, information is stored.
+    # When the user has captured enough images, the calibration stops and the calibration information is stored in a file.
     def __captureAction(self):
-        self.capture = True
+         if self.foundChessboardCorners:
+            self.imageCounter += 1 # add one to the captured image counter
+            self.ui.Label_TakenCaptures.setNum(self.imageCounter) # show the amount of captured images
+            self.objpoints.append(self.objp) # store object points
+            gray = cv2.cvtColor(self.image,cv2.COLOR_RGB2GRAY) # convert to grayscale
+            cv2.cornerSubPix(gray,self.corners,(11,11),(-1,-1),self.criteria)
+            self.imgpoints.append(self.corners)
+            
+            # when the user has captured enough images, stop calibration and save the calibration info in a file
+            if self.imageCounter >= self.REQUIRED_IMAGE_AMOUNT:
+                self.calibrating = False
+                ret, cameraMatrix, dist, rvecs, tvecs = cv2.calibrateCamera(self.objpoints, self.imgpoints, gray.shape[::-1],None,None)
+                self.cameraMatrix = cameraMatrix
+                self.__saveFile()
+                self.openFinnishedpopup()
+                
     
     # Checks and sets the inputvalues, all values must be numbers
     def __checkValues(self):
@@ -200,9 +200,8 @@ class CalibrationPage(QtWidgets.QWidget):
         fx = self.cameraMatrix[0][0]
         fy = self.cameraMatrix[1][1]
         if Path("camera_info.ini").is_file():
-            print("FILEN FINNS!!")
             try:
-                myFile = open("camera_info.ini","w")
+                myFile = open("camera_info.ini","w") # overwrite to existing file
                 myFile.write("fx:" + str(fx) + "\nfy:" + str(fy))
             except Exception:
                 raise Exception("Could not write to file!")
@@ -210,7 +209,7 @@ class CalibrationPage(QtWidgets.QWidget):
                 myFile.close()
         else:
             try:
-                myFile = open("camera_info.ini","x")
+                myFile = open("camera_info.ini","x") # create file and write to it
                 myFile.write("fx:" + str(fx) + "\nfy:" + str(fy))
             except Exception:
                 raise Exception("Could not write to file!")
@@ -231,4 +230,17 @@ class CalibrationPage(QtWidgets.QWidget):
         dialogMenu.ui.PushButton_top.clicked.connect(dialogMenu.close)
         dialogMenu.ui.PushButton_bottom.clicked.connect(lambda: self.closePage())
         dialogMenu.ui.PushButton_bottom.clicked.connect(dialogMenu.close)
+        dialogMenu.exec_()
+    
+    # Show finnished calibration popup
+    def openFinnishedpopup(self):
+        dialogMenu = DialogMenu(self.mainWindow)
+        dialogMenu.setTitle("<strong>Calibration was successful!</strong>")
+        dialogMenu.disableInformationText()
+        dialogMenu.setTopButtonText("Return")
+        dialogMenu.ui.PushButton_bottom.setVisible(False)
+        dialogMenu.setFixedHeight(200)
+        dialogMenu.centerOnWindow()
+        dialogMenu.ui.PushButton_top.clicked.connect(lambda: self.mainWindow.openPage(0))
+        dialogMenu.ui.PushButton_top.clicked.connect(dialogMenu.close)
         dialogMenu.exec_()

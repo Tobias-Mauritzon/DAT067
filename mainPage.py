@@ -1,7 +1,6 @@
 import sys
 import cv2
 import time
-
 from PyQt5.QtWidgets import QApplication
 from PyQt5.QtWidgets import QWidget
 from PyQt5.QtGui import QImage
@@ -13,24 +12,25 @@ from dialogMenu import *
 from GUI.ui_mainPage import * 
 
 # Author: Philip
-# Reviewed by:
-# Date: 2020-11-25
+# Reviewed by: Andreas
+# Date: 2020-12-01
 
 """
-This class handles the ui for the main page
+MainPage inherits QWidget and creates the main page with the ui(ui_mainPage.py) made with Qt designer.
+The class creates a page with all the object detection functions.
 """
 class MainPage(QtWidgets.QWidget):
 	def __init__(self,mainWindow):
 		super().__init__() # call QWidget constructor
-		self.mainWindow = mainWindow
-		self.ui = Ui_MainPage()
-		self.ui.setupUi(self)
+		self.mainWindow = mainWindow # the main window of the application
+		self.ui = Ui_MainPage() # create ui
+		self.ui.setupUi(self) # call setup funktion in ui
 		self.installEventFilter(self) # used for event when window is resized
-		self.__setActions() 
+		self.__setActions() # set actions
 		self.__initPage() # sets start sizes for widgets in page
 		self.cap = None # the captured image
 		self.timer = QTimer() # create a timer
-		self.timer.timeout.connect(self.__viewCam) # set timer timeout callback function
+		self.timer.timeout.connect(self.__update) # set timer timeout callback function
 		self.pix = None # the pixMap used to set the image on a QLabel
 		self.w = 0 # set the width of the QLabel 
 		self.h = 0 # set the height of the QLabel
@@ -45,7 +45,7 @@ class MainPage(QtWidgets.QWidget):
 		self.START_BRIGHTNESS = 0
 		self.START_CONTRAST = 10
 
-		self.faceDetection = False # boolean to activate/deactivate facedetection
+		self.usingHaarCascade = False # boolean to activate/deactivate Haar Cascade
 		self.customModelIsActive = False # boolean to activate/deactivate custom model
 		self.fps = 0
 		self.fpsInc = 0
@@ -130,25 +130,25 @@ class MainPage(QtWidgets.QWidget):
 
 	""" Main camera loop START"""
 	# View camera (loop)
-	def __viewCam(self):
+	def __update(self):
 		# read image in BGR format
-		ret, self.image = self.cap.read()
-
-		if self.image is None:
+		success, self.image = self.cap.read()
+		
+		# if no image was received, show popup
+		if not success:
 			self.__no_camera_available_popUp()
 			return
+
+		self.__setImageManipulation() # sets the chosen image manipulation
+		self.__setContrastAndBrightness() # sets the chosen contrast and brightness
+		self.__setObjectDetectionType() # sets the chosen object detection type
 		
-		self.__update()
-
-		self.__convertToQImage()
-		self.__resize_camFrame()
-		# set image to image label
-		self.ui.image_label.setPixmap(self.pix.scaled(self.w, self.h,QtCore.Qt.KeepAspectRatio))
-		# save images
-		#self.saveImages(cv2.cvtColor(image, cv2.COLOR_BGR2RGB),5)
-
-	# Update funktion for the camera, this function runs in a loop
-	def __update(self):
+		self.__convertToQImage() # convert to QImage that can be used on the QLabel
+		self.__resize_camFrame() # resize the image
+		self.ui.image_label.setPixmap(self.pix.scaled(self.w, self.h,QtCore.Qt.KeepAspectRatio)) # set image to image label
+	
+	# Sets the chosen image manipulation
+	def __setImageManipulation(self):
 		self.fps_color = (25,25,25)
 		# convert image to RGB format
 		if self.imageColor == "RGB":
@@ -175,6 +175,8 @@ class MainPage(QtWidgets.QWidget):
 
 			self.fps_color = (255,255,255)
 
+	# Sets the chosen contrast and brightness on the image
+	def __setContrastAndBrightness(self):
 		# set contrast
 		contrast = self.ui.Slider_contrast.value()/10
 		self.ui.Label_contrastValue.setNum(contrast)
@@ -182,14 +184,16 @@ class MainPage(QtWidgets.QWidget):
 		brightness = self.ui.Slider_brightness.value()
 		self.ui.Label_brightnessValue.setNum(brightness)
 		self.image = cv2.addWeighted(self.image,contrast,np.zeros(self.image.shape, self.image.dtype),0,brightness)
-
-		if self.faceDetection:
-			self.__detectFaces()
-		elif self.customModelIsActive:
-			self.__customModel()
-		elif self.frameRateIsShown:
-			self.__showFrameRate()
 	
+	# Sets the chosen object detection type
+	def __setObjectDetectionType(self):
+		if self.usingHaarCascade:
+			self.__detectUsingHaarCascade()
+		if self.customModelIsActive:
+			self.__customModel()
+		if self.frameRateIsShown:
+			self.__showFrameRate()
+
 	# Converts the image to a QImage that is used to set the image on the QLabel
 	def __convertToQImage(self):
 		# calculate step
@@ -211,17 +215,15 @@ class MainPage(QtWidgets.QWidget):
 
 	# Function that displays the frame rate
 	def __showFrameRate(self):
-		position = (5, 25)
+		position = (5, 25) # position of the text
 		font = cv2.FONT_HERSHEY_SIMPLEX # font that is used for the fps output
-		fontScale = 0.8
-		thickness = 1
+		fontScale = 0.8	# the fontscale of the text
+		thickness = 1 # the thickness of the text
 		new_frame_time = time.time() # time when we finish processing for this frame
-        # fps will be number of frame processed in given time frame 
-        # since their will be most of time error of 0.001 second 
-        # we will be subtracting it to get more accurate result
-		TIME = new_frame_time - self.prev_frame_time
-		self.fpsInc += 1
-		if TIME > 0.2:
+        
+		TIME = new_frame_time - self.prev_frame_time # calculate the difference between current time and previous time
+		self.fpsInc += 1 # increase the fpsInc variable
+		if TIME > 0.2: # fps will update each 0.2 seconds
 			self.fps = self.fpsInc/(TIME)
 			self.prev_frame_time = new_frame_time
 			self.fpsInc = 0
@@ -229,6 +231,7 @@ class MainPage(QtWidgets.QWidget):
 		fps = str(fps) # converting the fps into string		
 		cv2.putText(self.image, "FPS: " + fps, position, font, fontScale, self.fps_color, thickness, cv2.LINE_AA) # puting the FPS count on the frame
 	
+	# Sets the framrate visiblity
 	def __setFrameRateVisibility(self):
 		if self.frameRateIsShown:
 			self.frameRateIsShown = False
@@ -236,7 +239,7 @@ class MainPage(QtWidgets.QWidget):
 			self.prev_frame_time = time.time()
 			self.frameRateIsShown = True
 
-	# Set camera frame visibility
+	# Sets camera frame visibility
 	def setCameraFrame(self, wantToOpen):
 		if wantToOpen:
 			self.ui.Splitter_frame.setSizes([16777215,300])
@@ -245,7 +248,7 @@ class MainPage(QtWidgets.QWidget):
 			self.ui.Splitter_frame.setSizes([0,16777215])
 			self.ui.cameraFrame.setVisible(False)
 	
-	# Set side panel visibility
+	# Sets side panel visibility
 	def setSidePanel(self, wantToOpen):
 		if wantToOpen:
 			self.ui.Splitter_frame.setSizes([16777215,300])
@@ -258,7 +261,7 @@ class MainPage(QtWidgets.QWidget):
 			self.ui.Splitter_frame.setSizes([16777215,0])
 			self.ui.sidePanel.setVisible(False)
 
-	# Set settings panel visibility
+	# Sets settings panel visibility
 	def setSettingsPanel(self, wantToOpen, sidePanelIsOpen, outPutPanelIsOpen):
 		if wantToOpen and sidePanelIsOpen:
 			self.ui.Splitter_sidePanel.setSizes([16777215,16777215])
@@ -276,7 +279,7 @@ class MainPage(QtWidgets.QWidget):
 			self.ui.sidePanel.setVisible(False)
 			self.ui.settingsFrame.setVisible(False)
 	
-	# Set output panel visibility
+	# Sets output panel visibility
 	def setOutPutPanel(self, wantToOpen, sidePanelIsOpen, settingsPanelIsOpen):
 		if wantToOpen and sidePanelIsOpen:
 			self.ui.Splitter_sidePanel.setSizes([16777215,16777215])
@@ -294,7 +297,7 @@ class MainPage(QtWidgets.QWidget):
 			self.ui.sidePanel.setVisible(False)
 			self.ui.outputFrame.setVisible(False)
 
-	# Show no camera available pop
+	# Shows no camera available pop
 	def __no_camera_available_popUp(self):
 		dialogMenu = DialogMenu(self.mainWindow)
 		dialogMenu.setTitle("<strong>No available camera!</strong>")
@@ -310,14 +313,12 @@ class MainPage(QtWidgets.QWidget):
 		dialogMenu.ui.PushButton_bottom.clicked.connect(dialogMenu.close)
 		dialogMenu.exec_()
 
-	""" Face detection START"""
-	def __detectFaces(self):
-
-		#Filters that are searching for different things, in this case 'the front of the face and the eyes'
-		myCascade = cv2.CascadeClassifier('cascades/haarcascade_russian_plate_number.xml')
+	""" Haar Cascade detection START"""
+	# Function that detects faces using Haar cascades THIS SHOULD BE CHANGED SO WE CAN USE ANY XML FILE
+	def __detectUsingHaarCascade(self):
 		#Convert to gray
 		gray = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
-		objects = myCascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
+		objects = self.myCascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
 		for(x, y, w, h) in objects:
 			color = (255,0,0)
 			stroke = 2
@@ -328,30 +329,34 @@ class MainPage(QtWidgets.QWidget):
 
 			font = cv2.FONT_HERSHEY_SIMPLEX
 			#Display the text
-			cv2.putText(objectRectangle,"FACE",(x, y-10), font, 0.5, (11,255,255), 2, cv2.LINE_AA)
+			cv2.putText(objectRectangle,"License Plate",(x, y-10), font, 0.5, (11,255,255), 2, cv2.LINE_AA)
 
-
-	def activateFaceDetection(self):
-		if self.faceDetection:
-			self.faceDetection = False
-		else:
-			self.faceDetection = True
-			
+	# Activates the Haar cascade object detection
+	def activateHaarCascade(self, objectName):
+		if objectName == "Cars":
+			if self.usingHaarCascade:
+				self.usingHaarCascade = False
+			else:
+				#Filters that are searching for different things, in this case 'the front of the face and the eyes'
+				self.myCascade = cv2.CascadeClassifier('cascades/haarcascade_russian_plate_number.xml')
+				self.usingHaarCascade = True
 	""" Face detection END """
 
-	""" Custom Model START"""
-	# Funktion för att ladda in bilder så det går att testa.
+	""" Custom TensorFlow Model START"""
+	# Resizes the image to work with the model
 	def __prepare(self):
 		IMG_SIZE = 100
 		gray = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
 		new_array = cv2.resize(gray, (IMG_SIZE, IMG_SIZE))
 		return new_array.reshape(-1, IMG_SIZE, IMG_SIZE, 1)
-
+	
+	# Makes a prediction
 	def __customModel(self):
 		prediction = self.my_model.predict([self.__prepare()])
-		self.__check_categeori(prediction)
+		self.__check_category(prediction)
 	
-	def __check_categeori(self,prediction):
+	# Sets label to the predicted object
+	def __check_category(self,prediction):
 		if (int(prediction[0][0]) == 1):
 			#print("Car")
 			self.ui.Label_object.setText("CAR")
@@ -366,8 +371,9 @@ class MainPage(QtWidgets.QWidget):
 			self.ui.Label_object.setText("Not a Car, Cat or a Dog")
 		return
 	
+	# Activates the custom tensorFlow model
 	def activateCustomModel(self):
-		# Laddar in den tidigare tränade modellen.
+		# Loads the custom trained model.
 		self.my_model = tf.keras.models.load_model('saved_model/car_model')
 		if self.customModelIsActive:
 			self.customModelIsActive = False
