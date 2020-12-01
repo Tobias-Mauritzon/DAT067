@@ -47,6 +47,8 @@ class MainPage(QtWidgets.QWidget):
 
 		self.faceDetection = False # boolean to activate/deactivate facedetection
 		self.customModelIsActive = False # boolean to activate/deactivate custom model
+		self.fps = 0
+		self.fpsInc = 0
 
 	# Sets start sizes for widgets in page
 	def __initPage(self):
@@ -216,9 +218,13 @@ class MainPage(QtWidgets.QWidget):
         # fps will be number of frame processed in given time frame 
         # since their will be most of time error of 0.001 second 
         # we will be subtracting it to get more accurate result
-		fps = 1/(new_frame_time-self.prev_frame_time)
-		self.prev_frame_time = new_frame_time
-		fps = int(fps) # converting the fps into integer
+		TIME = new_frame_time - self.prev_frame_time
+		self.fpsInc += 1
+		if TIME > 0.2:
+			self.fps = self.fpsInc/(TIME)
+			self.prev_frame_time = new_frame_time
+			self.fpsInc = 0
+		fps = int(self.fps) # converting the fps into integer
 		fps = str(fps) # converting the fps into string		
 		cv2.putText(self.image, "FPS: " + fps, position, font, fontScale, color, thickness, cv2.LINE_AA) # puting the FPS count on the frame
 	
@@ -226,6 +232,7 @@ class MainPage(QtWidgets.QWidget):
 		if self.frameRateIsShown:
 			self.frameRateIsShown = False
 		else:
+			self.prev_frame_time = time.time()
 			self.frameRateIsShown = True
 
 	# Set camera frame visibility
