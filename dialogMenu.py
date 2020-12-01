@@ -49,6 +49,15 @@ class DialogMenu(QtWidgets.QDialog):
 
     def setInformationText(self, text):
         self.ui.Label_informationText.setText(text)
+    
+    def setInformationTextFromFile(self, fileName):
+        try:
+            f = open(fileName,"r")
+            self.setInformationText(f.read())
+        except Exception:
+            raise Exception("Could not read file!")
+        finally:
+            f.close()
 
     def setTopButtonText(self, text):
         self.ui.PushButton_top.setText(text)

@@ -26,11 +26,11 @@ class MainPage(QtWidgets.QWidget):
 		self.ui = Ui_MainPage()
 		self.ui.setupUi(self)
 		self.installEventFilter(self) # used for event when window is resized
-		self.setActions() 
-		self.initPage() # sets start sizes for widgets in page
+		self.__setActions() 
+		self.__initPage() # sets start sizes for widgets in page
 		self.cap = None # the captured image
 		self.timer = QTimer() # create a timer
-		self.timer.timeout.connect(self.viewCam) # set timer timeout callback function
+		self.timer.timeout.connect(self.__viewCam) # set timer timeout callback function
 		self.pix = None # the pixMap used to set the image on a QLabel
 		self.w = 0 # set the width of the QLabel 
 		self.h = 0 # set the height of the QLabel
@@ -49,7 +49,7 @@ class MainPage(QtWidgets.QWidget):
 		self.customModelIsActive = False # boolean to activate/deactivate custom model
 
 	# Sets start sizes for widgets in page
-	def initPage(self):
+	def __initPage(self):
 		self.ui.Splitter_frame.setSizes([1000,300])
 		self.ui.Splitter_sidePanel.setSizes([1,1])
 	
@@ -75,35 +75,35 @@ class MainPage(QtWidgets.QWidget):
 	# Event for when the window is resized
 	def eventFilter(self, obj, event):
 		if (event.type() == QtCore.QEvent.Resize):
-			self.resize_camFrame()
+			self.__resize_camFrame()
 		return super().eventFilter(obj, event)
 
 	# Set actions for QWidgets
-	def setActions(self):
+	def __setActions(self):
 		# Set action for start button
-		self.ui.Button_startCam.clicked.connect(self.controlTimer)
+		self.ui.Button_startCam.clicked.connect(self.__controlTimer)
 		# Set action for radioButtons
-		self.ui.radioButton_RGB.toggled.connect(lambda: self.changeImageAppearance("RGB"))
-		self.ui.radioButton_Grayscale.toggled.connect(lambda: self.changeImageAppearance("Grayscale"))
-		self.ui.radioButton_Edged.toggled.connect(lambda: self.changeImageAppearance("Edged"))
+		self.ui.radioButton_RGB.toggled.connect(lambda: self.__changeImageAppearance("RGB"))
+		self.ui.radioButton_Grayscale.toggled.connect(lambda: self.__changeImageAppearance("Grayscale"))
+		self.ui.radioButton_Edged.toggled.connect(lambda: self.__changeImageAppearance("Edged"))
 		# Set actions for radioButtons
-		self.ui.radioButton_showFrameRate.toggled.connect(self.setFrameRateVisibility)
-		self.ui.radioButton_res_0.toggled.connect(lambda: self.setResolution(160,120))
-		self.ui.radioButton_res_1.toggled.connect(lambda: self.setResolution(320,240))
-		self.ui.radioButton_res_2.toggled.connect(lambda: self.setResolution(640,480))
-		self.ui.radioButton_res_3.toggled.connect(lambda: self.setResolution(800,600))
-		self.ui.radioButton_res_4.toggled.connect(lambda: self.setResolution(1280,720))
+		self.ui.radioButton_showFrameRate.toggled.connect(self.__setFrameRateVisibility)
+		self.ui.radioButton_res_0.toggled.connect(lambda: self.__setResolution(160,120))
+		self.ui.radioButton_res_1.toggled.connect(lambda: self.__setResolution(320,240))
+		self.ui.radioButton_res_2.toggled.connect(lambda: self.__setResolution(640,480))
+		self.ui.radioButton_res_3.toggled.connect(lambda: self.__setResolution(800,600))
+		self.ui.radioButton_res_4.toggled.connect(lambda: self.__setResolution(1280,720))
 		# Set action for reset button
-		self.ui.Button_reset.clicked.connect(self.resetSettingValues)
+		self.ui.Button_reset.clicked.connect(self.__resetSettingValues)
 	
 	# Resizes the cam frame
-	def resize_camFrame(self):
+	def __resize_camFrame(self):
 		if self.pix is not None:
 			self.w = self.ui.image_label.width()
 			self.h = self.ui.image_label.height()
 	
 	# Sets all ui-objects to default values
-	def resetSettingValues(self):
+	def __resetSettingValues(self):
 		self.ui.Slider_brightness.setValue(self.START_BRIGHTNESS)
 		self.ui.Label_brightnessValue.setNum(self.START_CONTRAST)
 		self.ui.Slider_contrast.setValue(self.START_CONTRAST)
@@ -111,13 +111,13 @@ class MainPage(QtWidgets.QWidget):
 		self.ui.radioButton_RGB.toggle()
 
 	# Sets the resolution of the webcam
-	def setResolution(self,width,height):
+	def __setResolution(self,width,height):
 		if self.cap is not None:
 			self.cap.set(3,width)
 			self.cap.set(4,height)
 
 	# Start/stop timer
-	def controlTimer(self):
+	def __controlTimer(self):
 		# if timer is stopped
 		if not self.timer.isActive():
 			self.loadPage()
@@ -127,25 +127,25 @@ class MainPage(QtWidgets.QWidget):
 
 	""" Main camera loop START"""
 	# View camera (loop)
-	def viewCam(self):
+	def __viewCam(self):
 		# read image in BGR format
 		ret, self.image = self.cap.read()
 
 		if self.image is None:
-			self.no_camera_available_popUp()
+			self.__no_camera_available_popUp()
 			return
 		
-		self.update()
+		self.__update()
 
-		self.convertToQImage()
-		self.resize_camFrame()
+		self.__convertToQImage()
+		self.__resize_camFrame()
 		# set image to image label
 		self.ui.image_label.setPixmap(self.pix.scaled(self.w, self.h,QtCore.Qt.KeepAspectRatio))
 		# save images
 		#self.saveImages(cv2.cvtColor(image, cv2.COLOR_BGR2RGB),5)
 
 	# Update funktion for the camera, this function runs in a loop
-	def update(self):
+	def __update(self):
 		# convert image to RGB format
 		if self.imageColor == "RGB":
 			self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
@@ -169,25 +169,25 @@ class MainPage(QtWidgets.QWidget):
 			self.channel = 1
 			self.qiFormat = QImage.Format_Grayscale8
 
-			# set contrast
-			contrast = self.ui.Slider_contrast.value()/10
-			self.ui.Label_contrastValue.setNum(contrast)
-			# set brightness
-			brightness = self.ui.Slider_brightness.value()
-			self.ui.Label_brightnessValue.setNum(brightness)
-			self.image = cv2.addWeighted(self.image,contrast,np.zeros(self.image.shape, self.image.dtype),0,brightness)
+		# set contrast
+		contrast = self.ui.Slider_contrast.value()/10
+		self.ui.Label_contrastValue.setNum(contrast)
+		# set brightness
+		brightness = self.ui.Slider_brightness.value()
+		self.ui.Label_brightnessValue.setNum(brightness)
+		self.image = cv2.addWeighted(self.image,contrast,np.zeros(self.image.shape, self.image.dtype),0,brightness)
 
 		if self.faceDetection:
-			self.detectFaces()
+			self.__detectFaces()
 
 		if self.customModelIsActive:
-			self.customModel()
+			self.__customModel()
 
 		if self.frameRateIsShown:
-			self.showFrameRate()
+			self.__showFrameRate()
 	
 	# Converts the image to a QImage that is used to set the image on the QLabel
-	def convertToQImage(self):
+	def __convertToQImage(self):
 		# calculate step
 		step = self.channel * self.width
 		# create QImage from image
@@ -197,16 +197,16 @@ class MainPage(QtWidgets.QWidget):
 	""" Main camera loop END"""
 
 	# Saves images
-	def saveImages(self, img, amount):
+	def __saveImages(self, img, amount):
 		for i in range(amount):
 			cv2.imwrite("image-" + str(i) + ".jpg", img)
 	
 	# Function to change the image appearance
-	def changeImageAppearance(self, appearance):
+	def __changeImageAppearance(self, appearance):
 			self.imageColor = appearance
 
 	# Function that displays the frame rate
-	def showFrameRate(self):
+	def __showFrameRate(self):
 		position = (5, 25)
 		font = cv2.FONT_HERSHEY_SIMPLEX # font that is used for the fps output
 		fontScale = 0.8
@@ -222,7 +222,7 @@ class MainPage(QtWidgets.QWidget):
 		fps = str(fps) # converting the fps into string		
 		cv2.putText(self.image, "FPS: " + fps, position, font, fontScale, color, thickness, cv2.LINE_AA) # puting the FPS count on the frame
 	
-	def setFrameRateVisibility(self):
+	def __setFrameRateVisibility(self):
 		if self.frameRateIsShown:
 			self.frameRateIsShown = False
 		else:
@@ -287,7 +287,7 @@ class MainPage(QtWidgets.QWidget):
 			self.ui.outputFrame.setVisible(False)
 
 	# Show no camera available pop
-	def no_camera_available_popUp(self):
+	def __no_camera_available_popUp(self):
 		dialogMenu = DialogMenu(self.mainWindow)
 		dialogMenu.setTitle("<strong>No available camera!</strong>")
 		dialogMenu.setInformationText("Cannot find an available camera, make sure it's plugged in.")
@@ -303,7 +303,7 @@ class MainPage(QtWidgets.QWidget):
 		dialogMenu.exec_()
 
 	""" Face detection START"""
-	def detectFaces(self):
+	def __detectFaces(self):
 
 		#Filters that are searching for different things, in this case 'the front of the face and the eyes'
 		face_cascade = cv2.CascadeClassifier('cascades/haarcascade_frontalface_alt2.xml')
@@ -345,17 +345,17 @@ class MainPage(QtWidgets.QWidget):
 
 	""" Custom Model START"""
 	# Funktion för att ladda in bilder så det går att testa.
-	def prepare(self):
+	def __prepare(self):
 		IMG_SIZE = 100
 		gray = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
 		new_array = cv2.resize(gray, (IMG_SIZE, IMG_SIZE))
 		return new_array.reshape(-1, IMG_SIZE, IMG_SIZE, 1)
 
-	def customModel(self):
-		prediction = self.my_model.predict([self.prepare()])
-		self.check_categeori(prediction)
+	def __customModel(self):
+		prediction = self.my_model.predict([self.__prepare()])
+		self.__check_categeori(prediction)
 	
-	def check_categeori(self,prediction):
+	def __check_categeori(self,prediction):
 		if (int(prediction[0][0]) == 1):
 			#print("Car")
 			self.ui.Label_object.setText("CAR")

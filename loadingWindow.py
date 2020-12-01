@@ -43,19 +43,19 @@ class LoadingWindow(QtWidgets.QMainWindow):
         self.shadow.setColor(QColor(0,0,0,60))
         self.ui.frame_dropShadow.setGraphicsEffect(self.shadow)
         # starting thread for imports
-        thread = threading.Thread(target=self.importModules)
+        thread = threading.Thread(target=self.__importModules)
         thread.setDaemon(True)
         thread.start()
         # timer
         self.timer = QtCore.QTimer()
-        self.timer.timeout.connect(self.progress)
+        self.timer.timeout.connect(self.__progress)
         self.timer.start(30)
 
         self.calibrationIsNeeded = False # boolean for checking if calibration is needed
         self.show()
     
     # Funktion that loops and shows the progress of the imports
-    def progress(self):
+    def __progress(self):
         global counter,increments
         self.ui.progressBar.setValue(int(counter))
         if counter > 100.0:
@@ -65,13 +65,13 @@ class LoadingWindow(QtWidgets.QMainWindow):
                 self.main.show()
                 self.close()
                 if self.calibrationIsNeeded:
-                    self.calibrate_popUp()
+                    self.__calibrate_popUp()
             except:
                 self.ui.Label_information.setText("<strong>Error:</strong> could not load modules")
         counter += increments
 
     # Imorts the modules used in the main application
-    def importModules(self):
+    def __importModules(self):
         global mw,increments
         self.ui.Label_information.setText("Importing modules...")
         increments = 0.5
@@ -84,7 +84,7 @@ class LoadingWindow(QtWidgets.QMainWindow):
             self.calibrationIsNeeded = False
 
     # Function that instantiates a dialog menu that informs the user to calibrate
-    def calibrate_popUp(self):
+    def __calibrate_popUp(self):
         dialogMenu = DialogMenu(self.main)
         dialogMenu.setTitle("<strong>Calibration</strong> is needed!")
         dialogMenu.setInformationText("In order to use the distance-calculation feature of the application, you need to calibrate your camera.")
