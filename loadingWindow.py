@@ -1,17 +1,4 @@
-import sys
-import cv2
-import time
 import threading
-import numpy as np
-
-from PyQt5.QtWidgets import QApplication
-from PyQt5.QtWidgets import QWidget
-from PyQt5.QtGui import QImage
-from PyQt5.QtGui import QPixmap
-from PyQt5.QtCore import QTimer
-from PyQt5.QtWidgets import QGraphicsDropShadowEffect
-from PyQt5.QtGui import QColor
-
 from GUI.ui_loadingWindow import *
 from dialogMenu import *
 from pathlib import Path
@@ -23,7 +10,7 @@ from pathlib import Path
 # Global values
 counter = 0.0
 increments = 1.0
-mw = None
+applicationWindow = None
 
 """
 This class handles the loading window that opens the program
@@ -61,7 +48,7 @@ class LoadingWindow(QtWidgets.QMainWindow):
         if counter > 100.0:
             self.timer.stop()
             try:
-                self.main = mw("Object Detector")
+                self.main = applicationWindow("Object Detector")
                 self.main.show()
                 self.close()
                 if self.calibrationIsNeeded:
@@ -72,10 +59,10 @@ class LoadingWindow(QtWidgets.QMainWindow):
 
     # Imorts the modules used in the main application
     def __importModules(self):
-        global mw,increments
+        global applicationWindow,increments
         self.ui.Label_information.setText("Importing modules...")
         increments = 0.5
-        from application import MainWindow as mw
+        from application import MainWindow as applicationWindow
         increments = 3.5
         self.ui.Label_information.setText("Checking if calibration is needed...")
         if not Path("camera_info.ini").is_file():

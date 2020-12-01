@@ -49,6 +49,7 @@ class MainPage(QtWidgets.QWidget):
 		self.customModelIsActive = False # boolean to activate/deactivate custom model
 		self.fps = 0
 		self.fpsInc = 0
+		self.fps_color = (25, 25, 25)
 
 	# Sets start sizes for widgets in page
 	def __initPage(self):
@@ -148,6 +149,7 @@ class MainPage(QtWidgets.QWidget):
 
 	# Update funktion for the camera, this function runs in a loop
 	def __update(self):
+		self.fps_color = (25,25,25)
 		# convert image to RGB format
 		if self.imageColor == "RGB":
 			self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
@@ -170,6 +172,8 @@ class MainPage(QtWidgets.QWidget):
 			self.height, self.width = self.image.shape
 			self.channel = 1
 			self.qiFormat = QImage.Format_Grayscale8
+
+			self.fps_color = (255,255,255)
 
 		# set contrast
 		contrast = self.ui.Slider_contrast.value()/10
@@ -212,7 +216,6 @@ class MainPage(QtWidgets.QWidget):
 		position = (5, 25)
 		font = cv2.FONT_HERSHEY_SIMPLEX # font that is used for the fps output
 		fontScale = 0.8
-		color = (25, 25, 25)
 		thickness = 1
 		new_frame_time = time.time() # time when we finish processing for this frame
         # fps will be number of frame processed in given time frame 
@@ -226,7 +229,7 @@ class MainPage(QtWidgets.QWidget):
 			self.fpsInc = 0
 		fps = int(self.fps) # converting the fps into integer
 		fps = str(fps) # converting the fps into string		
-		cv2.putText(self.image, "FPS: " + fps, position, font, fontScale, color, thickness, cv2.LINE_AA) # puting the FPS count on the frame
+		cv2.putText(self.image, "FPS: " + fps, position, font, fontScale, self.fps_color, thickness, cv2.LINE_AA) # puting the FPS count on the frame
 	
 	def __setFrameRateVisibility(self):
 		if self.frameRateIsShown:
