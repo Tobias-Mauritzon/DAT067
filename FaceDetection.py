@@ -1,8 +1,9 @@
 import numpy as np
 import cv2
 
-#Filters that are searching for different things, in this case a numberplate
-plate_cascade = cv2.CascadeClassifier('cascades/haarcascade_russian_plate_number.xml')
+#Filters that are searching for different things, in this case 'the front of the face and the eyes'
+plate_cascade = cv2.CascadeClassifier('cascades/cars.xml')
+eye_cascade = cv2.CascadeClassifier('cascades/haarcascade_russian_plate_number.xml')
 
 #Starting the camera.
 cap = cv2.VideoCapture(0)
@@ -11,10 +12,9 @@ cap = cv2.VideoCapture(0)
 while(True):
     #Capture frame by frame
     ret, frame = cap.read()
-
     #Convert to gray
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    plates = plate_cascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
+    plates = plate_cascade.detectMultiScale(gray, scaleFactor=1.1, minNeighbors=3)
 
     
     for(x, y, w, h) in plates:
@@ -32,10 +32,13 @@ while(True):
 
         roi_gray = gray[y:y+h, x:x+w]
         roi_color = frame[y:y+h, x:x+w]
+        eyes = eye_cascade.detectMultiScale(roi_gray)
+        for(ex,ey,ew,eh) in eyes:
+            #Draws a rectangle within the face and around the eyes
+            cv2.rectangle(roi_color, (ex,ey), (ex+ew,ey+eh),(0,255,0), 2)
 
-
-        #Saves a picture of the last numberplate seen when the application is closed
-        img_item = "lastPlate.png"
+        #Saves a picture of the last face seen when the application is closed
+        img_item = "lastFace.png"
         cv2.imwrite(img_item, roi_gray)
 
     #Display resulting frame    
