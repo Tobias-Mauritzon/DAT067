@@ -22,22 +22,19 @@ y_labels = np.array(pickle.load(open("y.pickle", "rb")))
 X_features = X_features/255.0
 
 # Modellen.
-model = models.Sequential(
-    [
-        keras.Input(shape=(128, 128, 3)),
-        layers.Conv2D(32, (3,3), activation='relu'),
-        layers.MaxPooling2D(pool_size=(2, 2)),
-        layers.Conv2D(64, (3,3), activation='relu'),
-        layers.MaxPooling2D(pool_size=(2, 2)),
-        layers.Conv2D(128, (3,3), activation='relu'),
-        layers.MaxPooling2D(pool_size=(2, 2)),
-        layers.Flatten(),
-        layers.Dense(3, activation='softmax')
-    ]
-)
+inputs = keras.Input(shape=(128, 128, 3))
+x = layers.Conv2D(32, (3,3), activation='relu') (inputs)
+x = layers.MaxPooling2D(pool_size=(2, 2))(x)
+x = layers.Conv2D(64, (3,3), activation='relu') (x)
+x = layers.MaxPooling2D(pool_size=(2, 2))(x)
+x = layers.Conv2D(128, (3,3), activation='relu') (x)
+x = layers.MaxPooling2D(pool_size=(2, 2))(x)
+x = layers.Flatten(name="Flatten_CNN")(x)
+x = layers.Dense(64, activation='relu', name="dense_last_layer")(x)
+output = layers.Dense(3, activation="softmax")(x)
+model = keras.Model(inputs=inputs, outputs=output)
 
 model.summary()
-
 
 # Bygger ihop modelen, binary_crossentropy kan endast användas i binära fall, dvs två categorier.
 model.compile(optimizer=keras.optimizers.Adam(learning_rate=3e-4), 
@@ -75,5 +72,4 @@ plt.xlabel('epoch')
 plt.show()
 
 #Sparar den tränade modellen så den kan användas.
-model.save('saved_model/car_model_v2')
-
+model.save('saved_model/car_model_v3')
