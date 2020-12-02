@@ -6,6 +6,7 @@ from PyQt5.QtWidgets import QWidget
 from PyQt5.QtGui import QImage
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import QTimer
+from DistanceEstimator import DistanceEstimator
 import numpy as np
 import tensorflow as tf
 from dialogMenu import *
@@ -50,6 +51,8 @@ class MainPage(QtWidgets.QWidget):
 		self.fps = 0
 		self.fpsInc = 0
 		self.fps_color = (25, 25, 25)
+
+		self.estimator = DistanceEstimator(500.0, 1.8)
 
 	# Sets start sizes for widgets in page
 	def __initPage(self):
@@ -325,7 +328,15 @@ class MainPage(QtWidgets.QWidget):
 			end_cord_x = x + w
 			end_cord_y = y + h
 			#Draws the rectangle around the face
-			objectRectangle = cv2.rectangle(self.image, (x, y), (end_cord_x, end_cord_y), color, stroke)
+
+			"""
+			Implement distance here
+			"""
+			self.estimator.estimate_distance(w)
+
+			objectRectangle =  cv2.rectangle(self.image, (x, y), (end_cord_x, end_cord_y), color, stroke)
+            cv2.rectangle(img, (x, y+h), (end_cord_x, end_cord_y+40), color, -1)
+            cv2.putText(img, distance, (x + 10, y + h + 30), cv2.FONT_HERSHEY_DUPLEX, 0.7, (255, 255, 255))
 
 			font = cv2.FONT_HERSHEY_SIMPLEX
 			#Display the text
