@@ -3,6 +3,7 @@ A training script for a model that both classifies at locates objecets.
 Author: Greppe
 """""
 
+
 from tensorflow.keras.layers import Flatten
 from tensorflow.keras.layers import Dropout
 from tensorflow.keras.layers import Dense
@@ -23,11 +24,17 @@ import pickle
 import cv2
 import os
 
+
+
+config = tf.compat.v1.ConfigProto()
+config.gpu_options.allow_growth = True
+session =tf.compat.v1.InteractiveSession(config=config)
+
 #INIT values for training
 INIT_LR = 1e-4
 EPOCHS = 20
 BATCH = 16
-
+PLOTS_PATH = "plots"
 # ladda in pickles från config fil
 pickle_in = open("data.pickle","rb")
 data = pickle.load(pickle_in)
@@ -81,10 +88,41 @@ lossWeights = { 'class_label': 1.0,'bounding_box': 1.0}
 #, loss_weights=lossWeights
 opt = tf.keras.optimizers.Adam(learning_rate=INIT_LR)
 #compilar inte verkar vara problem med att VGG är gammalt
-loc_model.compile(optimizers=keras.optimizers.Adam(learning_rate=INIT_LR), loss=losses, metrics=["accuarcy"], loss_weights=lossWeights, **kwargs)
-print(model.summary())
+loc_model.compile(optimizer=keras.optimizers.Adam(learning_rate=INIT_LR), loss=losses, metrics=["accuracy"], loss_weights=lossWeights)
+print(loc_model.summary())
 
 trainTargets = {"class_label": trainLabels, "bounding_box": trainBBoxes}
-testTargets = {"class_label": testlabels , "bounding_box": testBBoxes}
-history = model.fit(trainImages, trainTargets,validation_data = (testImages, testBboxes),batch_size=BATCH, epochs = EPOCHS,verbose=1)
-model.save('saved_model/localization_model')
+testTargets = {"class_label": testLabels , "bounding_box": testBBoxes}
+history = loc_model.fit(trainImages, trainTargets,validation_data = (testImages, testTargets),batch_size=BATCH, epochs = EPOCHS,verbose=1)
+loc_model.save('saved_model/localization_model')
+
+# plot the total loss, label loss, and bounding box loss
+lossNames = ["loss", "class_label_loss", "bounding_box_loss"]
+N = np.arange(0, EPOCHS)
+plt.style.use("ggplot")
+(fig, ax) = plt.subplots(3, 1, figsize=(13, 13))
+# loop over the loss names
+for (i, l) in enumerate(lossNames):
+	# plot the loss for both the training and validation data
+	title = "Loss for {}".format(l) if l != "loss" else "Total loss"
+	ax[i].set_title(title)
+	ax[i].set_xlabel("Epoch #")
+	ax[i].set_ylabel("Loss")
+	ax[i].plot(N, history.history[l], label=l)
+	ax[i].plot(N, history.history["val_" + l], label="val_" + l)
+	ax[i].legend()
+# save the losses figure and create a new figure for the accuracies
+plt.tight_layout()
+
+
+plt.style.use("ggplot")
+plt.figure()
+plt.plot(N, history.history["class_label_accuracy"],
+	label="class_label_train_acc")
+plt.plot(N, history.history["val_class_label_accuracy"],
+	label="val_class_label_acc")
+plt.title("Class Label Accuracy")
+plt.xlabel("Epoch #")
+plt.ylabel("Accuracy")
+plt.legend(loc="lower left")
+plt.show()

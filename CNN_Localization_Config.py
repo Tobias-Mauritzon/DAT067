@@ -19,7 +19,7 @@ import os
 
 #Define input paths
 DATADIR = "BB_Dataset"
-IMAGE_SIZE = 224
+IMAGE_SIZE = 128
 IMG_PATH = os.path.join(DATADIR, "images")
 ANNO_PATH = os.path.join(DATADIR, "annotations\labels.csv")
 """""
@@ -74,7 +74,7 @@ for filename in filenames:
         y1[i] = float(y1[i]) / h
         x2[i] = float(x2[i]) / w
         y2[i] = float(y2[i]) / h
-        img = load_img(imagePath, target_size=(224, 224))
+        img = load_img(imagePath, target_size=(128, 128))
         img = img_to_array(img)
 
         data.append(img)
