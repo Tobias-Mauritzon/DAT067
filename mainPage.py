@@ -52,7 +52,7 @@ class MainPage(QtWidgets.QWidget):
 		self.fpsInc = 0
 		self.fps_color = (25, 25, 25)
 
-		self.estimator = DistanceEstimator(500.0, 1.8)
+		self.estimator = DistanceEstimator(1.8)
 
 	# Sets start sizes for widgets in page
 	def __initPage(self):
@@ -332,14 +332,15 @@ class MainPage(QtWidgets.QWidget):
 			"""
 			Implement distance here
 			"""
-			self.estimator.estimate_distance(w)
+			distance = self.estimator.estimate_distance(w)
 
-			objectRectangle =  cv2.rectangle(self.image, (x, y), (end_cord_x, end_cord_y), color, stroke)
-            cv2.rectangle(img, (x, y+h), (end_cord_x, end_cord_y+40), color, -1)
-            cv2.putText(img, distance, (x + 10, y + h + 30), cv2.FONT_HERSHEY_DUPLEX, 0.7, (255, 255, 255))
+			objectRectangle = cv2.rectangle(self.image, (x, y), (end_cord_x, end_cord_y), color, stroke)
+        	
+			cv2.rectangle(self.image, (x, end_cord_y), (end_cord_x, end_cord_y + 40), color, -1)
 
 			font = cv2.FONT_HERSHEY_SIMPLEX
 			#Display the text
+			cv2.putText(self.image, distance, (x + 10, y + h + 30), font, 0.7, (255, 255, 255))
 			cv2.putText(objectRectangle,"License Plate",(x, y-10), font, 0.5, (11,255,255), 2, cv2.LINE_AA)
 
 	# Activates the Haar cascade object detection
@@ -349,7 +350,10 @@ class MainPage(QtWidgets.QWidget):
 				self.usingHaarCascade = False
 			else:
 				#Filters that are searching for different things, in this case 'the front of the face and the eyes'
-				self.myCascade = cv2.CascadeClassifier('cascades/haarcascade_russian_plate_number.xml')
+				#self.myCascade = cv2.CascadeClassifier('cascades/haarcascade_russian_plate_number.xml')
+
+				self.myCascade = cv2.CascadeClassifier('cascades/haarcascade_frontalface_default.xml')
+
 				self.usingHaarCascade = True
 	""" Face detection END """
 
