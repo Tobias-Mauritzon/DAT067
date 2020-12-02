@@ -52,7 +52,7 @@ class MainPage(QtWidgets.QWidget):
 		self.fpsInc = 0
 		self.fps_color = (25, 25, 25)
 
-		self.estimator = DistanceEstimator(1.8)
+		self.estimator = DistanceEstimator(0.52) #sets width of obejct to measure distance to. //1.8 for car //0.52 for num.plate //0.15 for face
 
 	# Sets start sizes for widgets in page
 	def __initPage(self):
@@ -350,9 +350,9 @@ class MainPage(QtWidgets.QWidget):
 				self.usingHaarCascade = False
 			else:
 				#Filters that are searching for different things, in this case 'the front of the face and the eyes'
-				#self.myCascade = cv2.CascadeClassifier('cascades/haarcascade_russian_plate_number.xml')
+				self.myCascade = cv2.CascadeClassifier('cascades/haarcascade_russian_plate_number.xml')
 
-				self.myCascade = cv2.CascadeClassifier('cascades/haarcascade_frontalface_default.xml')
+				#self.myCascade = cv2.CascadeClassifier('cascades/haarcascade_frontalface_default.xml')
 
 				self.usingHaarCascade = True
 	""" Face detection END """
