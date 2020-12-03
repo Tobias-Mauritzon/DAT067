@@ -19,15 +19,13 @@ def prepare(filepath):
     new_array = cv2.resize(img_array, (IMG_SIZE, IMG_SIZE))
     return new_array.reshape(-1, IMG_SIZE, IMG_SIZE, 3)
 
-model = tf.keras.models.load_model("saved_model/localization_model")
-
-
+model = tf.keras.models.load_model('saved_model/pretrained_localization_model')
 
 # loop over the images that we'll be testing using our bounding box
 # regression model
 
 def predictNprepare_image(filepath):
-    IMG_SIZE = 128
+    IMG_SIZE = 224
     image = load_img(filepath, target_size=(IMG_SIZE, IMG_SIZE))
     image = img_to_array(image) / 255.0
     image = np.expand_dims(image, axis=0)
@@ -96,4 +94,4 @@ def predict_image(filepath):
     cv2.imshow("Output", image)
     cv2.waitKey(0)
 
-predictNprepare_image("car2.jpg")
+predictNprepare_image("dog11.jpg")
