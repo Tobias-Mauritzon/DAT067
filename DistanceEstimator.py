@@ -1,7 +1,7 @@
 """
-#Author: Joachim Antfolk
-#Reviewed by: William Jönsson
-#Date: 2020-11-20
+#Author: Joachim Antfolk, William Jönsson
+#Reviewed by: 
+#Reviewed on: 2020-12-04
 """
 
 from cv2 import cv2 
