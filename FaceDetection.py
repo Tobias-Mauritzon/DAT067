@@ -1,6 +1,12 @@
 import numpy as np
 import cv2
 
+"""
+Author: -*insert name here*-
+Reviewed by: Joachim Antfolk
+Reviewed on: 2020-12-04
+"""
+
 #Filters that are searching for different things, in this case 'cars and numberplates'.
 car_cascade = cv2.CascadeClassifier('cascades/cars.xml')
 plate_cascade = cv2.CascadeClassifier('cascades/haarcascade_russian_plate_number.xml')
