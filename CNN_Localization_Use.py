@@ -9,7 +9,10 @@ import pickle
 import cv2
 import os
 import tensorflow as tf
-    
+"""""
+A simple script to use the model that is trained on object localization & classifcation on cars, cats and dogs using our own pretrained model / network
+Author: Greppe
+"""""
 CATEGORIES = ["Car", "Dog", "Cat"]
 
 model = tf.keras.models.load_model("saved_model/localization_model")
@@ -17,6 +20,10 @@ model = tf.keras.models.load_model("saved_model/localization_model")
 # loop over the images that we'll be testing using our bounding box
 # regression model
 
+"""""
+Loads the images specifed by Filepath and predicts it bounding boxes and classifcation, will output the images with boundings drawn with the estimated class as title.
+filepath - the file path for the image you want to load.
+"""""
 def predictNprepare_image(filepath):
     IMG_SIZE = 128
     image = load_img(filepath, target_size=(IMG_SIZE, IMG_SIZE))

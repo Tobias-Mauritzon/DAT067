@@ -9,12 +9,20 @@ import pickle
 import cv2
 import os
 import tensorflow as tf
-    
+
+"""""
+A simple script to use the model that is trained on object localization on cars using the VGG16 network / modell
+Author: Greppe
+"""""
 model = tf.keras.models.load_model('saved_model/pretrained_car_localization')
 
 # loop over the images that we'll be testing using our bounding box
 # regression model
 
+"""""
+Loads the images specifed by Filepath and predicts it bounding boxes, will output the images with boundings drawn.
+filepath - the file path for the image you want to load.
+"""""
 def predictNprepare_image(filepath):
     IMG_SIZE = 224
     image = load_img(filepath, target_size=(IMG_SIZE, IMG_SIZE))

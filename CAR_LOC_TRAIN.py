@@ -1,5 +1,5 @@
 """""
-A training script for a model that both classifies at locates objecets.
+A script for training object localization for cars only using the VGG16 network / modell
 Author: Greppe
 """""
 
@@ -24,7 +24,10 @@ import pickle
 import cv2
 import os
 
-
+#Limits how much tensorflow can use of the GPU
+config = tf.compat.v1.ConfigProto()
+config.gpu_options.allow_growth = True
+session =tf.compat.v1.InteractiveSession(config=config)
 
 
 #INIT values for training
@@ -32,7 +35,8 @@ INIT_LR = 1e-4
 EPOCHS = 10
 BATCH = 8
 PLOTS_PATH = "plots"
-# ladda in pickles från config fil
+
+#Loads in the saved data that the config file created
 pickle_in = open("data.pickle","rb")
 data = pickle.load(pickle_in)
 
@@ -42,18 +46,20 @@ bboxes = pickle.load(pickle_in)
 pickle_in = open("imagePaths.pickle","rb")
 imagePaths = pickle.load(pickle_in)
 
-
+#Splits the data for training and testing
 split = train_test_split(data, bboxes, imagePaths, test_size=0.20, random_state=42)
 
 (trainImages, testImages) = split[:2]
 (trainTargets, testTargets) = split[2:4]
 (trainPaths, testPaths) = split[4:]
 
+#Loads the VGG16 network
 vgg = VGG16(weights="imagenet", include_top=False, input_tensor=Input(shape=(224, 224, 3)))
 vgg.summary()
 flatten_1 = vgg.output
 flatten_1 = Flatten(name="flatten_1") (flatten_1)
-#Split for bounding boxes
+
+#Estimation for bounding boxes
 bboxHead = Dense(128, activation="relu")(flatten_1)
 bboxHead = Dense(64, activation="relu")(bboxHead)
 bboxHead = Dense(32, activation="relu")(bboxHead)
@@ -61,16 +67,24 @@ bboxHead = Dense(4, activation="sigmoid", name="bounding_box")(bboxHead)
 
 loc_model = Model(inputs=vgg.input, outputs=bboxHead)
 loc_model.summary()
+
+#Defines the loss fucntion
 losses = {'bounding_box': 'mean_squared_error'}
 
+#Defines the weight of the loss function
 lossWeights = {'bounding_box': 1.0}
-#, loss_weights=lossWeights
+
+#Defines the optimizer and the learning rate
 opt = tf.keras.optimizers.Adam(learning_rate=INIT_LR)
-#compilar inte verkar vara problem med att VGG är gammalt
+
+#Complies the model with the defined optimizers, loss and loss weight
 loc_model.compile(optimizer=keras.optimizers.Adam(learning_rate=INIT_LR), loss=losses, metrics=["accuracy"], loss_weights=lossWeights)
 print(loc_model.summary())
 
+#Trains the model and stores its output in a variable for plotning
 history = loc_model.fit(trainImages, trainTargets,validation_data = (testImages, testTargets),batch_size=BATCH, epochs = EPOCHS,verbose=1, shuffle=True)
+
+#Saves the model
 loc_model.save('saved_model/pretrained_car_localization')
 
 # plot the model training history
