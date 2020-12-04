@@ -319,3 +319,6 @@ BB_Dataset/annotations/dogs.csv
 BB_Dataset/annotations/cats.csv
 BB_Dataset/annotations/cars.csv
 *.pickle
+*.index
+*.pb
+*.data-00000-of-00001
