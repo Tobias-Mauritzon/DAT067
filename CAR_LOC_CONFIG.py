@@ -1,5 +1,6 @@
 """""
-A config script to prepare the how to handle both the output and input of a simple model that can estimate bounding boxes
+Config scrip for loading in and handelning training data for a Localization model that estimates the bounding boxes of cars.
+Uses the pretrained VGG - network / modell
 Author: Greppe
 """""
 from tensorflow.keras.layers.experimental import preprocessing
@@ -22,28 +23,18 @@ DATADIR = "Car_Localization"
 IMAGE_SIZE = 224
 IMG_PATH = os.path.join(DATADIR, "cars_train")
 ANNO_PATH = os.path.join(DATADIR, "BoundingBoxes.csv")
-"""""
-#Define output paths
-B_OUTPUT = "output"
-MODEL_PATH = os.path.sep.join([B_OUTPUT, "detector.h5"])
-LB_PATH = os.path.sep.join([B_OUTPUT, "lb.pickle"])
-PLOTS_PATH = os.path.sep.join([B_OUTPUT, "plots"])
-TEST_PATHS = os.path.sep.join([B_OUTPUT, "test_paths.txt"])
 
-#INIT values for training
-INIT_LR = 1e-4
-EPOCHS = 20
-BATCH = 16
-"""""
 # Init array for training
 data = []
-#labels = []
 bboxes = []
 imagePaths = []
+
+print("loading data")
 
 # Read the csv and images and place them into the data arrays.
 annot_file = pd.read_csv(ANNO_PATH)
 
+#Reads through all the collums of the csv file and save them as separate arrays.
 
 #Reads the second collum, x1
 x1 = annot_file.iloc[:, 0].values
@@ -60,55 +51,41 @@ y2 = annot_file.iloc[:, 3].values
 #Reads the first collum, file names
 filenames = annot_file.iloc[:, 4].values
 
-#Reads the sixth collum, label
-#labels_temp = annot_file.iloc[:, 5].values
-i = 0
-while( i <10):
-        print(filenames[i])
-        print(x1[i])
-        print(y1[i])
-        print(x2[i])
-        print(y2[i])
-        i = i + 1
 #Loops through all the filenames and appends it's data to the arrays.
 i = 0
 for filename in filenames:
+        # removes apostrofe from the cvs file, is an error in the data but is hard to fix by hand
         filename = filename.translate(str.maketrans({"'":None}))
+        #Gets the path for the images from the csv file
         imagePath = os.path.sep.join( [IMG_PATH,  filename])
         img = cv2.imread(imagePath)
-        #print( os.path.join( IMG_PATH, filename))
-        #print(img)
+
+        #Convert the coordinates to a usable values for the model
         h, w = img.shape[:2]
         x_start = float(x1[i]) / w
         y_start = float(y1[i]) / h
         x_end = float(x2[i]) / w
         y_end = float(y2[i]) / h
-   
-        if(i < 10):
-                print(imagePath)
-                print(x_start)
-                print(y_start)
-                print(x_end)
-                print(y_end)
+        
+        #Loads the actually image
         img = load_img(imagePath, target_size=(IMAGE_SIZE, IMAGE_SIZE))
         img = img_to_array(img)
 
+        #Adds processed / loaded data to it's respective array
         data.append(img)
         bboxes.append((x_start, y_start , x_end, y_end))
         imagePaths.append(imagePath)
         i = i + 1
 
-#imgPaths = os.path.sep.join([IMG_PATH, label, filename])
-
+print("storing data")
 
 #Gör om till numpy arrayer.
 data = np.array(data, dtype="float32") / 255.0
 bboxes = np.array(bboxes, dtype="float32")
 imagePaths = np.array(imagePaths)
 
-print(data)
-print(bboxes)
-print(imagePaths)
+#Saves all the data in pickle format, so it can be loaded in the trainign file
+#This is to avoid reloading the data every time we train it.
 
 pickle_out = open("data.pickle","wb")
 pickle.dump(data, pickle_out)
@@ -124,3 +101,5 @@ pickle_out.close()
 
 pickle_in = open("data.pickle","rb")
 data = pickle.load(pickle_in)
+
+print("done")

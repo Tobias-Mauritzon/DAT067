@@ -1,5 +1,6 @@
 """""
-A config script to prepare the how to handle both the output and input of a simple model that can estimate bounding boxes
+Config scrip for loading in and handelning training data for a Localization model that estimates the bounding boxes of cars, cats and dogs.
+Uses the pretrained our own pretrained CNN network.
 Author: Greppe
 """""
 from tensorflow.keras.layers.experimental import preprocessing
@@ -22,24 +23,14 @@ DATADIR = "BB_Dataset"
 IMAGE_SIZE = 128
 IMG_PATH = os.path.join(DATADIR, "images")
 ANNO_PATH = os.path.join(DATADIR, "annotations\labels.csv")
-"""""
-#Define output paths
-B_OUTPUT = "output"
-MODEL_PATH = os.path.sep.join([B_OUTPUT, "detector.h5"])
-LB_PATH = os.path.sep.join([B_OUTPUT, "lb.pickle"])
-PLOTS_PATH = os.path.sep.join([B_OUTPUT, "plots"])
-TEST_PATHS = os.path.sep.join([B_OUTPUT, "test_paths.txt"])
 
-#INIT values for training
-INIT_LR = 1e-4
-EPOCHS = 20
-BATCH = 16
-"""""
 # Init array for training
 data = []
 labels = []
 bboxes = []
 imagePaths = []
+
+print("loading data")
 
 # Read the csv and images and place them into the data arrays.
 annot_file = pd.read_csv(ANNO_PATH)
@@ -65,26 +56,29 @@ labels_temp = annot_file.iloc[:, 5].values
 #Loops through all the filenames and appends it's data to the arrays.
 i = 0
 for filename in filenames:
+        #Gets the path for the images from the csv file
         imagePath = os.path.sep.join( [IMG_PATH, labels_temp[i], filename])
         img = cv2.imread(imagePath)
-        print( os.path.join( IMG_PATH, labels_temp[i], filename))
-        print(img)
+       
+        #Convert the coordinates to a usable values for the model
         h, w = img.shape[:2]
         x_start = float(x1[i]) / w
         y_start = float(y1[i]) / h
         x_end = float(x2[i]) / w
         y_end = float(y2[i]) / h
+
+        #Loads the actually image
         img = load_img(imagePath, target_size=(128, 128))
         img = img_to_array(img)
 
+        #Adds processed / loaded data to it's respective array
         data.append(img)
         labels.append(labels_temp[i])
         bboxes.append((x_start, y_start, x_end, y_end))
         imagePaths.append(imagePath)
         i = i + 1
 
-#imgPaths = os.path.sep.join([IMG_PATH, label, filename])
-
+print("storing data")
 
 #Gör om till numpy arrayer.
 data = np.array(data, dtype="float32") / 255.0
@@ -92,10 +86,8 @@ labels = np.array(labels)
 bboxes = np.array(bboxes, dtype="float32")
 imagePaths = np.array(imagePaths)
 
-print(data)
-print(labels)
-print(bboxes)
-print(imagePaths)
+#Saves all the data in pickle format, so it can be loaded in the trainign file
+#This is to avoid reloading the data every time we train it.
 
 pickle_out = open("data.pickle","wb")
 pickle.dump(data, pickle_out)
@@ -116,3 +108,5 @@ pickle_out.close()
 
 pickle_in = open("data.pickle","rb")
 data = pickle.load(pickle_in)
+
+print("done")
