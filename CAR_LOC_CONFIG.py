@@ -18,10 +18,10 @@ import os
 
 
 #Define input paths
-DATADIR = "BB_Dataset"
-IMAGE_SIZE = 128
-IMG_PATH = os.path.join(DATADIR, "images")
-ANNO_PATH = os.path.join(DATADIR, "annotations\labels.csv")
+DATADIR = "Car_Localization"
+IMAGE_SIZE = 224
+IMG_PATH = os.path.join(DATADIR, "cars_train")
+ANNO_PATH = os.path.join(DATADIR, "BoundingBoxes.csv")
 """""
 #Define output paths
 B_OUTPUT = "output"
@@ -37,49 +37,64 @@ BATCH = 16
 """""
 # Init array for training
 data = []
-labels = []
+#labels = []
 bboxes = []
 imagePaths = []
 
 # Read the csv and images and place them into the data arrays.
 annot_file = pd.read_csv(ANNO_PATH)
 
-#Reads the first collum, file names
-filenames = annot_file.iloc[:, 0].values
 
 #Reads the second collum, x1
-x1 = annot_file.iloc[:, 1].values
+x1 = annot_file.iloc[:, 0].values
 
 #Reads the third collum, y1
-y1 = annot_file.iloc[:, 2].values
+y1 = annot_file.iloc[:, 1].values
 
 #Reads the forth collum, x2
-x2 = annot_file.iloc[:, 3].values
+x2 = annot_file.iloc[:, 2].values
 
 #Reads the fifth collum, y2
-y2 = annot_file.iloc[:, 4].values
+y2 = annot_file.iloc[:, 3].values
+
+#Reads the first collum, file names
+filenames = annot_file.iloc[:, 4].values
 
 #Reads the sixth collum, label
-labels_temp = annot_file.iloc[:, 5].values
-
+#labels_temp = annot_file.iloc[:, 5].values
+i = 0
+while( i <10):
+        print(filenames[i])
+        print(x1[i])
+        print(y1[i])
+        print(x2[i])
+        print(y2[i])
+        i = i + 1
 #Loops through all the filenames and appends it's data to the arrays.
 i = 0
 for filename in filenames:
-        imagePath = os.path.sep.join( [IMG_PATH, labels_temp[i], filename])
+        filename = filename.translate(str.maketrans({"'":None}))
+        imagePath = os.path.sep.join( [IMG_PATH,  filename])
         img = cv2.imread(imagePath)
-        print( os.path.join( IMG_PATH, labels_temp[i], filename))
-        print(img)
+        #print( os.path.join( IMG_PATH, filename))
+        #print(img)
         h, w = img.shape[:2]
         x_start = float(x1[i]) / w
         y_start = float(y1[i]) / h
         x_end = float(x2[i]) / w
         y_end = float(y2[i]) / h
-        img = load_img(imagePath, target_size=(128, 128))
+   
+        if(i < 10):
+                print(imagePath)
+                print(x_start)
+                print(y_start)
+                print(x_end)
+                print(y_end)
+        img = load_img(imagePath, target_size=(IMAGE_SIZE, IMAGE_SIZE))
         img = img_to_array(img)
 
         data.append(img)
-        labels.append(labels_temp[i])
-        bboxes.append((x_start, y_start, x_end, y_end))
+        bboxes.append((x_start, y_start , x_end, y_end))
         imagePaths.append(imagePath)
         i = i + 1
 
@@ -88,22 +103,15 @@ for filename in filenames:
 
 #Gör om till numpy arrayer.
 data = np.array(data, dtype="float32") / 255.0
-labels = np.array(labels)
 bboxes = np.array(bboxes, dtype="float32")
 imagePaths = np.array(imagePaths)
 
 print(data)
-print(labels)
 print(bboxes)
 print(imagePaths)
 
 pickle_out = open("data.pickle","wb")
 pickle.dump(data, pickle_out)
-pickle_out.close()
-
-
-pickle_out = open("labels.pickle","wb")
-pickle.dump(labels, pickle_out)
 pickle_out.close()
 
 pickle_out = open("bboxes.pickle","wb")
