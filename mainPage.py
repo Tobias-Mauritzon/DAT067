@@ -346,32 +346,25 @@ class MainPage(QtWidgets.QWidget):
     # Function that detects faces using Haar cascades THIS SHOULD BE CHANGED SO WE CAN USE ANY XML FILE
 
     def __detectUsingHaarCascade(self):
-        # Convert to gray
+        #Convert to gray
         gray = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
-        objects = self.myCascade.detectMultiScale(
-            gray, scaleFactor=1.3, minNeighbors=5)
+        objects = self.myCascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
         for(x, y, w, h) in objects:
-            color = (255, 0, 0)
-            stroke = 2
             end_cord_x = x + w
             end_cord_y = y + h
-            # Draws the rectangle around the face
+            #Draws the rectangle around the face
 
-            # Implementation of distance estimation here
+            #Implementation of distance estimation here
             distance = self.estimator.estimate_distance(w)
 
-            objectRectangle = cv2.rectangle(
-                self.image, (x, y), (end_cord_x, end_cord_y), color, stroke)
+            objectRectangle = cv2.rectangle(self.image, (x, y), (end_cord_x, end_cord_y), (255,0,0), 2)
 
-            cv2.rectangle(self.image, (x, end_cord_y),
-                          (end_cord_x, end_cord_y + 40), color, -1)
+            cv2.rectangle(self.image, (x, end_cord_y), (end_cord_x, end_cord_y + 40), (255,0,0), -1)
 
             font = cv2.FONT_HERSHEY_SIMPLEX
-            # Display the text
-            cv2.putText(self.image, distance, (x + 10, y + h + 30),
-                        font, 0.7, (255, 255, 255))
-            cv2.putText(objectRectangle, "License Plate", (x, y-10),
-                        font, 0.5, (11, 255, 255), 2, cv2.LINE_AA)
+            #Display the text
+            cv2.putText(self.image, distance, (x + 10, y + h + 30), font, 0.7, (255, 255, 255))
+            cv2.putText(objectRectangle,"License Plate",(x, y-10), font, 0.5, (11,255,255), 2, cv2.LINE_AA)
 
     # Activates the Haar cascade object detection
     def activateHaarCascade(self, objectName):
