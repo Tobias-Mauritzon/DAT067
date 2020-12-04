@@ -1,13 +1,14 @@
 """
 #Author: Joachim Antfolk, William Jönsson
-#Reviewed by: 
+#Reviewed by: Tobias Mauritzon
 #Reviewed on: 2020-12-04
 """
 
-from cv2 import cv2 
+from cv2 import cv2
 import numpy as numpy
 from typing import Tuple
 from typing import List
+
 
 class DistanceEstimator:
     """
@@ -63,4 +64,3 @@ class DistanceEstimator:
         Updates the distance estimators real size attribute
         """
         self.real_size = new_size
-    
