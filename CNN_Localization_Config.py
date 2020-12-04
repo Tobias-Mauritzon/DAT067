@@ -2,6 +2,8 @@
 Config scrip for loading in and handelning training data for a Localization model that estimates the bounding boxes of cars, cats and dogs.
 Uses the pretrained our own pretrained CNN network.
 Author: Greppe
+Reviewed by: William
+Reviewed on: 2020-12-04
 """""
 from tensorflow.keras.layers.experimental import preprocessing
 from tensorflow.keras.preprocessing.image import img_to_array

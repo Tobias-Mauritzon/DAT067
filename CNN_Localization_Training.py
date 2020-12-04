@@ -1,6 +1,8 @@
 """""
 A script for training object localization & classifcation for cars, cats and dogs using our own pretrained network / modell
 Author: Greppe
+Reviewed by: William
+Reviewed on: 2020-12-04
 """""
 
 from tensorflow.keras.layers import Flatten

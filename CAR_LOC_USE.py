@@ -13,6 +13,8 @@ import tensorflow as tf
 """""
 A simple script to use the model that is trained on object localization on cars using the VGG16 network / modell
 Author: Greppe
+Reviewed by: William
+Reviewed on: 2020-12-04
 """""
 model = tf.keras.models.load_model('saved_model/pretrained_car_localization')
 

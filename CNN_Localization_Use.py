@@ -12,6 +12,8 @@ import tensorflow as tf
 """""
 A simple script to use the model that is trained on object localization & classifcation on cars, cats and dogs using our own pretrained model / network
 Author: Greppe
+Reviewed by: William
+Reviewed on: 2020-12-04
 """""
 CATEGORIES = ["Car", "Dog", "Cat"]
 
