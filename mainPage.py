@@ -16,6 +16,10 @@ from GUI.ui_mainPage import *
 # Reviewed by: Andreas
 # Date: 2020-12-01
 
+# Author: Joachim, William
+# Reviewed by: 
+# Date: 2020-12-02
+
 """
 MainPage inherits QWidget and creates the main page with the ui(ui_mainPage.py) made with Qt designer.
 The class creates a page with all the object detection functions.
@@ -329,9 +333,8 @@ class MainPage(QtWidgets.QWidget):
 			end_cord_y = y + h
 			#Draws the rectangle around the face
 
-			"""
-			Implement distance here
-			"""
+			
+			#Implementation of distance estimation here
 			distance = self.estimator.estimate_distance(w)
 
 			objectRectangle = cv2.rectangle(self.image, (x, y), (end_cord_x, end_cord_y), color, stroke)
