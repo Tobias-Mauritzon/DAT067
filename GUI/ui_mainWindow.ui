@@ -244,7 +244,6 @@ QPushButton:pressed {
      </property>
      <addaction name="action_HaarCascade_Cars"/>
     </widget>
-    <addaction name="actionCar_detection"/>
     <addaction name="menuHaar_Cascade"/>
     <addaction name="actionYOLO"/>
     <addaction name="actionSSD"/>
@@ -347,7 +346,7 @@ QPushButton:pressed {
   </action>
   <action name="actionCar_detection">
    <property name="text">
-    <string>CNN</string>
+    <string>TensorFlow</string>
    </property>
   </action>
   <action name="action_Settings">
@@ -383,6 +382,9 @@ QPushButton:pressed {
    </property>
   </action>
   <action name="action_HaarCascade_Cars">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Cars</string>
    </property>
@@ -398,6 +400,9 @@ QPushButton:pressed {
    </property>
   </action>
   <action name="action_CustomModel">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Custom Model</string>
    </property>

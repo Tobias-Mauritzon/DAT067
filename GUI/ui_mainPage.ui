@@ -17,7 +17,25 @@
    <string notr="true">*
 {
 	background-color: rgb(35, 35, 38);
+	color:white;
 }
+
+QGroupBox {
+    border: 1px solid gray;
+    margin-top: 0.5em;
+}
+
+QGroupBox::title {
+	color: white;
+	subcontrol-origin: margin;
+    left: 10px;
+    padding: -3 3px 0 3px;
+}
+
+QScrollArea{
+	border: 0;
+}
+
 
 /* VERTICAL SCROLLBAR */
 QScrollBar:vertical
@@ -276,7 +294,7 @@ QPushButton:pressed {
           <enum>Qt::LeftToRight</enum>
          </property>
          <property name="styleSheet">
-          <string notr="true"/>
+          <string notr="true">color:black;</string>
          </property>
          <property name="text">
           <string>Start</string>
@@ -370,8 +388,8 @@ QPushButton:pressed {
           </property>
           <property name="styleSheet">
            <string notr="true">background-color: rgb(51, 55, 61); 
-border-top-left-radius: 15;
-border-bottom-left-radius: 15;
+border-radius: 10;
+
 </string>
           </property>
           <property name="frameShape">
@@ -399,7 +417,7 @@ border-bottom-left-radius: 15;
               </font>
              </property>
              <property name="styleSheet">
-              <string notr="true">color: white;</string>
+              <string notr="true"/>
              </property>
              <property name="text">
               <string>Settings</string>
@@ -418,7 +436,7 @@ border-bottom-left-radius: 15;
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(35, 35, 38)</string>
+              <string notr="true">background-color: rgb(35, 35, 38);</string>
              </property>
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
@@ -467,9 +485,9 @@ border-bottom-left-radius: 15;
               <property name="geometry">
                <rect>
                 <x>0</x>
-                <y>0</y>
+                <y>-362</y>
                 <width>419</width>
-                <height>574</height>
+                <height>851</height>
                </rect>
               </property>
               <property name="sizePolicy">
@@ -494,18 +512,7 @@ border-bottom-left-radius: 15;
                   </size>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true">QGroupBox {
-    border: 1px solid gray;
-    border-radius: 5px;
-    margin-top: 0.5em;
-}
-
-QGroupBox::title {
-	color: white;
-	subcontrol-origin: margin;
-    left: 10px;
-    padding: -3 3px 0 3px;
-}</string>
+                  <string notr="true"/>
                  </property>
                  <property name="frameShape">
                   <enum>QFrame::StyledPanel</enum>
@@ -514,8 +521,20 @@ QGroupBox::title {
                   <enum>QFrame::Raised</enum>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_5">
+                  <property name="spacing">
+                   <number>10</number>
+                  </property>
                   <property name="leftMargin">
-                   <number>9</number>
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
+                   <number>0</number>
                   </property>
                   <item>
                    <widget class="QGroupBox" name="groupBox_3">
@@ -788,7 +807,7 @@ QGroupBox::title {
                      <item>
                       <widget class="QRadioButton" name="radioButton_showFrameRate">
                        <property name="styleSheet">
-                        <string notr="true">color: white;</string>
+                        <string notr="true"/>
                        </property>
                        <property name="text">
                         <string>Show frame rate</string>
@@ -821,7 +840,7 @@ QGroupBox::title {
                      <item>
                       <widget class="QRadioButton" name="radioButton_res_0">
                        <property name="styleSheet">
-                        <string notr="true">color: white;</string>
+                        <string notr="true"/>
                        </property>
                        <property name="text">
                         <string>160 x 120 (4:3) </string>
@@ -831,7 +850,7 @@ QGroupBox::title {
                      <item>
                       <widget class="QRadioButton" name="radioButton_res_1">
                        <property name="styleSheet">
-                        <string notr="true">color: white;</string>
+                        <string notr="true"/>
                        </property>
                        <property name="text">
                         <string>320 x 240 (4:3)</string>
@@ -841,7 +860,7 @@ QGroupBox::title {
                      <item>
                       <widget class="QRadioButton" name="radioButton_res_2">
                        <property name="styleSheet">
-                        <string notr="true">color:white;</string>
+                        <string notr="true"/>
                        </property>
                        <property name="text">
                         <string>640 x 480 (4:3)</string>
@@ -854,7 +873,7 @@ QGroupBox::title {
                      <item>
                       <widget class="QRadioButton" name="radioButton_res_3">
                        <property name="styleSheet">
-                        <string notr="true">color: white;</string>
+                        <string notr="true"/>
                        </property>
                        <property name="text">
                         <string>800 x 600 (4:3) </string>
@@ -864,7 +883,7 @@ QGroupBox::title {
                      <item>
                       <widget class="QRadioButton" name="radioButton_res_4">
                        <property name="styleSheet">
-                        <string notr="true">color:white;</string>
+                        <string notr="true"/>
                        </property>
                        <property name="text">
                         <string>1280 x 720 (16:9)</string>
@@ -939,7 +958,7 @@ QGroupBox::title {
                         </sizepolicy>
                        </property>
                        <property name="styleSheet">
-                        <string notr="true">color:white;</string>
+                        <string notr="true"/>
                        </property>
                        <property name="text">
                         <string>RGB</string>
@@ -958,7 +977,7 @@ QGroupBox::title {
                         </sizepolicy>
                        </property>
                        <property name="styleSheet">
-                        <string notr="true">color:white;</string>
+                        <string notr="true"/>
                        </property>
                        <property name="text">
                         <string>Grayscale</string>
@@ -968,7 +987,7 @@ QGroupBox::title {
                      <item>
                       <widget class="QRadioButton" name="radioButton_Edged">
                        <property name="styleSheet">
-                        <string notr="true">color:white;</string>
+                        <string notr="true"/>
                        </property>
                        <property name="text">
                         <string>Edged</string>
@@ -991,6 +1010,7 @@ QGroupBox::title {
 
 QPushButton{
 	background-color: white;
+	color: black;
 	border-radius: 10;
 }
 
@@ -1001,6 +1021,270 @@ QPushButton:pressed {
                     <property name="text">
                      <string>Reset</string>
                     </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QLabel" name="label_7">
+                    <property name="font">
+                     <font>
+                      <family>Rockwell</family>
+                      <pointsize>16</pointsize>
+                     </font>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true"/>
+                    </property>
+                    <property name="text">
+                     <string>Models</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="Line" name="line_3">
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>2</height>
+                     </size>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true">background-color: rgb(35, 35, 38);</string>
+                    </property>
+                    <property name="orientation">
+                     <enum>Qt::Horizontal</enum>
+                    </property>
+                   </widget>
+                  </item>
+                  <item>
+                   <widget class="QGroupBox" name="groupBox_HaarCascade">
+                    <property name="enabled">
+                     <bool>false</bool>
+                    </property>
+                    <property name="font">
+                     <font>
+                      <pointsize>10</pointsize>
+                     </font>
+                    </property>
+                    <property name="title">
+                     <string>Haar Cascade</string>
+                    </property>
+                    <layout class="QVBoxLayout" name="verticalLayout_14">
+                     <item>
+                      <widget class="QFrame" name="frame_5">
+                       <property name="layoutDirection">
+                        <enum>Qt::RightToLeft</enum>
+                       </property>
+                       <property name="frameShape">
+                        <enum>QFrame::StyledPanel</enum>
+                       </property>
+                       <property name="frameShadow">
+                        <enum>QFrame::Raised</enum>
+                       </property>
+                       <layout class="QFormLayout" name="formLayout">
+                        <item row="1" column="1">
+                         <widget class="QSlider" name="horizontalSlider_HC_ScaleFactor">
+                          <property name="layoutDirection">
+                           <enum>Qt::LeftToRight</enum>
+                          </property>
+                          <property name="minimum">
+                           <number>105</number>
+                          </property>
+                          <property name="maximum">
+                           <number>400</number>
+                          </property>
+                          <property name="singleStep">
+                           <number>5</number>
+                          </property>
+                          <property name="pageStep">
+                           <number>5</number>
+                          </property>
+                          <property name="value">
+                           <number>105</number>
+                          </property>
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
+                          </property>
+                          <property name="tickPosition">
+                           <enum>QSlider::NoTicks</enum>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="1" column="0">
+                         <widget class="QLabel" name="label_HC_ScaleFactor">
+                          <property name="layoutDirection">
+                           <enum>Qt::RightToLeft</enum>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true"/>
+                          </property>
+                          <property name="text">
+                           <string>1</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="0" column="1">
+                         <widget class="QLabel" name="label_5">
+                          <property name="styleSheet">
+                           <string notr="true"/>
+                          </property>
+                          <property name="text">
+                           <string>Scalefactor</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QFrame" name="frame_6">
+                       <property name="layoutDirection">
+                        <enum>Qt::RightToLeft</enum>
+                       </property>
+                       <property name="frameShape">
+                        <enum>QFrame::StyledPanel</enum>
+                       </property>
+                       <property name="frameShadow">
+                        <enum>QFrame::Raised</enum>
+                       </property>
+                       <layout class="QFormLayout" name="formLayout_4">
+                        <item row="1" column="1">
+                         <widget class="QSlider" name="horizontalSlider_HC_MinNeighbors">
+                          <property name="layoutDirection">
+                           <enum>Qt::LeftToRight</enum>
+                          </property>
+                          <property name="maximum">
+                           <number>10</number>
+                          </property>
+                          <property name="value">
+                           <number>5</number>
+                          </property>
+                          <property name="sliderPosition">
+                           <number>5</number>
+                          </property>
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="1" column="0">
+                         <widget class="QLabel" name="label_HC_MinNeighbors">
+                          <property name="layoutDirection">
+                           <enum>Qt::RightToLeft</enum>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true"/>
+                          </property>
+                          <property name="text">
+                           <string>1</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="0" column="1">
+                         <widget class="QLabel" name="label_6">
+                          <property name="styleSheet">
+                           <string notr="true"/>
+                          </property>
+                          <property name="text">
+                           <string>Min neighbors</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QFrame" name="frame_7">
+                       <property name="layoutDirection">
+                        <enum>Qt::RightToLeft</enum>
+                       </property>
+                       <property name="frameShape">
+                        <enum>QFrame::StyledPanel</enum>
+                       </property>
+                       <property name="frameShadow">
+                        <enum>QFrame::Raised</enum>
+                       </property>
+                       <layout class="QFormLayout" name="formLayout_5">
+                        <item row="1" column="1">
+                         <widget class="QSlider" name="horizontalSlider_HC_MinSize">
+                          <property name="layoutDirection">
+                           <enum>Qt::LeftToRight</enum>
+                          </property>
+                          <property name="minimum">
+                           <number>0</number>
+                          </property>
+                          <property name="maximum">
+                           <number>400</number>
+                          </property>
+                          <property name="singleStep">
+                           <number>10</number>
+                          </property>
+                          <property name="pageStep">
+                           <number>10</number>
+                          </property>
+                          <property name="value">
+                           <number>0</number>
+                          </property>
+                          <property name="orientation">
+                           <enum>Qt::Horizontal</enum>
+                          </property>
+                          <property name="tickPosition">
+                           <enum>QSlider::NoTicks</enum>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="1" column="0">
+                         <widget class="QLabel" name="label_HC_MinSize">
+                          <property name="layoutDirection">
+                           <enum>Qt::RightToLeft</enum>
+                          </property>
+                          <property name="styleSheet">
+                           <string notr="true"/>
+                          </property>
+                          <property name="text">
+                           <string>0</string>
+                          </property>
+                         </widget>
+                        </item>
+                        <item row="0" column="1">
+                         <widget class="QLabel" name="label_8">
+                          <property name="styleSheet">
+                           <string notr="true"/>
+                          </property>
+                          <property name="text">
+                           <string>Min size to detect</string>
+                          </property>
+                         </widget>
+                        </item>
+                       </layout>
+                      </widget>
+                     </item>
+                     <item>
+                      <widget class="QPushButton" name="Button_HC_Reset">
+                       <property name="font">
+                        <font>
+                         <family>Rockwell</family>
+                         <pointsize>12</pointsize>
+                        </font>
+                       </property>
+                       <property name="styleSheet">
+                        <string notr="true">/*Buttons*/
+
+QPushButton{
+	background-color: white;
+	color: black;
+	border-radius: 10;
+}
+
+QPushButton:pressed {	
+	background-color: #bcbcbc;
+}</string>
+                       </property>
+                       <property name="text">
+                        <string>Reset</string>
+                       </property>
+                      </widget>
+                     </item>
+                    </layout>
                    </widget>
                   </item>
                  </layout>
@@ -1015,9 +1299,7 @@ QPushButton:pressed {
          <widget class="QFrame" name="outputFrame">
           <property name="styleSheet">
            <string notr="true">background-color: rgb(51, 55, 61);
-border-top-left-radius: 15;
-
-</string>
+border-radius: 10;\n\n</string>
           </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
@@ -1063,7 +1345,7 @@ border-top-left-radius: 15;
               </size>
              </property>
              <property name="styleSheet">
-              <string notr="true">background-color: rgb(35, 35, 38)</string>
+              <string notr="true">background-color: rgb(35, 35, 38);</string>
              </property>
              <property name="orientation">
               <enum>Qt::Horizontal</enum>

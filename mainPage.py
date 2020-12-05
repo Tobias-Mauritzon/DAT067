@@ -8,8 +8,14 @@ from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import QTimer
 import numpy as np
 import tensorflow as tf
+from tensorflow.keras.preprocessing.image import img_to_array
 from dialogMenu import *
 from GUI.ui_mainPage import * 
+
+#Models:
+from TensorFlow_Custom_Model import *
+from HaarCascade_Model import *
+
 
 # Author: Philip
 # Reviewed by: Andreas
@@ -45,16 +51,23 @@ class MainPage(QtWidgets.QWidget):
 		self.START_BRIGHTNESS = 0
 		self.START_CONTRAST = 10
 
-		self.usingHaarCascade = False # boolean to activate/deactivate Haar Cascade
-		self.customModelIsActive = False # boolean to activate/deactivate custom model
 		self.fps = 0
 		self.fpsInc = 0
 		self.fps_color = (25, 25, 25)
+
+		#Models:
+		self.customTensorFlowModel = None
+		self.HaarCascadeModel = None
+		#Models activation booleans:
+		self.usingHaarCascade = False # boolean to activate/deactivate Haar Cascade
+		self.customModelIsActive = False # boolean to activate/deactivate custom model
 
 	# Sets start sizes for widgets in page
 	def __initPage(self):
 		self.ui.Splitter_frame.setSizes([1000,300])
 		self.ui.Splitter_sidePanel.setSizes([1,1])
+		self.ui.label_HC_ScaleFactor.setNum(self.ui.horizontalSlider_HC_ScaleFactor.value()/100)
+		self.ui.label_HC_MinNeighbors.setNum(self.ui.horizontalSlider_HC_MinNeighbors.value())
 	
 	# Load this page
 	def loadPage(self):
@@ -98,6 +111,17 @@ class MainPage(QtWidgets.QWidget):
 		self.ui.radioButton_res_4.toggled.connect(lambda: self.__setResolution(1280,720))
 		# Set action for reset button
 		self.ui.Button_reset.clicked.connect(self.__resetSettingValues)
+		self.ui.Button_HC_Reset.clicked.connect(self.__reset_HC_Values)
+
+		#MODELS SETTINGS
+		self.ui.horizontalSlider_HC_ScaleFactor.valueChanged.connect(lambda: self.HaarCascadeModel.setScaleFactor(self.ui.horizontalSlider_HC_ScaleFactor.value()/100))
+		self.ui.horizontalSlider_HC_ScaleFactor.valueChanged.connect(lambda: self.ui.label_HC_ScaleFactor.setNum(self.ui.horizontalSlider_HC_ScaleFactor.value()/100))
+		self.ui.horizontalSlider_HC_MinNeighbors.valueChanged.connect(lambda: self.HaarCascadeModel.setMinNeighbors(self.ui.horizontalSlider_HC_MinNeighbors.value()))
+		self.ui.horizontalSlider_HC_MinNeighbors.valueChanged.connect(lambda: self.ui.label_HC_MinNeighbors.setNum(self.ui.horizontalSlider_HC_MinNeighbors.value()))
+		self.ui.horizontalSlider_HC_MinSize.valueChanged.connect(lambda: self.HaarCascadeModel.setMinsize(self.ui.horizontalSlider_HC_MinSize.value()))
+		self.ui.horizontalSlider_HC_MinSize.valueChanged.connect(lambda: self.ui.label_HC_MinSize.setNum(self.ui.horizontalSlider_HC_MinSize.value()))
+		
+		
 	
 	# Resizes the cam frame
 	def __resize_camFrame(self):
@@ -188,9 +212,9 @@ class MainPage(QtWidgets.QWidget):
 	# Sets the chosen object detection type
 	def __setObjectDetectionType(self):
 		if self.usingHaarCascade:
-			self.__detectUsingHaarCascade()
+			self.HaarCascadeModel.findObject(self.image)
 		if self.customModelIsActive:
-			self.__customModel()
+			self.customTensorFlowModel.findObject(self.image)
 		if self.frameRateIsShown:
 			self.__showFrameRate()
 
@@ -314,67 +338,36 @@ class MainPage(QtWidgets.QWidget):
 		dialogMenu.exec_()
 
 	""" Haar Cascade detection START"""
-	# Function that detects faces using Haar cascades THIS SHOULD BE CHANGED SO WE CAN USE ANY XML FILE
-	def __detectUsingHaarCascade(self):
-		#Convert to gray
-		gray = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
-		objects = self.myCascade.detectMultiScale(gray, scaleFactor=1.3, minNeighbors=5)
-		for(x, y, w, h) in objects:
-			color = (255,0,0)
-			stroke = 2
-			end_cord_x = x + w
-			end_cord_y = y + h
-			#Draws the rectangle around the face
-			objectRectangle = cv2.rectangle(self.image, (x, y), (end_cord_x, end_cord_y), color, stroke)
-
-			font = cv2.FONT_HERSHEY_SIMPLEX
-			#Display the text
-			cv2.putText(objectRectangle,"License Plate",(x, y-10), font, 0.5, (11,255,255), 2, cv2.LINE_AA)
-
-	# Activates the Haar cascade object detection
+	# Activates the Haar cascade object detection and enables haaar cascade settings
 	def activateHaarCascade(self, objectName):
 		if objectName == "Cars":
 			if self.usingHaarCascade:
 				self.usingHaarCascade = False
+				self.ui.groupBox_HaarCascade.setEnabled(False)
 			else:
-				#Filters that are searching for different things, in this case 'the front of the face and the eyes'
-				self.myCascade = cv2.CascadeClassifier('cascades/haarcascade_russian_plate_number.xml')
+				self.HaarCascadeModel = HaarCascade_Model(objectName)
+				self.ui.groupBox_HaarCascade.setEnabled(True)
 				self.usingHaarCascade = True
-	""" Face detection END """
+				
+	# Sets the haar cascade values, labels and sliders to default values
+	def __reset_HC_Values(self):
+		self.HaarCascadeModel.resetValues()
+		self.ui.horizontalSlider_HC_ScaleFactor.setValue(self.HaarCascadeModel.scaleFactor_def)
+		self.ui.label_HC_ScaleFactor.setNum(self.HaarCascadeModel.scaleFactor_def)
+		self.ui.horizontalSlider_HC_MinNeighbors.setValue(self.HaarCascadeModel.minNeighbors_def)
+		self.ui.label_HC_MinNeighbors.setNum(self.HaarCascadeModel.minNeighbors_def)
+		self.ui.horizontalSlider_HC_MinSize.setValue(self.HaarCascadeModel.minSize_def)
+		self.ui.label_HC_MinSize.setNum(self.HaarCascadeModel.minSize_def)
 
-	""" Custom TensorFlow Model START"""
-	# Resizes the image to work with the model
-	def __prepare(self):
-		IMG_SIZE = 100
-		gray = cv2.cvtColor(self.image, cv2.COLOR_BGR2GRAY)
-		new_array = cv2.resize(gray, (IMG_SIZE, IMG_SIZE))
-		return new_array.reshape(-1, IMG_SIZE, IMG_SIZE, 1)
-	
-	# Makes a prediction
-	def __customModel(self):
-		prediction = self.my_model.predict([self.__prepare()])
-		self.__check_category(prediction)
-	
-	# Sets label to the predicted object
-	def __check_category(self,prediction):
-		if (int(prediction[0][0]) == 1):
-			#print("Car")
-			self.ui.Label_object.setText("CAR")
-		elif (int(prediction[0][1]) == 1):
-			#print("Dog")
-			self.ui.Label_object.setText("DOG")
-		elif (int(prediction[0][2]) == 1):
-			#print("Cat")
-			self.ui.Label_object.setText("CAT")
-		else:
-			#print("Not a Car, Cat or a Dog")
-			self.ui.Label_object.setText("Not a Car, Cat or a Dog")
-		return
-	
+	"""Haar Cascade detection END"""
+
+	""" Custom TensorFlow Model START"""	
 	# Activates the custom tensorFlow model
 	def activateCustomModel(self):
 		# Loads the custom trained model.
-		self.my_model = tf.keras.models.load_model('saved_model/car_model')
+		print("LOADING CUSTOM TENSORFLOW MODEL")
+		#self.my_model = tf.keras.models.load_model("pretrained_car_localization")
+		self.customTensorFlowModel = TensorFlow_Custom_Model(0)
 		if self.customModelIsActive:
 			self.customModelIsActive = False
 		else:

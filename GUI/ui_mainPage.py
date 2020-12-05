@@ -18,7 +18,25 @@ class Ui_MainPage(object):
         MainPage.setStyleSheet("*\n"
 "{\n"
 "    background-color: rgb(35, 35, 38);\n"
+"    color:white;\n"
 "}\n"
+"\n"
+"QGroupBox {\n"
+"    border: 1px solid gray;\n"
+"    margin-top: 0.5em;\n"
+"}\n"
+"\n"
+"QGroupBox::title {\n"
+"    color: white;\n"
+"    subcontrol-origin: margin;\n"
+"    left: 10px;\n"
+"    padding: -3 3px 0 3px;\n"
+"}\n"
+"\n"
+"QScrollArea{\n"
+"    border: 0;\n"
+"}\n"
+"\n"
 "\n"
 "/* VERTICAL SCROLLBAR */\n"
 "QScrollBar:vertical\n"
@@ -209,7 +227,7 @@ class Ui_MainPage(object):
         font.setWeight(50)
         self.Button_startCam.setFont(font)
         self.Button_startCam.setLayoutDirection(QtCore.Qt.LeftToRight)
-        self.Button_startCam.setStyleSheet("")
+        self.Button_startCam.setStyleSheet("color:black;")
         self.Button_startCam.setObjectName("Button_startCam")
         self.verticalLayout.addWidget(self.Button_startCam, 0, QtCore.Qt.AlignHCenter)
         self.sidePanel = QtWidgets.QFrame(self.Splitter_frame)
@@ -249,8 +267,8 @@ class Ui_MainPage(object):
         self.settingsFrame.setSizePolicy(sizePolicy)
         self.settingsFrame.setMinimumSize(QtCore.QSize(300, 0))
         self.settingsFrame.setStyleSheet("background-color: rgb(51, 55, 61); \n"
-"border-top-left-radius: 15;\n"
-"border-bottom-left-radius: 15;\n"
+"border-radius: 10;\n"
+"\n"
 "")
         self.settingsFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.settingsFrame.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -268,13 +286,13 @@ class Ui_MainPage(object):
         font.setFamily("Rockwell")
         font.setPointSize(16)
         self.label.setFont(font)
-        self.label.setStyleSheet("color: white;")
+        self.label.setStyleSheet("")
         self.label.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.label.setObjectName("label")
         self.verticalLayout_3.addWidget(self.label)
         self.line_2 = QtWidgets.QFrame(self.settingsFrame)
         self.line_2.setMaximumSize(QtCore.QSize(16777215, 2))
-        self.line_2.setStyleSheet("background-color: rgb(35, 35, 38)")
+        self.line_2.setStyleSheet("background-color: rgb(35, 35, 38);")
         self.line_2.setFrameShape(QtWidgets.QFrame.HLine)
         self.line_2.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line_2.setObjectName("line_2")
@@ -295,7 +313,7 @@ class Ui_MainPage(object):
         self.scrollArea.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 419, 574))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -362, 419, 851))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -307,23 +325,13 @@ class Ui_MainPage(object):
         self.frame_2 = QtWidgets.QFrame(self.scrollAreaWidgetContents)
         self.frame_2.setMinimumSize(QtCore.QSize(0, 0))
         self.frame_2.setMaximumSize(QtCore.QSize(16777215, 16777215))
-        self.frame_2.setStyleSheet("QGroupBox {\n"
-"    border: 1px solid gray;\n"
-"    border-radius: 5px;\n"
-"    margin-top: 0.5em;\n"
-"}\n"
-"\n"
-"QGroupBox::title {\n"
-"    color: white;\n"
-"    subcontrol-origin: margin;\n"
-"    left: 10px;\n"
-"    padding: -3 3px 0 3px;\n"
-"}")
+        self.frame_2.setStyleSheet("")
         self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_2.setObjectName("frame_2")
         self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.frame_2)
-        self.verticalLayout_5.setContentsMargins(9, -1, -1, -1)
+        self.verticalLayout_5.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_5.setSpacing(10)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
         self.groupBox_3 = QtWidgets.QGroupBox(self.frame_2)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
@@ -436,7 +444,7 @@ class Ui_MainPage(object):
         self.verticalLayout_13.setSpacing(15)
         self.verticalLayout_13.setObjectName("verticalLayout_13")
         self.radioButton_showFrameRate = QtWidgets.QRadioButton(self.groupBox_5)
-        self.radioButton_showFrameRate.setStyleSheet("color: white;")
+        self.radioButton_showFrameRate.setStyleSheet("")
         self.radioButton_showFrameRate.setObjectName("radioButton_showFrameRate")
         self.verticalLayout_13.addWidget(self.radioButton_showFrameRate)
         self.verticalLayout_5.addWidget(self.groupBox_5)
@@ -451,24 +459,24 @@ class Ui_MainPage(object):
         self.verticalLayout_11.setSpacing(15)
         self.verticalLayout_11.setObjectName("verticalLayout_11")
         self.radioButton_res_0 = QtWidgets.QRadioButton(self.groupBox)
-        self.radioButton_res_0.setStyleSheet("color: white;")
+        self.radioButton_res_0.setStyleSheet("")
         self.radioButton_res_0.setObjectName("radioButton_res_0")
         self.verticalLayout_11.addWidget(self.radioButton_res_0)
         self.radioButton_res_1 = QtWidgets.QRadioButton(self.groupBox)
-        self.radioButton_res_1.setStyleSheet("color: white;")
+        self.radioButton_res_1.setStyleSheet("")
         self.radioButton_res_1.setObjectName("radioButton_res_1")
         self.verticalLayout_11.addWidget(self.radioButton_res_1)
         self.radioButton_res_2 = QtWidgets.QRadioButton(self.groupBox)
-        self.radioButton_res_2.setStyleSheet("color:white;")
+        self.radioButton_res_2.setStyleSheet("")
         self.radioButton_res_2.setChecked(True)
         self.radioButton_res_2.setObjectName("radioButton_res_2")
         self.verticalLayout_11.addWidget(self.radioButton_res_2)
         self.radioButton_res_3 = QtWidgets.QRadioButton(self.groupBox)
-        self.radioButton_res_3.setStyleSheet("color: white;")
+        self.radioButton_res_3.setStyleSheet("")
         self.radioButton_res_3.setObjectName("radioButton_res_3")
         self.verticalLayout_11.addWidget(self.radioButton_res_3)
         self.radioButton_res_4 = QtWidgets.QRadioButton(self.groupBox)
-        self.radioButton_res_4.setStyleSheet("color:white;")
+        self.radioButton_res_4.setStyleSheet("")
         self.radioButton_res_4.setObjectName("radioButton_res_4")
         self.verticalLayout_11.addWidget(self.radioButton_res_4)
         self.verticalLayout_5.addWidget(self.groupBox)
@@ -500,7 +508,7 @@ class Ui_MainPage(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.radioButton_RGB.sizePolicy().hasHeightForWidth())
         self.radioButton_RGB.setSizePolicy(sizePolicy)
-        self.radioButton_RGB.setStyleSheet("color:white;")
+        self.radioButton_RGB.setStyleSheet("")
         self.radioButton_RGB.setChecked(True)
         self.radioButton_RGB.setObjectName("radioButton_RGB")
         self.verticalLayout_6.addWidget(self.radioButton_RGB)
@@ -510,11 +518,11 @@ class Ui_MainPage(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.radioButton_Grayscale.sizePolicy().hasHeightForWidth())
         self.radioButton_Grayscale.setSizePolicy(sizePolicy)
-        self.radioButton_Grayscale.setStyleSheet("color:white;")
+        self.radioButton_Grayscale.setStyleSheet("")
         self.radioButton_Grayscale.setObjectName("radioButton_Grayscale")
         self.verticalLayout_6.addWidget(self.radioButton_Grayscale)
         self.radioButton_Edged = QtWidgets.QRadioButton(self.groupBox_2)
-        self.radioButton_Edged.setStyleSheet("color:white;")
+        self.radioButton_Edged.setStyleSheet("")
         self.radioButton_Edged.setObjectName("radioButton_Edged")
         self.verticalLayout_6.addWidget(self.radioButton_Edged)
         self.verticalLayout_5.addWidget(self.groupBox_2)
@@ -527,6 +535,7 @@ class Ui_MainPage(object):
 "\n"
 "QPushButton{\n"
 "    background-color: white;\n"
+"    color: black;\n"
 "    border-radius: 10;\n"
 "}\n"
 "\n"
@@ -535,14 +544,135 @@ class Ui_MainPage(object):
 "}")
         self.Button_reset.setObjectName("Button_reset")
         self.verticalLayout_5.addWidget(self.Button_reset)
+        self.label_7 = QtWidgets.QLabel(self.frame_2)
+        font = QtGui.QFont()
+        font.setFamily("Rockwell")
+        font.setPointSize(16)
+        self.label_7.setFont(font)
+        self.label_7.setStyleSheet("")
+        self.label_7.setObjectName("label_7")
+        self.verticalLayout_5.addWidget(self.label_7)
+        self.line_3 = QtWidgets.QFrame(self.frame_2)
+        self.line_3.setMaximumSize(QtCore.QSize(16777215, 2))
+        self.line_3.setStyleSheet("background-color: rgb(35, 35, 38);")
+        self.line_3.setFrameShape(QtWidgets.QFrame.HLine)
+        self.line_3.setFrameShadow(QtWidgets.QFrame.Sunken)
+        self.line_3.setObjectName("line_3")
+        self.verticalLayout_5.addWidget(self.line_3)
+        self.groupBox_HaarCascade = QtWidgets.QGroupBox(self.frame_2)
+        self.groupBox_HaarCascade.setEnabled(False)
+        font = QtGui.QFont()
+        font.setPointSize(10)
+        self.groupBox_HaarCascade.setFont(font)
+        self.groupBox_HaarCascade.setObjectName("groupBox_HaarCascade")
+        self.verticalLayout_14 = QtWidgets.QVBoxLayout(self.groupBox_HaarCascade)
+        self.verticalLayout_14.setObjectName("verticalLayout_14")
+        self.frame_5 = QtWidgets.QFrame(self.groupBox_HaarCascade)
+        self.frame_5.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.frame_5.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_5.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_5.setObjectName("frame_5")
+        self.formLayout = QtWidgets.QFormLayout(self.frame_5)
+        self.formLayout.setObjectName("formLayout")
+        self.horizontalSlider_HC_ScaleFactor = QtWidgets.QSlider(self.frame_5)
+        self.horizontalSlider_HC_ScaleFactor.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.horizontalSlider_HC_ScaleFactor.setMinimum(105)
+        self.horizontalSlider_HC_ScaleFactor.setMaximum(400)
+        self.horizontalSlider_HC_ScaleFactor.setSingleStep(5)
+        self.horizontalSlider_HC_ScaleFactor.setPageStep(5)
+        self.horizontalSlider_HC_ScaleFactor.setProperty("value", 105)
+        self.horizontalSlider_HC_ScaleFactor.setOrientation(QtCore.Qt.Horizontal)
+        self.horizontalSlider_HC_ScaleFactor.setTickPosition(QtWidgets.QSlider.NoTicks)
+        self.horizontalSlider_HC_ScaleFactor.setObjectName("horizontalSlider_HC_ScaleFactor")
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.horizontalSlider_HC_ScaleFactor)
+        self.label_HC_ScaleFactor = QtWidgets.QLabel(self.frame_5)
+        self.label_HC_ScaleFactor.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.label_HC_ScaleFactor.setStyleSheet("")
+        self.label_HC_ScaleFactor.setObjectName("label_HC_ScaleFactor")
+        self.formLayout.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label_HC_ScaleFactor)
+        self.label_5 = QtWidgets.QLabel(self.frame_5)
+        self.label_5.setStyleSheet("")
+        self.label_5.setObjectName("label_5")
+        self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.label_5)
+        self.verticalLayout_14.addWidget(self.frame_5)
+        self.frame_6 = QtWidgets.QFrame(self.groupBox_HaarCascade)
+        self.frame_6.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.frame_6.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_6.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_6.setObjectName("frame_6")
+        self.formLayout_4 = QtWidgets.QFormLayout(self.frame_6)
+        self.formLayout_4.setObjectName("formLayout_4")
+        self.horizontalSlider_HC_MinNeighbors = QtWidgets.QSlider(self.frame_6)
+        self.horizontalSlider_HC_MinNeighbors.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.horizontalSlider_HC_MinNeighbors.setMaximum(10)
+        self.horizontalSlider_HC_MinNeighbors.setProperty("value", 5)
+        self.horizontalSlider_HC_MinNeighbors.setSliderPosition(5)
+        self.horizontalSlider_HC_MinNeighbors.setOrientation(QtCore.Qt.Horizontal)
+        self.horizontalSlider_HC_MinNeighbors.setObjectName("horizontalSlider_HC_MinNeighbors")
+        self.formLayout_4.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.horizontalSlider_HC_MinNeighbors)
+        self.label_HC_MinNeighbors = QtWidgets.QLabel(self.frame_6)
+        self.label_HC_MinNeighbors.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.label_HC_MinNeighbors.setStyleSheet("")
+        self.label_HC_MinNeighbors.setObjectName("label_HC_MinNeighbors")
+        self.formLayout_4.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label_HC_MinNeighbors)
+        self.label_6 = QtWidgets.QLabel(self.frame_6)
+        self.label_6.setStyleSheet("")
+        self.label_6.setObjectName("label_6")
+        self.formLayout_4.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.label_6)
+        self.verticalLayout_14.addWidget(self.frame_6)
+        self.frame_7 = QtWidgets.QFrame(self.groupBox_HaarCascade)
+        self.frame_7.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.frame_7.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_7.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_7.setObjectName("frame_7")
+        self.formLayout_5 = QtWidgets.QFormLayout(self.frame_7)
+        self.formLayout_5.setObjectName("formLayout_5")
+        self.horizontalSlider_HC_MinSize = QtWidgets.QSlider(self.frame_7)
+        self.horizontalSlider_HC_MinSize.setLayoutDirection(QtCore.Qt.LeftToRight)
+        self.horizontalSlider_HC_MinSize.setMinimum(0)
+        self.horizontalSlider_HC_MinSize.setMaximum(400)
+        self.horizontalSlider_HC_MinSize.setSingleStep(10)
+        self.horizontalSlider_HC_MinSize.setPageStep(10)
+        self.horizontalSlider_HC_MinSize.setProperty("value", 0)
+        self.horizontalSlider_HC_MinSize.setOrientation(QtCore.Qt.Horizontal)
+        self.horizontalSlider_HC_MinSize.setTickPosition(QtWidgets.QSlider.NoTicks)
+        self.horizontalSlider_HC_MinSize.setObjectName("horizontalSlider_HC_MinSize")
+        self.formLayout_5.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.horizontalSlider_HC_MinSize)
+        self.label_HC_MinSize = QtWidgets.QLabel(self.frame_7)
+        self.label_HC_MinSize.setLayoutDirection(QtCore.Qt.RightToLeft)
+        self.label_HC_MinSize.setStyleSheet("")
+        self.label_HC_MinSize.setObjectName("label_HC_MinSize")
+        self.formLayout_5.setWidget(1, QtWidgets.QFormLayout.LabelRole, self.label_HC_MinSize)
+        self.label_8 = QtWidgets.QLabel(self.frame_7)
+        self.label_8.setStyleSheet("")
+        self.label_8.setObjectName("label_8")
+        self.formLayout_5.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.label_8)
+        self.verticalLayout_14.addWidget(self.frame_7)
+        self.Button_HC_Reset = QtWidgets.QPushButton(self.groupBox_HaarCascade)
+        font = QtGui.QFont()
+        font.setFamily("Rockwell")
+        font.setPointSize(12)
+        self.Button_HC_Reset.setFont(font)
+        self.Button_HC_Reset.setStyleSheet("/*Buttons*/\n"
+"\n"
+"QPushButton{\n"
+"    background-color: white;\n"
+"    color: black;\n"
+"    border-radius: 10;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {    \n"
+"    background-color: #bcbcbc;\n"
+"}")
+        self.Button_HC_Reset.setObjectName("Button_HC_Reset")
+        self.verticalLayout_14.addWidget(self.Button_HC_Reset)
+        self.verticalLayout_5.addWidget(self.groupBox_HaarCascade)
         self.verticalLayout_4.addWidget(self.frame_2, 0, QtCore.Qt.AlignTop)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout_3.addWidget(self.scrollArea)
         self.outputFrame = QtWidgets.QFrame(self.Splitter_sidePanel)
         self.outputFrame.setStyleSheet("background-color: rgb(51, 55, 61);\n"
-"border-top-left-radius: 15;\n"
-"\n"
-"")
+"border-radius: 10;\\n\\n")
         self.outputFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.outputFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.outputFrame.setObjectName("outputFrame")
@@ -565,7 +695,7 @@ class Ui_MainPage(object):
         self.verticalLayout_9.addWidget(self.label_2)
         self.line = QtWidgets.QFrame(self.outputFrame)
         self.line.setMaximumSize(QtCore.QSize(16777215, 2))
-        self.line.setStyleSheet("background-color: rgb(35, 35, 38)")
+        self.line.setStyleSheet("background-color: rgb(35, 35, 38);")
         self.line.setFrameShape(QtWidgets.QFrame.HLine)
         self.line.setFrameShadow(QtWidgets.QFrame.Sunken)
         self.line.setObjectName("line")
@@ -614,6 +744,15 @@ class Ui_MainPage(object):
         self.radioButton_Grayscale.setText(_translate("MainPage", "Grayscale"))
         self.radioButton_Edged.setText(_translate("MainPage", "Edged"))
         self.Button_reset.setText(_translate("MainPage", "Reset"))
+        self.label_7.setText(_translate("MainPage", "Models"))
+        self.groupBox_HaarCascade.setTitle(_translate("MainPage", "Haar Cascade"))
+        self.label_HC_ScaleFactor.setText(_translate("MainPage", "1"))
+        self.label_5.setText(_translate("MainPage", "Scalefactor"))
+        self.label_HC_MinNeighbors.setText(_translate("MainPage", "1"))
+        self.label_6.setText(_translate("MainPage", "Min neighbors"))
+        self.label_HC_MinSize.setText(_translate("MainPage", "0"))
+        self.label_8.setText(_translate("MainPage", "Min size to detect"))
+        self.Button_HC_Reset.setText(_translate("MainPage", "Reset"))
         self.label_2.setText(_translate("MainPage", "Output"))
         self.Label_object.setText(_translate("MainPage", "Object"))
 
