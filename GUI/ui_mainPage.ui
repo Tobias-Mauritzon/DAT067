@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>912</width>
-    <height>694</height>
+    <width>1116</width>
+    <height>760</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -22,6 +22,7 @@
 
 QGroupBox {
     border: 1px solid gray;
+	border-radius:10;
     margin-top: 0.5em;
 }
 
@@ -36,77 +37,6 @@ QScrollArea{
 	border: 0;
 }
 
-
-/* VERTICAL SCROLLBAR */
-QScrollBar:vertical
- {
-     background-color: red;
-     width: 15px;
-     margin: 15px 3px 15px 3px;
-     border: 1px transparent #2A2929;
-     border-radius: 4px;
- }
-
-/*  HANDLE BAR VERTICAL */
- QScrollBar::handle:vertical
- {
-     background-color: rgb(35, 35, 38);         /* Handle color */
-     min-height: 5px;
-     border-radius: 4px;
- }
-
-QScrollBar::handle:vertical:hover{	
-	background-color: #0D0D0D;
-}
-QScrollBar::handle:vertical:pressed {	
-	background-color: #0D0D0D;
-}
-
- QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical
- {
-     background: none;
- }
-
-
- QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
- {
-     background: none;
- }
-
-/* Disable top and bottom arrows*/
-QScrollBar::add-line:vertical {
-      border: none;
-      background: none;
-}
-
-QScrollBar::sub-line:vertical {
-      border: none;
-      background: none;
-}
-
-
-/*Slider*/
-
-
-/*
-QSlider::groove:horizontal { 
-	background-color: black;
-	border: 0px solid; 
-	height: 5px; 
-	border-radius: 4px;
-}
-
-QSlider::handle:horizontal { 
-	background-color: white; 
-	border: 2px solid; 
-	width: 10px; 
-	height: 20px; 
-	line-height: 20px; 
-	margin-top: -5px; 
-	margin-bottom: -5px; 
-	border-radius: 7px; 
-}
-*/
 
 QSlider::groove:horizontal {
 	background: white;
@@ -172,10 +102,7 @@ QPushButton:pressed {
 	background-color: #bcbcbc;
 }</string>
   </property>
-  <layout class="QVBoxLayout" name="verticalLayout_12">
-   <property name="spacing">
-    <number>0</number>
-   </property>
+  <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -188,7 +115,7 @@ QPushButton:pressed {
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item>
+   <item row="0" column="0">
     <widget class="QSplitter" name="Splitter_frame">
      <property name="styleSheet">
       <string notr="true"/>
@@ -219,6 +146,18 @@ QPushButton:pressed {
        <enum>QFrame::Raised</enum>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>9</number>
+       </property>
+       <property name="topMargin">
+        <number>9</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
        <property name="bottomMargin">
         <number>20</number>
        </property>
@@ -268,37 +207,61 @@ QPushButton:pressed {
          </property>
         </widget>
        </item>
-       <item alignment="Qt::AlignHCenter">
-        <widget class="QPushButton" name="Button_startCam">
+       <item>
+        <widget class="QFrame" name="frame_8">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
-         <property name="minimumSize">
+         <property name="maximumSize">
           <size>
-           <width>100</width>
-           <height>30</height>
+           <width>16777215</width>
+           <height>50</height>
           </size>
          </property>
-         <property name="font">
-          <font>
-           <family>Rockwell</family>
-           <pointsize>12</pointsize>
-           <weight>50</weight>
-           <bold>false</bold>
-          </font>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
          </property>
-         <property name="layoutDirection">
-          <enum>Qt::LeftToRight</enum>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
          </property>
-         <property name="styleSheet">
-          <string notr="true">color:black;</string>
-         </property>
-         <property name="text">
-          <string>Start</string>
-         </property>
+         <layout class="QVBoxLayout" name="verticalLayout_15">
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QPushButton" name="Button_startCam">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>100</width>
+              <height>30</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Rockwell</family>
+              <pointsize>12</pointsize>
+              <weight>50</weight>
+              <bold>false</bold>
+             </font>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">color:black;</string>
+            </property>
+            <property name="text">
+             <string>Start</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </item>
       </layout>
@@ -386,9 +349,44 @@ QPushButton:pressed {
             <height>0</height>
            </size>
           </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(51, 55, 61); 
-border-radius: 10;
+           <string notr="true">QTabWidget::pane {
+	background-color: transparent;
+}
+
+QFrame{
+	background-color:transparent; 
+	border-radius:10;
+}
+
+QTabBar::tab {
+	font-size:9pt;
+	height: 35px;
+	width: 140px;
+	background-color: rgb(61, 65, 71);
+	color: white;
+	padding: 0px;
+	border-top-left-radius: 6px;
+	border-top-right-radius: 6px;
+    margin-right:5px;
+
+}
+
+QTabBar::tab:!selected{
+	background-color: rgb(41, 45, 51);
+	color: rgb(200, 200, 200);
+}
+
+QToolBox::tab{
+	background-color: rgb(41,45,51);
+	border-radius:10px;
+	padding-left:5;
+	font-size: 14px;
+	
+}
 
 </string>
           </property>
@@ -398,69 +396,31 @@ border-radius: 10;
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_3">
+          <property name="lineWidth">
+           <number>1</number>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_12">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
            <property name="topMargin">
-            <number>9</number>
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
            </property>
            <item>
-            <widget class="QLabel" name="label">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Ignored" vsizetype="Maximum">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="font">
-              <font>
-               <family>Rockwell</family>
-               <pointsize>16</pointsize>
-              </font>
-             </property>
-             <property name="styleSheet">
-              <string notr="true"/>
-             </property>
-             <property name="text">
-              <string>Settings</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="Line" name="line_2">
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>2</height>
-              </size>
-             </property>
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(35, 35, 38);</string>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QScrollArea" name="scrollArea">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
+            <widget class="QTabWidget" name="tabWidget">
              <property name="minimumSize">
               <size>
                <width>0</width>
                <height>0</height>
-              </size>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>16777215</width>
-               <height>16777215</height>
               </size>
              </property>
              <property name="autoFillBackground">
@@ -469,50 +429,52 @@ border-radius: 10;
              <property name="styleSheet">
               <string notr="true"/>
              </property>
-             <property name="verticalScrollBarPolicy">
-              <enum>Qt::ScrollBarAsNeeded</enum>
+             <property name="tabPosition">
+              <enum>QTabWidget::North</enum>
              </property>
-             <property name="horizontalScrollBarPolicy">
-              <enum>Qt::ScrollBarAlwaysOff</enum>
+             <property name="tabShape">
+              <enum>QTabWidget::Rounded</enum>
              </property>
-             <property name="widgetResizable">
+             <property name="currentIndex">
+              <number>0</number>
+             </property>
+             <property name="usesScrollButtons">
               <bool>true</bool>
              </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-             </property>
-             <widget class="QWidget" name="scrollAreaWidgetContents">
-              <property name="geometry">
-               <rect>
-                <x>0</x>
-                <y>-362</y>
-                <width>419</width>
-                <height>851</height>
-               </rect>
+             <widget class="QWidget" name="tab_GeneralSettings">
+              <property name="autoFillBackground">
+               <bool>false</bool>
               </property>
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <layout class="QVBoxLayout" name="verticalLayout_4">
-               <item alignment="Qt::AlignTop">
-                <widget class="QFrame" name="frame_2">
-                 <property name="minimumSize">
-                  <size>
-                   <width>0</width>
-                   <height>0</height>
-                  </size>
-                 </property>
-                 <property name="maximumSize">
-                  <size>
-                   <width>16777215</width>
-                   <height>16777215</height>
-                  </size>
+              <attribute name="title">
+               <string>General Settings</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_16">
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QFrame" name="frame_9">
+                 <property name="autoFillBackground">
+                  <bool>false</bool>
                  </property>
                  <property name="styleSheet">
-                  <string notr="true"/>
+                  <string notr="true">*{
+	background-color: rgb(61, 65, 71);
+}
+QFrame{
+	border-top-left-radius:0;
+	border-top-right-radius:0;
+}
+</string>
                  </property>
                  <property name="frameShape">
                   <enum>QFrame::StyledPanel</enum>
@@ -520,26 +482,14 @@ border-radius: 10;
                  <property name="frameShadow">
                   <enum>QFrame::Raised</enum>
                  </property>
-                 <layout class="QVBoxLayout" name="verticalLayout_5">
-                  <property name="spacing">
-                   <number>10</number>
-                  </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_3">
                   <property name="leftMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="topMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="rightMargin">
-                   <number>0</number>
-                  </property>
-                  <property name="bottomMargin">
-                   <number>0</number>
+                   <number>9</number>
                   </property>
                   <item>
-                   <widget class="QGroupBox" name="groupBox_3">
+                   <widget class="QScrollArea" name="scrollArea">
                     <property name="sizePolicy">
-                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                       <horstretch>0</horstretch>
                       <verstretch>0</verstretch>
                      </sizepolicy>
@@ -556,457 +506,599 @@ border-radius: 10;
                       <height>16777215</height>
                      </size>
                     </property>
-                    <property name="font">
-                     <font>
-                      <pointsize>10</pointsize>
-                     </font>
-                    </property>
                     <property name="autoFillBackground">
                      <bool>false</bool>
                     </property>
                     <property name="styleSheet">
-                     <string notr="true"/>
+                     <string notr="true">
+/* VERTICAL SCROLLBAR */
+QScrollBar:vertical
+ {
+     background-color: gray;
+     width: 15px;
+     margin: 15px 3px 15px 3px;
+     border: 1px transparent #2A2929;
+     border-radius: 4px;
+ }
+
+/*  HANDLE BAR VERTICAL */
+ QScrollBar::handle:vertical
+ {
+     background-color: rgb(35, 35, 38);         /* Handle color */
+     min-height: 5px;
+     border-radius: 4px;
+ }
+
+QScrollBar::handle:vertical:hover{	
+	background-color: #0D0D0D;
+}
+QScrollBar::handle:vertical:pressed {	
+	background-color: #0D0D0D;
+}
+
+ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical
+ {
+     background: none;
+ }
+
+
+ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
+ {
+     background: none;
+ }
+
+/* Disable top and bottom arrows*/
+QScrollBar::add-line:vertical {
+      border: none;
+      background: none;
+}
+
+QScrollBar::sub-line:vertical {
+      border: none;
+      background: none;
+}</string>
                     </property>
-                    <property name="title">
-                     <string>Brightness</string>
+                    <property name="verticalScrollBarPolicy">
+                     <enum>Qt::ScrollBarAsNeeded</enum>
                     </property>
-                    <property name="alignment">
-                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                    <property name="horizontalScrollBarPolicy">
+                     <enum>Qt::ScrollBarAlwaysOff</enum>
                     </property>
-                    <property name="flat">
-                     <bool>false</bool>
-                    </property>
-                    <property name="checkable">
-                     <bool>false</bool>
-                    </property>
-                    <layout class="QVBoxLayout" name="verticalLayout_7">
-                     <property name="spacing">
-                      <number>15</number>
-                     </property>
-                     <property name="sizeConstraint">
-                      <enum>QLayout::SetDefaultConstraint</enum>
-                     </property>
-                     <property name="leftMargin">
-                      <number>9</number>
-                     </property>
-                     <property name="topMargin">
-                      <number>20</number>
-                     </property>
-                     <item>
-                      <widget class="QFrame" name="frame_3">
-                       <property name="layoutDirection">
-                        <enum>Qt::RightToLeft</enum>
-                       </property>
-                       <property name="frameShape">
-                        <enum>QFrame::StyledPanel</enum>
-                       </property>
-                       <property name="frameShadow">
-                        <enum>QFrame::Raised</enum>
-                       </property>
-                       <layout class="QFormLayout" name="formLayout_2">
-                        <item row="1" column="0">
-                         <widget class="QLabel" name="Label_brightnessValue">
-                          <property name="styleSheet">
-                           <string notr="true">color: white;</string>
-                          </property>
-                          <property name="text">
-                           <string>0</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="1" column="1">
-                         <widget class="QSlider" name="Slider_brightness">
-                          <property name="layoutDirection">
-                           <enum>Qt::LeftToRight</enum>
-                          </property>
-                          <property name="styleSheet">
-                           <string notr="true"/>
-                          </property>
-                          <property name="minimum">
-                           <number>-255</number>
-                          </property>
-                          <property name="maximum">
-                           <number>255</number>
-                          </property>
-                          <property name="pageStep">
-                           <number>1</number>
-                          </property>
-                          <property name="value">
-                           <number>0</number>
-                          </property>
-                          <property name="sliderPosition">
-                           <number>0</number>
-                          </property>
-                          <property name="orientation">
-                           <enum>Qt::Horizontal</enum>
-                          </property>
-                          <property name="invertedAppearance">
-                           <bool>false</bool>
-                          </property>
-                          <property name="invertedControls">
-                           <bool>false</bool>
-                          </property>
-                          <property name="tickPosition">
-                           <enum>QSlider::NoTicks</enum>
-                          </property>
-                          <property name="tickInterval">
-                           <number>1</number>
-                          </property>
-                         </widget>
-                        </item>
-                       </layout>
-                      </widget>
-                     </item>
-                    </layout>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QGroupBox" name="groupBox_4">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>0</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>16777215</width>
-                      <height>16777215</height>
-                     </size>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <pointsize>10</pointsize>
-                     </font>
-                    </property>
-                    <property name="autoFillBackground">
-                     <bool>false</bool>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true"/>
-                    </property>
-                    <property name="title">
-                     <string>Contrast</string>
+                    <property name="widgetResizable">
+                     <bool>true</bool>
                     </property>
                     <property name="alignment">
                      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
                     </property>
-                    <property name="flat">
-                     <bool>false</bool>
-                    </property>
-                    <property name="checkable">
-                     <bool>false</bool>
-                    </property>
-                    <layout class="QVBoxLayout" name="verticalLayout_8">
-                     <property name="spacing">
-                      <number>15</number>
+                    <widget class="QWidget" name="scrollAreaWidgetContents">
+                     <property name="geometry">
+                      <rect>
+                       <x>0</x>
+                       <y>0</y>
+                       <width>530</width>
+                       <height>613</height>
+                      </rect>
                      </property>
-                     <property name="sizeConstraint">
-                      <enum>QLayout::SetDefaultConstraint</enum>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
                      </property>
-                     <property name="leftMargin">
-                      <number>9</number>
+                     <property name="styleSheet">
+                      <string notr="true"/>
                      </property>
-                     <property name="topMargin">
-                      <number>20</number>
-                     </property>
-                     <item>
-                      <widget class="QFrame" name="frame_4">
-                       <property name="layoutDirection">
-                        <enum>Qt::RightToLeft</enum>
-                       </property>
-                       <property name="frameShape">
-                        <enum>QFrame::StyledPanel</enum>
-                       </property>
-                       <property name="frameShadow">
-                        <enum>QFrame::Raised</enum>
-                       </property>
-                       <layout class="QFormLayout" name="formLayout_3">
-                        <item row="1" column="0">
-                         <widget class="QLabel" name="Label_contrastValue">
-                          <property name="styleSheet">
-                           <string notr="true">color: white;</string>
-                          </property>
-                          <property name="text">
-                           <string>1</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="1" column="1">
-                         <widget class="QSlider" name="Slider_contrast">
-                          <property name="layoutDirection">
-                           <enum>Qt::LeftToRight</enum>
-                          </property>
-                          <property name="styleSheet">
-                           <string notr="true"/>
-                          </property>
-                          <property name="minimum">
-                           <number>0</number>
-                          </property>
-                          <property name="maximum">
-                           <number>100</number>
-                          </property>
-                          <property name="pageStep">
-                           <number>1</number>
-                          </property>
-                          <property name="value">
-                           <number>10</number>
-                          </property>
-                          <property name="sliderPosition">
-                           <number>10</number>
-                          </property>
-                          <property name="tracking">
-                           <bool>true</bool>
-                          </property>
-                          <property name="orientation">
-                           <enum>Qt::Horizontal</enum>
-                          </property>
-                          <property name="invertedAppearance">
-                           <bool>false</bool>
-                          </property>
-                          <property name="invertedControls">
-                           <bool>false</bool>
-                          </property>
-                          <property name="tickPosition">
-                           <enum>QSlider::NoTicks</enum>
-                          </property>
-                          <property name="tickInterval">
-                           <number>1</number>
-                          </property>
-                         </widget>
-                        </item>
-                       </layout>
-                      </widget>
-                     </item>
-                    </layout>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QGroupBox" name="groupBox_5">
-                    <property name="font">
-                     <font>
-                      <pointsize>10</pointsize>
-                     </font>
-                    </property>
-                    <property name="title">
-                     <string>Frame Rate</string>
-                    </property>
-                    <layout class="QVBoxLayout" name="verticalLayout_13">
-                     <property name="spacing">
-                      <number>15</number>
-                     </property>
-                     <property name="topMargin">
-                      <number>20</number>
-                     </property>
-                     <item>
-                      <widget class="QRadioButton" name="radioButton_showFrameRate">
-                       <property name="styleSheet">
-                        <string notr="true"/>
-                       </property>
-                       <property name="text">
-                        <string>Show frame rate</string>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QGroupBox" name="groupBox">
-                    <property name="font">
-                     <font>
-                      <pointsize>10</pointsize>
-                     </font>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true"/>
-                    </property>
-                    <property name="title">
-                     <string>Resolution</string>
-                    </property>
-                    <layout class="QVBoxLayout" name="verticalLayout_11">
-                     <property name="spacing">
-                      <number>15</number>
-                     </property>
-                     <property name="topMargin">
-                      <number>20</number>
-                     </property>
-                     <item>
-                      <widget class="QRadioButton" name="radioButton_res_0">
-                       <property name="styleSheet">
-                        <string notr="true"/>
-                       </property>
-                       <property name="text">
-                        <string>160 x 120 (4:3) </string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QRadioButton" name="radioButton_res_1">
-                       <property name="styleSheet">
-                        <string notr="true"/>
-                       </property>
-                       <property name="text">
-                        <string>320 x 240 (4:3)</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QRadioButton" name="radioButton_res_2">
-                       <property name="styleSheet">
-                        <string notr="true"/>
-                       </property>
-                       <property name="text">
-                        <string>640 x 480 (4:3)</string>
-                       </property>
-                       <property name="checked">
-                        <bool>true</bool>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QRadioButton" name="radioButton_res_3">
-                       <property name="styleSheet">
-                        <string notr="true"/>
-                       </property>
-                       <property name="text">
-                        <string>800 x 600 (4:3) </string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QRadioButton" name="radioButton_res_4">
-                       <property name="styleSheet">
-                        <string notr="true"/>
-                       </property>
-                       <property name="text">
-                        <string>1280 x 720 (16:9)</string>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QGroupBox" name="groupBox_2">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>0</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>16777215</width>
-                      <height>16777215</height>
-                     </size>
-                    </property>
-                    <property name="font">
-                     <font>
-                      <pointsize>10</pointsize>
-                     </font>
-                    </property>
-                    <property name="autoFillBackground">
-                     <bool>false</bool>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true"/>
-                    </property>
-                    <property name="title">
-                     <string>Image</string>
-                    </property>
-                    <property name="alignment">
-                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-                    </property>
-                    <property name="flat">
-                     <bool>false</bool>
-                    </property>
-                    <property name="checkable">
-                     <bool>false</bool>
-                    </property>
-                    <layout class="QVBoxLayout" name="verticalLayout_6">
-                     <property name="spacing">
-                      <number>15</number>
-                     </property>
-                     <property name="sizeConstraint">
-                      <enum>QLayout::SetDefaultConstraint</enum>
-                     </property>
-                     <property name="leftMargin">
-                      <number>9</number>
-                     </property>
-                     <property name="topMargin">
-                      <number>20</number>
-                     </property>
-                     <item>
-                      <widget class="QRadioButton" name="radioButton_RGB">
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true"/>
-                       </property>
-                       <property name="text">
-                        <string>RGB</string>
-                       </property>
-                       <property name="checked">
-                        <bool>true</bool>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QRadioButton" name="radioButton_Grayscale">
-                       <property name="sizePolicy">
-                        <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                         <horstretch>0</horstretch>
-                         <verstretch>0</verstretch>
-                        </sizepolicy>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true"/>
-                       </property>
-                       <property name="text">
-                        <string>Grayscale</string>
-                       </property>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QRadioButton" name="radioButton_Edged">
-                       <property name="styleSheet">
-                        <string notr="true"/>
-                       </property>
-                       <property name="text">
-                        <string>Edged</string>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QPushButton" name="Button_reset">
-                    <property name="font">
-                     <font>
-                      <family>Rockwell</family>
-                      <pointsize>12</pointsize>
-                     </font>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">/*Buttons*/
+                     <layout class="QVBoxLayout" name="verticalLayout_4">
+                      <item alignment="Qt::AlignTop">
+                       <widget class="QFrame" name="frame_2">
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>16777215</width>
+                          <height>16777215</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true"/>
+                        </property>
+                        <property name="frameShape">
+                         <enum>QFrame::StyledPanel</enum>
+                        </property>
+                        <property name="frameShadow">
+                         <enum>QFrame::Raised</enum>
+                        </property>
+                        <layout class="QVBoxLayout" name="verticalLayout_5">
+                         <property name="spacing">
+                          <number>10</number>
+                         </property>
+                         <property name="leftMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="topMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="rightMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>0</number>
+                         </property>
+                         <item>
+                          <widget class="QGroupBox" name="groupBox_3">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="minimumSize">
+                            <size>
+                             <width>0</width>
+                             <height>0</height>
+                            </size>
+                           </property>
+                           <property name="maximumSize">
+                            <size>
+                             <width>16777215</width>
+                             <height>16777215</height>
+                            </size>
+                           </property>
+                           <property name="font">
+                            <font>
+                             <pointsize>10</pointsize>
+                            </font>
+                           </property>
+                           <property name="autoFillBackground">
+                            <bool>false</bool>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true"/>
+                           </property>
+                           <property name="title">
+                            <string>Brightness</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                           </property>
+                           <property name="flat">
+                            <bool>false</bool>
+                           </property>
+                           <property name="checkable">
+                            <bool>false</bool>
+                           </property>
+                           <layout class="QVBoxLayout" name="verticalLayout_7">
+                            <property name="spacing">
+                             <number>15</number>
+                            </property>
+                            <property name="sizeConstraint">
+                             <enum>QLayout::SetDefaultConstraint</enum>
+                            </property>
+                            <property name="leftMargin">
+                             <number>9</number>
+                            </property>
+                            <property name="topMargin">
+                             <number>20</number>
+                            </property>
+                            <item>
+                             <widget class="QFrame" name="frame_3">
+                              <property name="layoutDirection">
+                               <enum>Qt::RightToLeft</enum>
+                              </property>
+                              <property name="frameShape">
+                               <enum>QFrame::StyledPanel</enum>
+                              </property>
+                              <property name="frameShadow">
+                               <enum>QFrame::Raised</enum>
+                              </property>
+                              <layout class="QFormLayout" name="formLayout_2">
+                               <item row="1" column="0">
+                                <widget class="QLabel" name="Label_brightnessValue">
+                                 <property name="styleSheet">
+                                  <string notr="true">color: white;</string>
+                                 </property>
+                                 <property name="text">
+                                  <string>0</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="1">
+                                <widget class="QSlider" name="Slider_brightness">
+                                 <property name="layoutDirection">
+                                  <enum>Qt::LeftToRight</enum>
+                                 </property>
+                                 <property name="styleSheet">
+                                  <string notr="true"/>
+                                 </property>
+                                 <property name="minimum">
+                                  <number>-255</number>
+                                 </property>
+                                 <property name="maximum">
+                                  <number>255</number>
+                                 </property>
+                                 <property name="pageStep">
+                                  <number>1</number>
+                                 </property>
+                                 <property name="value">
+                                  <number>0</number>
+                                 </property>
+                                 <property name="sliderPosition">
+                                  <number>0</number>
+                                 </property>
+                                 <property name="orientation">
+                                  <enum>Qt::Horizontal</enum>
+                                 </property>
+                                 <property name="invertedAppearance">
+                                  <bool>false</bool>
+                                 </property>
+                                 <property name="invertedControls">
+                                  <bool>false</bool>
+                                 </property>
+                                 <property name="tickPosition">
+                                  <enum>QSlider::NoTicks</enum>
+                                 </property>
+                                 <property name="tickInterval">
+                                  <number>1</number>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </widget>
+                            </item>
+                           </layout>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QGroupBox" name="groupBox_4">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="minimumSize">
+                            <size>
+                             <width>0</width>
+                             <height>0</height>
+                            </size>
+                           </property>
+                           <property name="maximumSize">
+                            <size>
+                             <width>16777215</width>
+                             <height>16777215</height>
+                            </size>
+                           </property>
+                           <property name="font">
+                            <font>
+                             <pointsize>10</pointsize>
+                            </font>
+                           </property>
+                           <property name="autoFillBackground">
+                            <bool>false</bool>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true"/>
+                           </property>
+                           <property name="title">
+                            <string>Contrast</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                           </property>
+                           <property name="flat">
+                            <bool>false</bool>
+                           </property>
+                           <property name="checkable">
+                            <bool>false</bool>
+                           </property>
+                           <layout class="QVBoxLayout" name="verticalLayout_8">
+                            <property name="spacing">
+                             <number>15</number>
+                            </property>
+                            <property name="sizeConstraint">
+                             <enum>QLayout::SetDefaultConstraint</enum>
+                            </property>
+                            <property name="leftMargin">
+                             <number>9</number>
+                            </property>
+                            <property name="topMargin">
+                             <number>20</number>
+                            </property>
+                            <item>
+                             <widget class="QFrame" name="frame_4">
+                              <property name="layoutDirection">
+                               <enum>Qt::RightToLeft</enum>
+                              </property>
+                              <property name="frameShape">
+                               <enum>QFrame::StyledPanel</enum>
+                              </property>
+                              <property name="frameShadow">
+                               <enum>QFrame::Raised</enum>
+                              </property>
+                              <layout class="QFormLayout" name="formLayout_3">
+                               <item row="1" column="0">
+                                <widget class="QLabel" name="Label_contrastValue">
+                                 <property name="styleSheet">
+                                  <string notr="true">color: white;</string>
+                                 </property>
+                                 <property name="text">
+                                  <string>1</string>
+                                 </property>
+                                </widget>
+                               </item>
+                               <item row="1" column="1">
+                                <widget class="QSlider" name="Slider_contrast">
+                                 <property name="layoutDirection">
+                                  <enum>Qt::LeftToRight</enum>
+                                 </property>
+                                 <property name="styleSheet">
+                                  <string notr="true"/>
+                                 </property>
+                                 <property name="minimum">
+                                  <number>0</number>
+                                 </property>
+                                 <property name="maximum">
+                                  <number>100</number>
+                                 </property>
+                                 <property name="pageStep">
+                                  <number>1</number>
+                                 </property>
+                                 <property name="value">
+                                  <number>10</number>
+                                 </property>
+                                 <property name="sliderPosition">
+                                  <number>10</number>
+                                 </property>
+                                 <property name="tracking">
+                                  <bool>true</bool>
+                                 </property>
+                                 <property name="orientation">
+                                  <enum>Qt::Horizontal</enum>
+                                 </property>
+                                 <property name="invertedAppearance">
+                                  <bool>false</bool>
+                                 </property>
+                                 <property name="invertedControls">
+                                  <bool>false</bool>
+                                 </property>
+                                 <property name="tickPosition">
+                                  <enum>QSlider::NoTicks</enum>
+                                 </property>
+                                 <property name="tickInterval">
+                                  <number>1</number>
+                                 </property>
+                                </widget>
+                               </item>
+                              </layout>
+                             </widget>
+                            </item>
+                           </layout>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QGroupBox" name="groupBox_5">
+                           <property name="font">
+                            <font>
+                             <pointsize>10</pointsize>
+                            </font>
+                           </property>
+                           <property name="title">
+                            <string>Frame Rate</string>
+                           </property>
+                           <layout class="QVBoxLayout" name="verticalLayout_13">
+                            <property name="spacing">
+                             <number>15</number>
+                            </property>
+                            <property name="topMargin">
+                             <number>20</number>
+                            </property>
+                            <item>
+                             <widget class="QRadioButton" name="radioButton_showFrameRate">
+                              <property name="styleSheet">
+                               <string notr="true"/>
+                              </property>
+                              <property name="text">
+                               <string>Show frame rate</string>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QGroupBox" name="groupBox">
+                           <property name="font">
+                            <font>
+                             <pointsize>10</pointsize>
+                            </font>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true"/>
+                           </property>
+                           <property name="title">
+                            <string>Resolution</string>
+                           </property>
+                           <layout class="QVBoxLayout" name="verticalLayout_11">
+                            <property name="spacing">
+                             <number>15</number>
+                            </property>
+                            <property name="topMargin">
+                             <number>20</number>
+                            </property>
+                            <item>
+                             <widget class="QRadioButton" name="radioButton_res_0">
+                              <property name="styleSheet">
+                               <string notr="true"/>
+                              </property>
+                              <property name="text">
+                               <string>160 x 120 (4:3) </string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QRadioButton" name="radioButton_res_1">
+                              <property name="styleSheet">
+                               <string notr="true"/>
+                              </property>
+                              <property name="text">
+                               <string>320 x 240 (4:3)</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QRadioButton" name="radioButton_res_2">
+                              <property name="styleSheet">
+                               <string notr="true"/>
+                              </property>
+                              <property name="text">
+                               <string>640 x 480 (4:3)</string>
+                              </property>
+                              <property name="checked">
+                               <bool>true</bool>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QRadioButton" name="radioButton_res_3">
+                              <property name="styleSheet">
+                               <string notr="true"/>
+                              </property>
+                              <property name="text">
+                               <string>800 x 600 (4:3) </string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QRadioButton" name="radioButton_res_4">
+                              <property name="styleSheet">
+                               <string notr="true"/>
+                              </property>
+                              <property name="text">
+                               <string>1280 x 720 (16:9)</string>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QGroupBox" name="groupBox_2">
+                           <property name="sizePolicy">
+                            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                             <horstretch>0</horstretch>
+                             <verstretch>0</verstretch>
+                            </sizepolicy>
+                           </property>
+                           <property name="minimumSize">
+                            <size>
+                             <width>0</width>
+                             <height>0</height>
+                            </size>
+                           </property>
+                           <property name="maximumSize">
+                            <size>
+                             <width>16777215</width>
+                             <height>16777215</height>
+                            </size>
+                           </property>
+                           <property name="font">
+                            <font>
+                             <pointsize>10</pointsize>
+                            </font>
+                           </property>
+                           <property name="autoFillBackground">
+                            <bool>false</bool>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true"/>
+                           </property>
+                           <property name="title">
+                            <string>Image</string>
+                           </property>
+                           <property name="alignment">
+                            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                           </property>
+                           <property name="flat">
+                            <bool>false</bool>
+                           </property>
+                           <property name="checkable">
+                            <bool>false</bool>
+                           </property>
+                           <layout class="QVBoxLayout" name="verticalLayout_6">
+                            <property name="spacing">
+                             <number>15</number>
+                            </property>
+                            <property name="sizeConstraint">
+                             <enum>QLayout::SetDefaultConstraint</enum>
+                            </property>
+                            <property name="leftMargin">
+                             <number>9</number>
+                            </property>
+                            <property name="topMargin">
+                             <number>20</number>
+                            </property>
+                            <item>
+                             <widget class="QRadioButton" name="radioButton_RGB">
+                              <property name="sizePolicy">
+                               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                               </sizepolicy>
+                              </property>
+                              <property name="styleSheet">
+                               <string notr="true"/>
+                              </property>
+                              <property name="text">
+                               <string>RGB</string>
+                              </property>
+                              <property name="checked">
+                               <bool>true</bool>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QRadioButton" name="radioButton_Grayscale">
+                              <property name="sizePolicy">
+                               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+                                <horstretch>0</horstretch>
+                                <verstretch>0</verstretch>
+                               </sizepolicy>
+                              </property>
+                              <property name="styleSheet">
+                               <string notr="true"/>
+                              </property>
+                              <property name="text">
+                               <string>Grayscale</string>
+                              </property>
+                             </widget>
+                            </item>
+                            <item>
+                             <widget class="QRadioButton" name="radioButton_Edged">
+                              <property name="styleSheet">
+                               <string notr="true"/>
+                              </property>
+                              <property name="text">
+                               <string>Edged</string>
+                              </property>
+                             </widget>
+                            </item>
+                           </layout>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QPushButton" name="Button_reset">
+                           <property name="font">
+                            <font>
+                             <family>Rockwell</family>
+                             <pointsize>12</pointsize>
+                            </font>
+                           </property>
+                           <property name="styleSheet">
+                            <string notr="true">/*Buttons*/
 
 QPushButton{
 	background-color: white;
@@ -1017,257 +1109,469 @@ QPushButton{
 QPushButton:pressed {	
 	background-color: #bcbcbc;
 }</string>
-                    </property>
-                    <property name="text">
-                     <string>Reset</string>
-                    </property>
+                           </property>
+                           <property name="text">
+                            <string>Reset</string>
+                           </property>
+                          </widget>
+                         </item>
+                        </layout>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
                    </widget>
                   </item>
+                 </layout>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+             <widget class="QWidget" name="tab_6">
+              <attribute name="title">
+               <string>Object Detection</string>
+              </attribute>
+              <layout class="QVBoxLayout" name="verticalLayout_20">
+               <property name="spacing">
+                <number>0</number>
+               </property>
+               <property name="leftMargin">
+                <number>0</number>
+               </property>
+               <property name="topMargin">
+                <number>0</number>
+               </property>
+               <property name="rightMargin">
+                <number>0</number>
+               </property>
+               <property name="bottomMargin">
+                <number>0</number>
+               </property>
+               <item>
+                <widget class="QFrame" name="frame_10">
+                 <property name="autoFillBackground">
+                  <bool>false</bool>
+                 </property>
+                 <property name="styleSheet">
+                  <string notr="true">*{
+	background-color: rgb(61, 65, 71);
+}
+QFrame{
+	border-top-left-radius:0;
+	border-top-right-radius:0;
+}
+</string>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_17">
+                  <property name="leftMargin">
+                   <number>9</number>
+                  </property>
                   <item>
-                   <widget class="QLabel" name="label_7">
-                    <property name="font">
-                     <font>
-                      <family>Rockwell</family>
-                      <pointsize>16</pointsize>
-                     </font>
+                   <widget class="QScrollArea" name="scrollArea_2">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
                     </property>
-                    <property name="styleSheet">
-                     <string notr="true"/>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>0</height>
+                     </size>
                     </property>
-                    <property name="text">
-                     <string>Models</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="Line" name="line_3">
                     <property name="maximumSize">
                      <size>
                       <width>16777215</width>
-                      <height>2</height>
+                      <height>16777215</height>
                      </size>
                     </property>
-                    <property name="styleSheet">
-                     <string notr="true">background-color: rgb(35, 35, 38);</string>
-                    </property>
-                    <property name="orientation">
-                     <enum>Qt::Horizontal</enum>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
-                   <widget class="QGroupBox" name="groupBox_HaarCascade">
-                    <property name="enabled">
+                    <property name="autoFillBackground">
                      <bool>false</bool>
                     </property>
-                    <property name="font">
-                     <font>
-                      <pointsize>10</pointsize>
-                     </font>
+                    <property name="styleSheet">
+                     <string notr="true">
+/* VERTICAL SCROLLBAR */
+QScrollBar:vertical
+ {
+     background-color: gray;
+     width: 15px;
+     margin: 15px 3px 15px 3px;
+     border: 1px transparent #2A2929;
+     border-radius: 4px;
+ }
+
+/*  HANDLE BAR VERTICAL */
+ QScrollBar::handle:vertical
+ {
+     background-color: rgb(35, 35, 38);         /* Handle color */
+     min-height: 5px;
+     border-radius: 4px;
+ }
+
+QScrollBar::handle:vertical:hover{	
+	background-color: #0D0D0D;
+}
+QScrollBar::handle:vertical:pressed {	
+	background-color: #0D0D0D;
+}
+
+ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical
+ {
+     background: none;
+ }
+
+
+ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
+ {
+     background: none;
+ }
+
+/* Disable top and bottom arrows*/
+QScrollBar::add-line:vertical {
+      border: none;
+      background: none;
+}
+
+QScrollBar::sub-line:vertical {
+      border: none;
+      background: none;
+}</string>
                     </property>
-                    <property name="title">
-                     <string>Haar Cascade</string>
+                    <property name="verticalScrollBarPolicy">
+                     <enum>Qt::ScrollBarAsNeeded</enum>
                     </property>
-                    <layout class="QVBoxLayout" name="verticalLayout_14">
-                     <item>
-                      <widget class="QFrame" name="frame_5">
-                       <property name="layoutDirection">
-                        <enum>Qt::RightToLeft</enum>
-                       </property>
-                       <property name="frameShape">
-                        <enum>QFrame::StyledPanel</enum>
-                       </property>
-                       <property name="frameShadow">
-                        <enum>QFrame::Raised</enum>
-                       </property>
-                       <layout class="QFormLayout" name="formLayout">
-                        <item row="1" column="1">
-                         <widget class="QSlider" name="horizontalSlider_HC_ScaleFactor">
-                          <property name="layoutDirection">
-                           <enum>Qt::LeftToRight</enum>
-                          </property>
-                          <property name="minimum">
-                           <number>105</number>
-                          </property>
-                          <property name="maximum">
-                           <number>400</number>
-                          </property>
-                          <property name="singleStep">
-                           <number>5</number>
-                          </property>
-                          <property name="pageStep">
-                           <number>5</number>
-                          </property>
-                          <property name="value">
-                           <number>105</number>
-                          </property>
-                          <property name="orientation">
-                           <enum>Qt::Horizontal</enum>
-                          </property>
-                          <property name="tickPosition">
-                           <enum>QSlider::NoTicks</enum>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="1" column="0">
-                         <widget class="QLabel" name="label_HC_ScaleFactor">
-                          <property name="layoutDirection">
-                           <enum>Qt::RightToLeft</enum>
-                          </property>
-                          <property name="styleSheet">
-                           <string notr="true"/>
-                          </property>
-                          <property name="text">
-                           <string>1</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="0" column="1">
-                         <widget class="QLabel" name="label_5">
-                          <property name="styleSheet">
-                           <string notr="true"/>
-                          </property>
-                          <property name="text">
-                           <string>Scalefactor</string>
-                          </property>
-                         </widget>
-                        </item>
-                       </layout>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QFrame" name="frame_6">
-                       <property name="layoutDirection">
-                        <enum>Qt::RightToLeft</enum>
-                       </property>
-                       <property name="frameShape">
-                        <enum>QFrame::StyledPanel</enum>
-                       </property>
-                       <property name="frameShadow">
-                        <enum>QFrame::Raised</enum>
-                       </property>
-                       <layout class="QFormLayout" name="formLayout_4">
-                        <item row="1" column="1">
-                         <widget class="QSlider" name="horizontalSlider_HC_MinNeighbors">
-                          <property name="layoutDirection">
-                           <enum>Qt::LeftToRight</enum>
-                          </property>
-                          <property name="maximum">
-                           <number>10</number>
-                          </property>
-                          <property name="value">
-                           <number>5</number>
-                          </property>
-                          <property name="sliderPosition">
-                           <number>5</number>
-                          </property>
-                          <property name="orientation">
-                           <enum>Qt::Horizontal</enum>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="1" column="0">
-                         <widget class="QLabel" name="label_HC_MinNeighbors">
-                          <property name="layoutDirection">
-                           <enum>Qt::RightToLeft</enum>
-                          </property>
-                          <property name="styleSheet">
-                           <string notr="true"/>
-                          </property>
-                          <property name="text">
-                           <string>1</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="0" column="1">
-                         <widget class="QLabel" name="label_6">
-                          <property name="styleSheet">
-                           <string notr="true"/>
-                          </property>
-                          <property name="text">
-                           <string>Min neighbors</string>
-                          </property>
-                         </widget>
-                        </item>
-                       </layout>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QFrame" name="frame_7">
-                       <property name="layoutDirection">
-                        <enum>Qt::RightToLeft</enum>
-                       </property>
-                       <property name="frameShape">
-                        <enum>QFrame::StyledPanel</enum>
-                       </property>
-                       <property name="frameShadow">
-                        <enum>QFrame::Raised</enum>
-                       </property>
-                       <layout class="QFormLayout" name="formLayout_5">
-                        <item row="1" column="1">
-                         <widget class="QSlider" name="horizontalSlider_HC_MinSize">
-                          <property name="layoutDirection">
-                           <enum>Qt::LeftToRight</enum>
-                          </property>
-                          <property name="minimum">
-                           <number>0</number>
-                          </property>
-                          <property name="maximum">
-                           <number>400</number>
-                          </property>
-                          <property name="singleStep">
-                           <number>10</number>
-                          </property>
-                          <property name="pageStep">
-                           <number>10</number>
-                          </property>
-                          <property name="value">
-                           <number>0</number>
-                          </property>
-                          <property name="orientation">
-                           <enum>Qt::Horizontal</enum>
-                          </property>
-                          <property name="tickPosition">
-                           <enum>QSlider::NoTicks</enum>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="1" column="0">
-                         <widget class="QLabel" name="label_HC_MinSize">
-                          <property name="layoutDirection">
-                           <enum>Qt::RightToLeft</enum>
-                          </property>
-                          <property name="styleSheet">
-                           <string notr="true"/>
-                          </property>
-                          <property name="text">
-                           <string>0</string>
-                          </property>
-                         </widget>
-                        </item>
-                        <item row="0" column="1">
-                         <widget class="QLabel" name="label_8">
-                          <property name="styleSheet">
-                           <string notr="true"/>
-                          </property>
-                          <property name="text">
-                           <string>Min size to detect</string>
-                          </property>
-                         </widget>
-                        </item>
-                       </layout>
-                      </widget>
-                     </item>
-                     <item>
-                      <widget class="QPushButton" name="Button_HC_Reset">
-                       <property name="font">
-                        <font>
-                         <family>Rockwell</family>
-                         <pointsize>12</pointsize>
-                        </font>
-                       </property>
-                       <property name="styleSheet">
-                        <string notr="true">/*Buttons*/
+                    <property name="horizontalScrollBarPolicy">
+                     <enum>Qt::ScrollBarAlwaysOff</enum>
+                    </property>
+                    <property name="widgetResizable">
+                     <bool>true</bool>
+                    </property>
+                    <property name="alignment">
+                     <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+                    </property>
+                    <widget class="QWidget" name="scrollAreaWidgetContents_2">
+                     <property name="geometry">
+                      <rect>
+                       <x>0</x>
+                       <y>0</y>
+                       <width>545</width>
+                       <height>546</height>
+                      </rect>
+                     </property>
+                     <property name="sizePolicy">
+                      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+                       <horstretch>0</horstretch>
+                       <verstretch>0</verstretch>
+                      </sizepolicy>
+                     </property>
+                     <property name="styleSheet">
+                      <string notr="true"/>
+                     </property>
+                     <layout class="QVBoxLayout" name="verticalLayout_18">
+                      <item alignment="Qt::AlignTop">
+                       <widget class="QFrame" name="frame_11">
+                        <property name="minimumSize">
+                         <size>
+                          <width>0</width>
+                          <height>0</height>
+                         </size>
+                        </property>
+                        <property name="maximumSize">
+                         <size>
+                          <width>16777215</width>
+                          <height>16777215</height>
+                         </size>
+                        </property>
+                        <property name="styleSheet">
+                         <string notr="true"/>
+                        </property>
+                        <property name="frameShape">
+                         <enum>QFrame::StyledPanel</enum>
+                        </property>
+                        <property name="frameShadow">
+                         <enum>QFrame::Raised</enum>
+                        </property>
+                        <layout class="QVBoxLayout" name="verticalLayout_19">
+                         <property name="spacing">
+                          <number>10</number>
+                         </property>
+                         <property name="leftMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="topMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="rightMargin">
+                          <number>0</number>
+                         </property>
+                         <property name="bottomMargin">
+                          <number>0</number>
+                         </property>
+                        </layout>
+                       </widget>
+                      </item>
+                      <item>
+                       <widget class="QToolBox" name="toolBox">
+                        <property name="styleSheet">
+                         <string notr="true"/>
+                        </property>
+                        <property name="currentIndex">
+                         <number>0</number>
+                        </property>
+                        <widget class="QWidget" name="page">
+                         <property name="geometry">
+                          <rect>
+                           <x>0</x>
+                           <y>-103</y>
+                           <width>512</width>
+                           <height>569</height>
+                          </rect>
+                         </property>
+                         <attribute name="label">
+                          <string>Haar Cascade</string>
+                         </attribute>
+                         <layout class="QVBoxLayout" name="verticalLayout_21">
+                          <item alignment="Qt::AlignTop">
+                           <widget class="QGroupBox" name="groupBox_HC_Cars">
+                            <property name="enabled">
+                             <bool>false</bool>
+                            </property>
+                            <property name="font">
+                             <font>
+                              <pointsize>10</pointsize>
+                             </font>
+                            </property>
+                            <property name="layoutDirection">
+                             <enum>Qt::LeftToRight</enum>
+                            </property>
+                            <property name="title">
+                             <string>Cars</string>
+                            </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_25">
+                             <property name="spacing">
+                              <number>40</number>
+                             </property>
+                             <item>
+                              <widget class="QFrame" name="frame_5">
+                               <property name="minimumSize">
+                                <size>
+                                 <width>0</width>
+                                 <height>0</height>
+                                </size>
+                               </property>
+                               <property name="frameShape">
+                                <enum>QFrame::StyledPanel</enum>
+                               </property>
+                               <property name="frameShadow">
+                                <enum>QFrame::Raised</enum>
+                               </property>
+                               <layout class="QVBoxLayout" name="verticalLayout_22">
+                                <item>
+                                 <widget class="QFrame" name="frame_14">
+                                  <property name="layoutDirection">
+                                   <enum>Qt::RightToLeft</enum>
+                                  </property>
+                                  <property name="frameShape">
+                                   <enum>QFrame::StyledPanel</enum>
+                                  </property>
+                                  <property name="frameShadow">
+                                   <enum>QFrame::Raised</enum>
+                                  </property>
+                                  <layout class="QFormLayout" name="formLayout_8">
+                                   <item row="2" column="1">
+                                    <widget class="QSlider" name="horizontalSlider_HC_Cars_ScaleFactor">
+                                     <property name="layoutDirection">
+                                      <enum>Qt::LeftToRight</enum>
+                                     </property>
+                                     <property name="minimum">
+                                      <number>105</number>
+                                     </property>
+                                     <property name="maximum">
+                                      <number>400</number>
+                                     </property>
+                                     <property name="singleStep">
+                                      <number>5</number>
+                                     </property>
+                                     <property name="pageStep">
+                                      <number>5</number>
+                                     </property>
+                                     <property name="value">
+                                      <number>105</number>
+                                     </property>
+                                     <property name="orientation">
+                                      <enum>Qt::Horizontal</enum>
+                                     </property>
+                                     <property name="tickPosition">
+                                      <enum>QSlider::NoTicks</enum>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item row="2" column="0">
+                                    <widget class="QLabel" name="label_HC_Cars_ScaleFactor">
+                                     <property name="layoutDirection">
+                                      <enum>Qt::RightToLeft</enum>
+                                     </property>
+                                     <property name="styleSheet">
+                                      <string notr="true"/>
+                                     </property>
+                                     <property name="text">
+                                      <string>1</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item row="1" column="1">
+                                    <widget class="QLabel" name="label_10">
+                                     <property name="styleSheet">
+                                      <string notr="true"/>
+                                     </property>
+                                     <property name="text">
+                                      <string>Scalefactor</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                  </layout>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QFrame" name="frame_15">
+                                  <property name="layoutDirection">
+                                   <enum>Qt::RightToLeft</enum>
+                                  </property>
+                                  <property name="frameShape">
+                                   <enum>QFrame::StyledPanel</enum>
+                                  </property>
+                                  <property name="frameShadow">
+                                   <enum>QFrame::Raised</enum>
+                                  </property>
+                                  <layout class="QFormLayout" name="formLayout_9">
+                                   <item row="0" column="1">
+                                    <widget class="QLabel" name="label_11">
+                                     <property name="styleSheet">
+                                      <string notr="true"/>
+                                     </property>
+                                     <property name="text">
+                                      <string>Min neighbors</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item row="1" column="0">
+                                    <widget class="QLabel" name="label_HC_Cars_MinNeighbors">
+                                     <property name="layoutDirection">
+                                      <enum>Qt::RightToLeft</enum>
+                                     </property>
+                                     <property name="styleSheet">
+                                      <string notr="true"/>
+                                     </property>
+                                     <property name="text">
+                                      <string>1</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item row="1" column="1">
+                                    <widget class="QSlider" name="horizontalSlider_HC_Cars_MinNeighbors">
+                                     <property name="layoutDirection">
+                                      <enum>Qt::LeftToRight</enum>
+                                     </property>
+                                     <property name="maximum">
+                                      <number>10</number>
+                                     </property>
+                                     <property name="value">
+                                      <number>5</number>
+                                     </property>
+                                     <property name="sliderPosition">
+                                      <number>5</number>
+                                     </property>
+                                     <property name="orientation">
+                                      <enum>Qt::Horizontal</enum>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                  </layout>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QFrame" name="frame_16">
+                                  <property name="layoutDirection">
+                                   <enum>Qt::RightToLeft</enum>
+                                  </property>
+                                  <property name="frameShape">
+                                   <enum>QFrame::StyledPanel</enum>
+                                  </property>
+                                  <property name="frameShadow">
+                                   <enum>QFrame::Raised</enum>
+                                  </property>
+                                  <layout class="QFormLayout" name="formLayout_10">
+                                   <item row="1" column="1">
+                                    <widget class="QSlider" name="horizontalSlider_HC_Cars_MinSize">
+                                     <property name="layoutDirection">
+                                      <enum>Qt::LeftToRight</enum>
+                                     </property>
+                                     <property name="minimum">
+                                      <number>0</number>
+                                     </property>
+                                     <property name="maximum">
+                                      <number>400</number>
+                                     </property>
+                                     <property name="singleStep">
+                                      <number>10</number>
+                                     </property>
+                                     <property name="pageStep">
+                                      <number>10</number>
+                                     </property>
+                                     <property name="value">
+                                      <number>0</number>
+                                     </property>
+                                     <property name="orientation">
+                                      <enum>Qt::Horizontal</enum>
+                                     </property>
+                                     <property name="tickPosition">
+                                      <enum>QSlider::NoTicks</enum>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item row="1" column="0">
+                                    <widget class="QLabel" name="label_HC_Cars_MinSize">
+                                     <property name="layoutDirection">
+                                      <enum>Qt::RightToLeft</enum>
+                                     </property>
+                                     <property name="styleSheet">
+                                      <string notr="true"/>
+                                     </property>
+                                     <property name="text">
+                                      <string>0</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item row="0" column="1">
+                                    <widget class="QLabel" name="label_12">
+                                     <property name="styleSheet">
+                                      <string notr="true"/>
+                                     </property>
+                                     <property name="text">
+                                      <string>Min size to detect</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                  </layout>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QPushButton" name="Button_HC_Cars_Reset">
+                                  <property name="font">
+                                   <font>
+                                    <family>Rockwell</family>
+                                    <pointsize>12</pointsize>
+                                   </font>
+                                  </property>
+                                  <property name="styleSheet">
+                                   <string notr="true">/*Buttons*/
 
 QPushButton{
 	background-color: white;
@@ -1278,13 +1582,277 @@ QPushButton{
 QPushButton:pressed {	
 	background-color: #bcbcbc;
 }</string>
-                       </property>
-                       <property name="text">
-                        <string>Reset</string>
-                       </property>
-                      </widget>
-                     </item>
-                    </layout>
+                                  </property>
+                                  <property name="text">
+                                   <string>Reset</string>
+                                  </property>
+                                 </widget>
+                                </item>
+                               </layout>
+                              </widget>
+                             </item>
+                             <item>
+                              <widget class="QGroupBox" name="groupBox_HC_LicencePlates">
+                               <property name="title">
+                                <string>Licence Plates</string>
+                               </property>
+                               <property name="checkable">
+                                <bool>true</bool>
+                               </property>
+                               <property name="checked">
+                                <bool>false</bool>
+                               </property>
+                               <layout class="QVBoxLayout" name="verticalLayout_14">
+                                <item>
+                                 <widget class="QFrame" name="frame_17">
+                                  <property name="layoutDirection">
+                                   <enum>Qt::RightToLeft</enum>
+                                  </property>
+                                  <property name="frameShape">
+                                   <enum>QFrame::StyledPanel</enum>
+                                  </property>
+                                  <property name="frameShadow">
+                                   <enum>QFrame::Raised</enum>
+                                  </property>
+                                  <layout class="QFormLayout" name="formLayout_11">
+                                   <item row="2" column="1">
+                                    <widget class="QSlider" name="horizontalSlider_HC_LicencePlates_ScaleFactor">
+                                     <property name="layoutDirection">
+                                      <enum>Qt::LeftToRight</enum>
+                                     </property>
+                                     <property name="minimum">
+                                      <number>105</number>
+                                     </property>
+                                     <property name="maximum">
+                                      <number>400</number>
+                                     </property>
+                                     <property name="singleStep">
+                                      <number>5</number>
+                                     </property>
+                                     <property name="pageStep">
+                                      <number>5</number>
+                                     </property>
+                                     <property name="value">
+                                      <number>105</number>
+                                     </property>
+                                     <property name="orientation">
+                                      <enum>Qt::Horizontal</enum>
+                                     </property>
+                                     <property name="tickPosition">
+                                      <enum>QSlider::NoTicks</enum>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item row="2" column="0">
+                                    <widget class="QLabel" name="label_HC_LicencePlates_ScaleFactor">
+                                     <property name="layoutDirection">
+                                      <enum>Qt::RightToLeft</enum>
+                                     </property>
+                                     <property name="styleSheet">
+                                      <string notr="true"/>
+                                     </property>
+                                     <property name="text">
+                                      <string>1</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item row="1" column="1">
+                                    <widget class="QLabel" name="label_13">
+                                     <property name="styleSheet">
+                                      <string notr="true"/>
+                                     </property>
+                                     <property name="text">
+                                      <string>Scalefactor</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                  </layout>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QFrame" name="frame_18">
+                                  <property name="layoutDirection">
+                                   <enum>Qt::RightToLeft</enum>
+                                  </property>
+                                  <property name="frameShape">
+                                   <enum>QFrame::StyledPanel</enum>
+                                  </property>
+                                  <property name="frameShadow">
+                                   <enum>QFrame::Raised</enum>
+                                  </property>
+                                  <layout class="QFormLayout" name="formLayout_12">
+                                   <item row="0" column="1">
+                                    <widget class="QLabel" name="label_14">
+                                     <property name="styleSheet">
+                                      <string notr="true"/>
+                                     </property>
+                                     <property name="text">
+                                      <string>Min neighbors</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item row="1" column="0">
+                                    <widget class="QLabel" name="label_HC_LicencePlates_MinNeighbors">
+                                     <property name="layoutDirection">
+                                      <enum>Qt::RightToLeft</enum>
+                                     </property>
+                                     <property name="styleSheet">
+                                      <string notr="true"/>
+                                     </property>
+                                     <property name="text">
+                                      <string>1</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item row="1" column="1">
+                                    <widget class="QSlider" name="horizontalSlider_HC_LicencePlates_MinNeighbors">
+                                     <property name="layoutDirection">
+                                      <enum>Qt::LeftToRight</enum>
+                                     </property>
+                                     <property name="maximum">
+                                      <number>10</number>
+                                     </property>
+                                     <property name="value">
+                                      <number>5</number>
+                                     </property>
+                                     <property name="sliderPosition">
+                                      <number>5</number>
+                                     </property>
+                                     <property name="orientation">
+                                      <enum>Qt::Horizontal</enum>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                  </layout>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QFrame" name="frame_19">
+                                  <property name="layoutDirection">
+                                   <enum>Qt::RightToLeft</enum>
+                                  </property>
+                                  <property name="frameShape">
+                                   <enum>QFrame::StyledPanel</enum>
+                                  </property>
+                                  <property name="frameShadow">
+                                   <enum>QFrame::Raised</enum>
+                                  </property>
+                                  <layout class="QFormLayout" name="formLayout_13">
+                                   <item row="1" column="1">
+                                    <widget class="QSlider" name="horizontalSlider_HC_LicencePlates_MinSize">
+                                     <property name="layoutDirection">
+                                      <enum>Qt::LeftToRight</enum>
+                                     </property>
+                                     <property name="minimum">
+                                      <number>0</number>
+                                     </property>
+                                     <property name="maximum">
+                                      <number>400</number>
+                                     </property>
+                                     <property name="singleStep">
+                                      <number>10</number>
+                                     </property>
+                                     <property name="pageStep">
+                                      <number>10</number>
+                                     </property>
+                                     <property name="value">
+                                      <number>0</number>
+                                     </property>
+                                     <property name="orientation">
+                                      <enum>Qt::Horizontal</enum>
+                                     </property>
+                                     <property name="tickPosition">
+                                      <enum>QSlider::NoTicks</enum>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item row="1" column="0">
+                                    <widget class="QLabel" name="label_HC_LicencePlates_MinSize">
+                                     <property name="layoutDirection">
+                                      <enum>Qt::RightToLeft</enum>
+                                     </property>
+                                     <property name="styleSheet">
+                                      <string notr="true"/>
+                                     </property>
+                                     <property name="text">
+                                      <string>0</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item row="0" column="1">
+                                    <widget class="QLabel" name="label_15">
+                                     <property name="styleSheet">
+                                      <string notr="true"/>
+                                     </property>
+                                     <property name="text">
+                                      <string>Min size to detect</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                  </layout>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QPushButton" name="Button_HC_LicencePlates_Reset">
+                                  <property name="font">
+                                   <font>
+                                    <family>Rockwell</family>
+                                    <pointsize>12</pointsize>
+                                   </font>
+                                  </property>
+                                  <property name="styleSheet">
+                                   <string notr="true">/*Buttons*/
+
+QPushButton{
+	background-color: white;
+	color: black;
+	border-radius: 10;
+}
+
+QPushButton:pressed {	
+	background-color: #bcbcbc;
+}</string>
+                                  </property>
+                                  <property name="text">
+                                   <string>Reset</string>
+                                  </property>
+                                 </widget>
+                                </item>
+                               </layout>
+                              </widget>
+                             </item>
+                            </layout>
+                           </widget>
+                          </item>
+                         </layout>
+                        </widget>
+                        <widget class="QWidget" name="page_2">
+                         <property name="geometry">
+                          <rect>
+                           <x>0</x>
+                           <y>0</y>
+                           <width>527</width>
+                           <height>402</height>
+                          </rect>
+                         </property>
+                         <attribute name="label">
+                          <string>Yolo</string>
+                         </attribute>
+                        </widget>
+                        <widget class="QWidget" name="page_3">
+                         <attribute name="label">
+                          <string>SSD</string>
+                         </attribute>
+                        </widget>
+                        <widget class="QWidget" name="page_4">
+                         <attribute name="label">
+                          <string>Custom Model</string>
+                         </attribute>
+                        </widget>
+                       </widget>
+                      </item>
+                     </layout>
+                    </widget>
                    </widget>
                   </item>
                  </layout>
@@ -1298,7 +1866,7 @@ QPushButton:pressed {
          </widget>
          <widget class="QFrame" name="outputFrame">
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(51, 55, 61);
+           <string notr="true">background-color: rgb(61, 65, 71);
 border-radius: 10;\n\n</string>
           </property>
           <property name="frameShape">

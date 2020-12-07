@@ -1,5 +1,5 @@
 <p><strong>Prerequisites:</strong></p>
-A web-cam must be plugged in to your computer, if not, a popup window will be displayed telling you to plug in a web-cam.
+A webcam must be plugged in to your computer.
 
 <p><strong>MenuBar:</strong></p>
 In the menuBar, located at the top of the window, you can change views, navigate between calibration and the main screen and choose different object detections.
@@ -14,7 +14,9 @@ To stop the video-stream, press the button "Stop" located at the bottom of the w
 It is also possible to close views by dragging them.
 
 <p><strong>Settings menu:</strong></p>
-In the settings menu, you can change the brightness, contrast, resolution. It is also possible to change to RGB, grayscale and edged video output.
+In the settings menu, you can change the brightness, contrast, resolution. 
+<p>It is also possible to change to RGB, grayscale and edged video output.</p> 
+<p>You can also change different settings for each object detection type.</p>
 
 <p><strong>Output menu:</strong></p>
 NOT IMPLEMENTED YET

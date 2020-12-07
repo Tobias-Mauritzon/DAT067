@@ -57,7 +57,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.action_MainScreen.triggered.connect(lambda: self.openPage(0))
         self.ui.action_Calibration.triggered.connect(lambda: self.openPage(1))
         """Object Detection"""
-        self.ui.action_HaarCascade_Cars.triggered.connect(lambda: self.page_0.activateHaarCascade("Cars"))
+        self.ui.action_HaarCascade_Cars.triggered.connect(lambda: self.page_0.activateHaarCascade("Car"))
         self.ui.action_CustomModel.triggered.connect(self.page_0.activateCustomModel)
         """Help"""
         self.ui.action_HowToUse.triggered.connect(self.__showHowToUse)
@@ -91,7 +91,7 @@ class MainWindow(QtWidgets.QMainWindow):
     # Shows a dialogmenu with text from the About.txt file
     def __showAbout(self):
         dialogMenu = DialogMenu(self)
-        dialogMenu.setTitle("<strong>Written By:</strong>")
+        dialogMenu.setTitle("<strong>Made By:</strong>")
         dialogMenu.setFixedHeight(400)
         dialogMenu.centerOnWindow()
         dialogMenu.centerText()

@@ -255,6 +255,9 @@ class Ui_MainWindow(object):
         self.action_CustomModel = QtWidgets.QAction(MainWindow)
         self.action_CustomModel.setCheckable(True)
         self.action_CustomModel.setObjectName("action_CustomModel")
+        self.action_HaarCascade_Licence_Plates = QtWidgets.QAction(MainWindow)
+        self.action_HaarCascade_Licence_Plates.setCheckable(True)
+        self.action_HaarCascade_Licence_Plates.setObjectName("action_HaarCascade_Licence_Plates")
         self.menuView.addAction(self.action_Camera)
         self.menuView.addAction(self.action_SidePanel)
         self.menuView.addAction(self.action_Settings)
@@ -305,6 +308,7 @@ class Ui_MainWindow(object):
         self.actionYOLO.setText(_translate("MainWindow", "YOLO"))
         self.actionSSD.setText(_translate("MainWindow", "SSD"))
         self.action_CustomModel.setText(_translate("MainWindow", "Custom Model"))
+        self.action_HaarCascade_Licence_Plates.setText(_translate("MainWindow", "Licence Plates"))
 
 
 if __name__ == "__main__":

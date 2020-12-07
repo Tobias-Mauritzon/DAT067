@@ -50,32 +50,40 @@ class MainPage(QtWidgets.QWidget):
 		# Start values:
 		self.START_BRIGHTNESS = 0
 		self.START_CONTRAST = 10
+		self.capSize = (640,480)
 
 		self.fps = 0
 		self.fpsInc = 0
-		self.fps_color = (25, 25, 25)
+		self.fps_color = (0, 255, 127)
 
 		#Models:
 		self.customTensorFlowModel = None
-		self.HaarCascadeModel = None
+		self.HaarCascade_Cars_Model = HaarCascade_Model("Car")
 		#Models activation booleans:
-		self.usingHaarCascade = False # boolean to activate/deactivate Haar Cascade
+		self.usingHaarCascade_Cars = False # boolean to activate/deactivate Haar Cascade Cars
 		self.customModelIsActive = False # boolean to activate/deactivate custom model
 
 	# Sets start sizes for widgets in page
 	def __initPage(self):
 		self.ui.Splitter_frame.setSizes([1000,300])
 		self.ui.Splitter_sidePanel.setSizes([1,1])
-		self.ui.label_HC_ScaleFactor.setNum(self.ui.horizontalSlider_HC_ScaleFactor.value()/100)
-		self.ui.label_HC_MinNeighbors.setNum(self.ui.horizontalSlider_HC_MinNeighbors.value())
+		self.ui.label_HC_Cars_ScaleFactor.setNum(self.ui.horizontalSlider_HC_Cars_ScaleFactor.value()/100)
+		self.ui.label_HC_Cars_MinNeighbors.setNum(self.ui.horizontalSlider_HC_Cars_MinNeighbors.value())
+		self.ui.label_HC_LicencePlates_ScaleFactor.setNum(self.ui.horizontalSlider_HC_LicencePlates_ScaleFactor.value()/100)
+		self.ui.label_HC_LicencePlates_MinNeighbors.setNum(self.ui.horizontalSlider_HC_LicencePlates_MinNeighbors.value())
 	
 	# Load this page
 	def loadPage(self):
 		print("load p0")
 		self.cap = cv2.VideoCapture(0,cv2.CAP_DSHOW) # create video capture
 		self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 3) # set buffer size
+		self.cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'))
+		self.cap.set(cv2.CAP_PROP_FPS, 30) # set fps
 		self.timer.start(20) # start timer
 		self.ui.Button_startCam.setText("Stop") # update Button_startCam text
+		self.cap.set(3,self.capSize[0])
+		self.cap.set(4,self.capSize[1])
+		
 	
 	# Close this page
 	def closePage(self):
@@ -111,17 +119,25 @@ class MainPage(QtWidgets.QWidget):
 		self.ui.radioButton_res_4.toggled.connect(lambda: self.__setResolution(1280,720))
 		# Set action for reset button
 		self.ui.Button_reset.clicked.connect(self.__resetSettingValues)
-		self.ui.Button_HC_Reset.clicked.connect(self.__reset_HC_Values)
+		self.ui.Button_HC_Cars_Reset.clicked.connect(lambda: self.__reset_HC_Values(0))
+		self.ui.Button_HC_LicencePlates_Reset.clicked.connect(lambda: self.__reset_HC_Values(1))
 
 		#MODELS SETTINGS
-		self.ui.horizontalSlider_HC_ScaleFactor.valueChanged.connect(lambda: self.HaarCascadeModel.setScaleFactor(self.ui.horizontalSlider_HC_ScaleFactor.value()/100))
-		self.ui.horizontalSlider_HC_ScaleFactor.valueChanged.connect(lambda: self.ui.label_HC_ScaleFactor.setNum(self.ui.horizontalSlider_HC_ScaleFactor.value()/100))
-		self.ui.horizontalSlider_HC_MinNeighbors.valueChanged.connect(lambda: self.HaarCascadeModel.setMinNeighbors(self.ui.horizontalSlider_HC_MinNeighbors.value()))
-		self.ui.horizontalSlider_HC_MinNeighbors.valueChanged.connect(lambda: self.ui.label_HC_MinNeighbors.setNum(self.ui.horizontalSlider_HC_MinNeighbors.value()))
-		self.ui.horizontalSlider_HC_MinSize.valueChanged.connect(lambda: self.HaarCascadeModel.setMinsize(self.ui.horizontalSlider_HC_MinSize.value()))
-		self.ui.horizontalSlider_HC_MinSize.valueChanged.connect(lambda: self.ui.label_HC_MinSize.setNum(self.ui.horizontalSlider_HC_MinSize.value()))
-		
-		
+		# Cars
+		self.ui.horizontalSlider_HC_Cars_ScaleFactor.valueChanged.connect(lambda: self.HaarCascade_Cars_Model.setScaleFactor(self.ui.horizontalSlider_HC_Cars_ScaleFactor.value()/100,0))
+		self.ui.horizontalSlider_HC_Cars_ScaleFactor.valueChanged.connect(lambda: self.ui.label_HC_Cars_ScaleFactor.setNum(self.ui.horizontalSlider_HC_Cars_ScaleFactor.value()/100))
+		self.ui.horizontalSlider_HC_Cars_MinNeighbors.valueChanged.connect(lambda: self.HaarCascade_Cars_Model.setMinNeighbors(self.ui.horizontalSlider_HC_Cars_MinNeighbors.value(),0))
+		self.ui.horizontalSlider_HC_Cars_MinNeighbors.valueChanged.connect(lambda: self.ui.label_HC_Cars_MinNeighbors.setNum(self.ui.horizontalSlider_HC_Cars_MinNeighbors.value()))
+		self.ui.horizontalSlider_HC_Cars_MinSize.valueChanged.connect(lambda: self.HaarCascade_Cars_Model.setMinsize(self.ui.horizontalSlider_HC_Cars_MinSize.value(),0))
+		self.ui.horizontalSlider_HC_Cars_MinSize.valueChanged.connect(lambda: self.ui.label_HC_Cars_MinSize.setNum(self.ui.horizontalSlider_HC_Cars_MinSize.value()))
+		# Licence Plates
+		self.ui.horizontalSlider_HC_LicencePlates_ScaleFactor.valueChanged.connect(lambda: self.HaarCascade_Cars_Model.setScaleFactor(self.ui.horizontalSlider_HC_LicencePlates_ScaleFactor.value()/100,1))
+		self.ui.horizontalSlider_HC_LicencePlates_ScaleFactor.valueChanged.connect(lambda: self.ui.label_HC_LicencePlates_ScaleFactor.setNum(self.ui.horizontalSlider_HC_LicencePlates_ScaleFactor.value()/100))
+		self.ui.horizontalSlider_HC_LicencePlates_MinNeighbors.valueChanged.connect(lambda: self.HaarCascade_Cars_Model.setMinNeighbors(self.ui.horizontalSlider_HC_LicencePlates_MinNeighbors.value(),1))
+		self.ui.horizontalSlider_HC_LicencePlates_MinNeighbors.valueChanged.connect(lambda: self.ui.label_HC_LicencePlates_MinNeighbors.setNum(self.ui.horizontalSlider_HC_LicencePlates_MinNeighbors.value()))
+		self.ui.horizontalSlider_HC_LicencePlates_MinSize.valueChanged.connect(lambda: self.HaarCascade_Cars_Model.setMinsize(self.ui.horizontalSlider_HC_LicencePlates_MinSize.value(),1))
+		self.ui.horizontalSlider_HC_LicencePlates_MinSize.valueChanged.connect(lambda: self.ui.label_HC_LicencePlates_MinSize.setNum(self.ui.horizontalSlider_HC_LicencePlates_MinSize.value()))
+		self.ui.groupBox_HC_LicencePlates.toggled.connect(lambda: self.HaarCascade_Cars_Model.setDetectPlates())
 	
 	# Resizes the cam frame
 	def __resize_camFrame(self):
@@ -139,6 +155,7 @@ class MainPage(QtWidgets.QWidget):
 
 	# Sets the resolution of the webcam
 	def __setResolution(self,width,height):
+		self.capSize = (width,height)
 		if self.cap is not None:
 			self.cap.set(3,width)
 			self.cap.set(4,height)
@@ -173,7 +190,6 @@ class MainPage(QtWidgets.QWidget):
 	
 	# Sets the chosen image manipulation
 	def __setImageManipulation(self):
-		self.fps_color = (25,25,25)
 		# convert image to RGB format
 		if self.imageColor == "RGB":
 			self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
@@ -197,8 +213,6 @@ class MainPage(QtWidgets.QWidget):
 			self.channel = 1
 			self.qiFormat = QImage.Format_Grayscale8
 
-			self.fps_color = (255,255,255)
-
 	# Sets the chosen contrast and brightness on the image
 	def __setContrastAndBrightness(self):
 		# set contrast
@@ -211,8 +225,8 @@ class MainPage(QtWidgets.QWidget):
 	
 	# Sets the chosen object detection type
 	def __setObjectDetectionType(self):
-		if self.usingHaarCascade:
-			self.HaarCascadeModel.findObject(self.image)
+		if self.usingHaarCascade_Cars:
+			self.HaarCascade_Cars_Model.findCars(self.image)
 		if self.customModelIsActive:
 			self.customTensorFlowModel.findObject(self.image)
 		if self.frameRateIsShown:
@@ -340,24 +354,32 @@ class MainPage(QtWidgets.QWidget):
 	""" Haar Cascade detection START"""
 	# Activates the Haar cascade object detection and enables haaar cascade settings
 	def activateHaarCascade(self, objectName):
-		if objectName == "Cars":
-			if self.usingHaarCascade:
-				self.usingHaarCascade = False
-				self.ui.groupBox_HaarCascade.setEnabled(False)
+		if objectName == "Car":
+			if self.usingHaarCascade_Cars:
+				self.usingHaarCascade_Cars = False
+				self.ui.groupBox_HC_Cars.setEnabled(False)
 			else:
-				self.HaarCascadeModel = HaarCascade_Model(objectName)
-				self.ui.groupBox_HaarCascade.setEnabled(True)
-				self.usingHaarCascade = True
+				self.ui.groupBox_HC_Cars.setEnabled(True)
+				self.usingHaarCascade_Cars = True
 				
 	# Sets the haar cascade values, labels and sliders to default values
-	def __reset_HC_Values(self):
-		self.HaarCascadeModel.resetValues()
-		self.ui.horizontalSlider_HC_ScaleFactor.setValue(self.HaarCascadeModel.scaleFactor_def)
-		self.ui.label_HC_ScaleFactor.setNum(self.HaarCascadeModel.scaleFactor_def)
-		self.ui.horizontalSlider_HC_MinNeighbors.setValue(self.HaarCascadeModel.minNeighbors_def)
-		self.ui.label_HC_MinNeighbors.setNum(self.HaarCascadeModel.minNeighbors_def)
-		self.ui.horizontalSlider_HC_MinSize.setValue(self.HaarCascadeModel.minSize_def)
-		self.ui.label_HC_MinSize.setNum(self.HaarCascadeModel.minSize_def)
+	def __reset_HC_Values(self, index):
+		if index == 0:
+			self.HaarCascade_Cars_Model.resetValues(0)
+			self.ui.horizontalSlider_HC_Cars_ScaleFactor.setValue(self.HaarCascade_Cars_Model.scaleFactor_def)
+			self.ui.label_HC_Cars_ScaleFactor.setNum(self.HaarCascade_Cars_Model.scaleFactor_def)
+			self.ui.horizontalSlider_HC_Cars_MinNeighbors.setValue(self.HaarCascade_Cars_Model.minNeighbors_def)
+			self.ui.label_HC_Cars_MinNeighbors.setNum(self.HaarCascade_Cars_Model.minNeighbors_def)
+			self.ui.horizontalSlider_HC_Cars_MinSize.setValue(self.HaarCascade_Cars_Model.minSize_def)
+			self.ui.label_HC_Cars_MinSize.setNum(self.HaarCascade_Cars_Model.minSize_def)
+		elif index == 1:
+			self.HaarCascade_Cars_Model.resetValues(1)
+			self.ui.horizontalSlider_HC_LicencePlates_ScaleFactor.setValue(self.HaarCascade_Cars_Model.scaleFactor_def)
+			self.ui.label_HC_LicencePlates_ScaleFactor.setNum(self.HaarCascade_Cars_Model.scaleFactor_def)
+			self.ui.horizontalSlider_HC_LicencePlates_MinNeighbors.setValue(self.HaarCascade_Cars_Model.minNeighbors_def)
+			self.ui.label_HC_LicencePlates_MinNeighbors.setNum(self.HaarCascade_Cars_Model.minNeighbors_def)
+			self.ui.horizontalSlider_HC_LicencePlates_MinSize.setValue(self.HaarCascade_Cars_Model.minSize_def)
+			self.ui.label_HC_LicencePlates_MinSize.setNum(self.HaarCascade_Cars_Model.minSize_def)
 
 	"""Haar Cascade detection END"""
 

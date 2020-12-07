@@ -208,7 +208,7 @@ QPushButton:pressed {
      <x>0</x>
      <y>0</y>
      <width>867</width>
-     <height>22</height>
+     <height>26</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -405,6 +405,14 @@ QPushButton:pressed {
    </property>
    <property name="text">
     <string>Custom Model</string>
+   </property>
+  </action>
+  <action name="action_HaarCascade_Licence_Plates">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Licence Plates</string>
    </property>
   </action>
  </widget>
