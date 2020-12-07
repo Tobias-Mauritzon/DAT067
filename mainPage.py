@@ -6,11 +6,12 @@ from PyQt5.QtWidgets import QWidget
 from PyQt5.QtGui import QImage
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import QTimer
+from DistanceEstimator import DistanceEstimator
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import img_to_array
 from dialogMenu import *
-from GUI.ui_mainPage import * 
+from GUI.ui_mainPage import *
 
 #Models:
 from TensorFlow_Custom_Model import *
@@ -21,10 +22,16 @@ from HaarCascade_Model import *
 # Reviewed by: Andreas
 # Date: 2020-12-01
 
+# Author: Joachim, William
+# Reviewed by: Tobias Mauritzon
+# Date: 2020-12-04
+
 """
 MainPage inherits QWidget and creates the main page with the ui(ui_mainPage.py) made with Qt designer.
 The class creates a page with all the object detection functions.
 """
+
+
 class MainPage(QtWidgets.QWidget):
 	def __init__(self,mainWindow):
 		super().__init__() # call QWidget constructor
@@ -38,7 +45,7 @@ class MainPage(QtWidgets.QWidget):
 		self.timer = QTimer() # create a timer
 		self.timer.timeout.connect(self.__update) # set timer timeout callback function
 		self.pix = None # the pixMap used to set the image on a QLabel
-		self.w = 0 # set the width of the QLabel 
+		self.w = 0 # set the width of the QLabel
 		self.h = 0 # set the height of the QLabel
 		self.cameraFrameIsActive = True
 		self.sidePanelIsActive = True
@@ -71,7 +78,7 @@ class MainPage(QtWidgets.QWidget):
 		self.ui.label_HC_Cars_MinNeighbors.setNum(self.ui.horizontalSlider_HC_Cars_MinNeighbors.value())
 		self.ui.label_HC_LicencePlates_ScaleFactor.setNum(self.ui.horizontalSlider_HC_LicencePlates_ScaleFactor.value()/100)
 		self.ui.label_HC_LicencePlates_MinNeighbors.setNum(self.ui.horizontalSlider_HC_LicencePlates_MinNeighbors.value())
-	
+
 	# Load this page
 	def loadPage(self):
 		print("load p0")
@@ -83,8 +90,8 @@ class MainPage(QtWidgets.QWidget):
 		self.ui.Button_startCam.setText("Stop") # update Button_startCam text
 		self.cap.set(3,self.capSize[0])
 		self.cap.set(4,self.capSize[1])
-		
-	
+
+
 	# Close this page
 	def closePage(self):
 		if self.timer.isActive:
@@ -138,13 +145,13 @@ class MainPage(QtWidgets.QWidget):
 		self.ui.horizontalSlider_HC_LicencePlates_MinSize.valueChanged.connect(lambda: self.HaarCascade_Cars_Model.setMinsize(self.ui.horizontalSlider_HC_LicencePlates_MinSize.value(),1))
 		self.ui.horizontalSlider_HC_LicencePlates_MinSize.valueChanged.connect(lambda: self.ui.label_HC_LicencePlates_MinSize.setNum(self.ui.horizontalSlider_HC_LicencePlates_MinSize.value()))
 		self.ui.groupBox_HC_LicencePlates.toggled.connect(lambda: self.HaarCascade_Cars_Model.setDetectPlates())
-	
+
 	# Resizes the cam frame
 	def __resize_camFrame(self):
 		if self.pix is not None:
 			self.w = self.ui.image_label.width()
 			self.h = self.ui.image_label.height()
-	
+
 	# Sets all ui-objects to default values
 	def __resetSettingValues(self):
 		self.ui.Slider_brightness.setValue(self.START_BRIGHTNESS)
@@ -174,7 +181,7 @@ class MainPage(QtWidgets.QWidget):
 	def __update(self):
 		# read image in BGR format
 		success, self.image = self.cap.read()
-		
+
 		# if no image was received, show popup
 		if not success:
 			self.__no_camera_available_popUp()
@@ -183,11 +190,11 @@ class MainPage(QtWidgets.QWidget):
 		self.__setImageManipulation() # sets the chosen image manipulation
 		self.__setContrastAndBrightness() # sets the chosen contrast and brightness
 		self.__setObjectDetectionType() # sets the chosen object detection type
-		
+
 		self.__convertToQImage() # convert to QImage that can be used on the QLabel
 		self.__resize_camFrame() # resize the image
 		self.ui.image_label.setPixmap(self.pix.scaled(self.w, self.h,QtCore.Qt.KeepAspectRatio)) # set image to image label
-	
+
 	# Sets the chosen image manipulation
 	def __setImageManipulation(self):
 		# convert image to RGB format
@@ -222,7 +229,7 @@ class MainPage(QtWidgets.QWidget):
 		brightness = self.ui.Slider_brightness.value()
 		self.ui.Label_brightnessValue.setNum(brightness)
 		self.image = cv2.addWeighted(self.image,contrast,np.zeros(self.image.shape, self.image.dtype),0,brightness)
-	
+
 	# Sets the chosen object detection type
 	def __setObjectDetectionType(self):
 		if self.usingHaarCascade_Cars:
@@ -246,7 +253,7 @@ class MainPage(QtWidgets.QWidget):
 	def __saveImages(self, img, amount):
 		for i in range(amount):
 			cv2.imwrite("image-" + str(i) + ".jpg", img)
-	
+
 	# Function to change the image appearance
 	def __changeImageAppearance(self, appearance):
 			self.imageColor = appearance
@@ -258,7 +265,7 @@ class MainPage(QtWidgets.QWidget):
 		fontScale = 0.8	# the fontscale of the text
 		thickness = 1 # the thickness of the text
 		new_frame_time = time.time() # time when we finish processing for this frame
-        
+
 		TIME = new_frame_time - self.prev_frame_time # calculate the difference between current time and previous time
 		self.fpsInc += 1 # increase the fpsInc variable
 		if TIME > 0.2: # fps will update each 0.2 seconds
@@ -266,9 +273,9 @@ class MainPage(QtWidgets.QWidget):
 			self.prev_frame_time = new_frame_time
 			self.fpsInc = 0
 		fps = int(self.fps) # converting the fps into integer
-		fps = str(fps) # converting the fps into string		
+		fps = str(fps) # converting the fps into string
 		cv2.putText(self.image, "FPS: " + fps, position, font, fontScale, self.fps_color, thickness, cv2.LINE_AA) # puting the FPS count on the frame
-	
+
 	# Sets the framrate visiblity
 	def __setFrameRateVisibility(self):
 		if self.frameRateIsShown:
@@ -282,10 +289,10 @@ class MainPage(QtWidgets.QWidget):
 		if wantToOpen:
 			self.ui.Splitter_frame.setSizes([16777215,300])
 			self.ui.cameraFrame.setVisible(True)
-		else: 
+		else:
 			self.ui.Splitter_frame.setSizes([0,16777215])
 			self.ui.cameraFrame.setVisible(False)
-	
+
 	# Sets side panel visibility
 	def setSidePanel(self, wantToOpen):
 		if wantToOpen:
@@ -295,7 +302,7 @@ class MainPage(QtWidgets.QWidget):
 			self.ui.settingsFrame.setVisible(True)
 			self.ui.outputFrame.setVisible(True)
 			self.ui.sidePanel.setVisible(True)
-		else: 
+		else:
 			self.ui.Splitter_frame.setSizes([16777215,0])
 			self.ui.sidePanel.setVisible(False)
 
@@ -316,7 +323,7 @@ class MainPage(QtWidgets.QWidget):
 			self.ui.Splitter_frame.setSizes([16777215,0])
 			self.ui.sidePanel.setVisible(False)
 			self.ui.settingsFrame.setVisible(False)
-	
+
 	# Sets output panel visibility
 	def setOutPutPanel(self, wantToOpen, sidePanelIsOpen, settingsPanelIsOpen):
 		if wantToOpen and sidePanelIsOpen:
@@ -361,7 +368,7 @@ class MainPage(QtWidgets.QWidget):
 			else:
 				self.ui.groupBox_HC_Cars.setEnabled(True)
 				self.usingHaarCascade_Cars = True
-				
+
 	# Sets the haar cascade values, labels and sliders to default values
 	def __reset_HC_Values(self, index):
 		if index == 0:
@@ -383,7 +390,7 @@ class MainPage(QtWidgets.QWidget):
 
 	"""Haar Cascade detection END"""
 
-	""" Custom TensorFlow Model START"""	
+	""" Custom TensorFlow Model START"""
 	# Activates the custom tensorFlow model
 	def activateCustomModel(self):
 		# Loads the custom trained model.

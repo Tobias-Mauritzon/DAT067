@@ -1,6 +1,7 @@
 import cv2
 import time
 import numpy as np
+import PyQt5
 from PyQt5.QtGui import QImage
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtGui import QIntValidator
