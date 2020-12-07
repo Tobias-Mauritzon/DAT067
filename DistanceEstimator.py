@@ -1,10 +1,10 @@
 """
-#Author: Joachim Antfolk
-#Reviewed by: William Jönsson
-#Date: 2020-11-20
+#Author: Joachim Antfolk, William Jönsson
+#Reviewed by: Tobias Mauritzon
+#Reviewed on: 2020-12-04
 """
 
-from cv2 import cv2 
+from cv2 import cv2
 import numpy as numpy
 from typing import Tuple
 from typing import List
@@ -14,31 +14,38 @@ class DistanceEstimator:
     This class handles estimating the distance to an object in an image.
     """
 
-    def __init__(self, focal: int, real_size: float):
+    def __init__(self, real_size: float):
         """
-        Initiates DistanceEstimator object with focal length data (in pixels) and the real dimension of object (in meters). 
+        Initiates DistanceEstimator object with focal length data and the real dimension of object. 
         """
-        self.focal = focal
+        self.focal = self.__read_from_file()[1]
         self.real_size = real_size
 
-    def estimate_distance(self, img: numpy.ndarray, objects: List, dimension: str):
+    def estimate_distance(self, dimension: int) -> str:
         """
         Estimates the distance to every object in the rectangle list 'objects' by 
         using the specified dimension ("h" for height or "w" for width) and draws this on the image 'img'
         """
-        for(x, y, w, h) in objects:
-            if dimension == "h":
-                distance = self.calculate(h)
-            elif dimension == "w":
-                distance = self.calculate(w)
-            else:
-                distance = "Invalid"
+        return self.__calculate(dimension)
 
-            cv2.rectangle(img, (x, y), (x+w, y+h), (255, 0, 255), 2)
-            cv2.rectangle(img, (x, y+h), (x+w, y+h+40), (255, 0, 255), -1)
-            cv2.putText(img, distance, (x + 10, y + h + 30), cv2.FONT_HERSHEY_DUPLEX, 0.7, (255, 255, 255))
+    def __read_from_file(self) -> (float, float):
+        """ 
+        Reads the relevant camera inforamtion from camera_info.ini 
+        returns a tuple in the format (fx, fy) 
+        otherwise throws exception 
+        """
+        try:
+            file = open("camera_info.ini", "r")
+            fx = float(file.readline().split(":")[1])
+            fy = float(file.readline().split(":")[1])
+            retval = (fx, fy)
+        except Exception:
+            raise Exception("Could not read from file!")
+        finally:
+            file.close()
+            return retval
 
-    def calculate(self, dimension: int) -> str:
+    def __calculate(self, dimension: int) -> str:
         """
         Calculates the distance and returns it as a string of the 
         distance in meters rounded to three places
@@ -47,13 +54,12 @@ class DistanceEstimator:
 
     def update_focal(self, new_focal: int):
         """
-        Updates the distance estimators focal length attribute (new_focal should be in pixels)
+        Updates the distance estimators focal length attribute
         """
         self.focal = new_focal
 
     def update_size(self, new_size: float):
         """
-        Updates the distance estimators real size attribute (new_size should be in meters)
+        Updates the distance estimators real size attribute
         """
         self.real_size = new_size
-    
