@@ -29,9 +29,9 @@ from HaarCascade_Model import *
 """
 MainPage inherits QWidget and creates the main page with the ui(ui_mainPage.py) made with Qt designer.
 The class creates a page with all the object detection functions.
+OBS! IF YOU ARE ON A RASPBERRY PI, YOU NEED TO REMOVE cv2.CAP_DSHOW in mainPage row 85! 
+OBS! IF YOU WANT TO START WITH THE LOADING SCREEN CHANGE timer start time TO 100 in loadingwindow row 42.
 """
-
-
 class MainPage(QtWidgets.QWidget):
 	def __init__(self,mainWindow):
 		super().__init__() # call QWidget constructor
@@ -90,7 +90,6 @@ class MainPage(QtWidgets.QWidget):
 		self.ui.Button_startCam.setText("Stop") # update Button_startCam text
 		self.cap.set(3,self.capSize[0])
 		self.cap.set(4,self.capSize[1])
-
 
 	# Close this page
 	def closePage(self):

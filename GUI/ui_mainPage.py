@@ -21,76 +21,9 @@ class Ui_MainPage(object):
 "    color:white;\n"
 "}\n"
 "\n"
-"QGroupBox {\n"
-"    border: 1px solid gray;\n"
-"    border-radius:10;\n"
-"    margin-top: 0.5em;\n"
-"}\n"
-"\n"
-"QGroupBox::title {\n"
-"    color: white;\n"
-"    subcontrol-origin: margin;\n"
-"    left: 10px;\n"
-"    padding: -3 3px 0 3px;\n"
-"}\n"
-"\n"
 "QScrollArea{\n"
 "    border: 0;\n"
 "}\n"
-"\n"
-"\n"
-"QSlider::groove:horizontal {\n"
-"    background: white;\n"
-"    height: 5px;\n"
-"}\n"
-"\n"
-"QSlider::sub-page:horizontal {\n"
-"background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #49BF88, stop: 1 #7289DA);\n"
-"border: 0px solid #777;\n"
-"height: 10px;\n"
-"border-radius: 7px;\n"
-"}\n"
-"\n"
-"QSlider::add-page:horizontal {\n"
-"background: #fff;\n"
-"border: 1px solid #777;\n"
-"height: 10px;\n"
-"border-radius: 7px;\n"
-"}\n"
-"\n"
-"QSlider::handle:horizontal {\n"
-"background: qlineargradient(x1:0, y1:0, x2:1, y2:1,\n"
-"    stop:0 #eee, stop:1 #ccc);\n"
-"border: 1px solid #777;\n"
-"width: 13px;\n"
-"margin-top: -5px;\n"
-"margin-bottom: -5px;\n"
-"border-radius: 7px;\n"
-"}\n"
-"\n"
-"QSlider::handle:horizontal:hover {\n"
-"background: qlineargradient(x1:0, y1:0, x2:1, y2:1,\n"
-"    stop:0 #fff, stop:1 #ddd);\n"
-"border: 1px solid #444;\n"
-"border-radius: 7px;\n"
-"}\n"
-"\n"
-"QSlider::sub-page:horizontal:disabled {\n"
-"background: #bbb;\n"
-"border-color: #999;\n"
-"}\n"
-"\n"
-"QSlider::add-page:horizontal:disabled {\n"
-"background: #eee;\n"
-"border-color: #999;\n"
-"}\n"
-"\n"
-"QSlider::handle:horizontal:disabled {\n"
-"background: #eee;\n"
-"border: 1px solid #aaa;\n"
-"border-radius: 7px;\n"
-"}\n"
-"\n"
 "\n"
 "/*Buttons*/\n"
 "\n"
@@ -117,14 +50,16 @@ class Ui_MainPage(object):
         sizePolicy.setHeightForWidth(self.cameraFrame.sizePolicy().hasHeightForWidth())
         self.cameraFrame.setSizePolicy(sizePolicy)
         self.cameraFrame.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.cameraFrame.setStyleSheet("border: none;")
         self.cameraFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.cameraFrame.setFrameShadow(QtWidgets.QFrame.Raised)
         self.cameraFrame.setObjectName("cameraFrame")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.cameraFrame)
-        self.verticalLayout.setContentsMargins(9, 9, 0, 20)
-        self.verticalLayout.setSpacing(0)
-        self.verticalLayout.setObjectName("verticalLayout")
-        self.image_label = QtWidgets.QLabel(self.cameraFrame)
+        self.verticalLayout_15 = QtWidgets.QVBoxLayout(self.cameraFrame)
+        self.verticalLayout_15.setObjectName("verticalLayout_15")
+        self.splitter = QtWidgets.QSplitter(self.cameraFrame)
+        self.splitter.setOrientation(QtCore.Qt.Vertical)
+        self.splitter.setObjectName("splitter")
+        self.image_label = QtWidgets.QLabel(self.splitter)
         self.image_label.setEnabled(True)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
@@ -142,8 +77,7 @@ class Ui_MainPage(object):
         self.image_label.setAlignment(QtCore.Qt.AlignCenter)
         self.image_label.setWordWrap(False)
         self.image_label.setObjectName("image_label")
-        self.verticalLayout.addWidget(self.image_label)
-        self.frame_8 = QtWidgets.QFrame(self.cameraFrame)
+        self.frame_8 = QtWidgets.QFrame(self.splitter)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -153,8 +87,8 @@ class Ui_MainPage(object):
         self.frame_8.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_8.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_8.setObjectName("frame_8")
-        self.verticalLayout_15 = QtWidgets.QVBoxLayout(self.frame_8)
-        self.verticalLayout_15.setObjectName("verticalLayout_15")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.frame_8)
+        self.verticalLayout.setObjectName("verticalLayout")
         self.Button_startCam = QtWidgets.QPushButton(self.frame_8)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -171,8 +105,8 @@ class Ui_MainPage(object):
         self.Button_startCam.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.Button_startCam.setStyleSheet("color:black;")
         self.Button_startCam.setObjectName("Button_startCam")
-        self.verticalLayout_15.addWidget(self.Button_startCam, 0, QtCore.Qt.AlignHCenter)
-        self.verticalLayout.addWidget(self.frame_8)
+        self.verticalLayout.addWidget(self.Button_startCam, 0, QtCore.Qt.AlignHCenter)
+        self.verticalLayout_15.addWidget(self.splitter)
         self.sidePanel = QtWidgets.QFrame(self.Splitter_frame)
         self.sidePanel.setEnabled(True)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
@@ -182,7 +116,7 @@ class Ui_MainPage(object):
         self.sidePanel.setSizePolicy(sizePolicy)
         self.sidePanel.setMinimumSize(QtCore.QSize(0, 0))
         self.sidePanel.setMaximumSize(QtCore.QSize(16777215, 16777215))
-        self.sidePanel.setStyleSheet("")
+        self.sidePanel.setStyleSheet("border: none;")
         self.sidePanel.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.sidePanel.setFrameShadow(QtWidgets.QFrame.Raised)
         self.sidePanel.setObjectName("sidePanel")
@@ -237,13 +171,6 @@ class Ui_MainPage(object):
 "    color: rgb(200, 200, 200);\n"
 "}\n"
 "\n"
-"QToolBox::tab{\n"
-"    background-color: rgb(41,45,51);\n"
-"    border-radius:10px;\n"
-"    padding-left:5;\n"
-"    font-size: 14px;\n"
-"    \n"
-"}\n"
 "\n"
 "")
         self.settingsFrame.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -272,28 +199,9 @@ class Ui_MainPage(object):
         self.frame_9.setAutoFillBackground(False)
         self.frame_9.setStyleSheet("*{\n"
 "    background-color: rgb(61, 65, 71);\n"
+"    color: white;\n"
 "}\n"
-"QFrame{\n"
-"    border-top-left-radius:0;\n"
-"    border-top-right-radius:0;\n"
-"}\n"
-"")
-        self.frame_9.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_9.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_9.setObjectName("frame_9")
-        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.frame_9)
-        self.verticalLayout_3.setContentsMargins(9, -1, -1, -1)
-        self.verticalLayout_3.setObjectName("verticalLayout_3")
-        self.scrollArea = QtWidgets.QScrollArea(self.frame_9)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.scrollArea.sizePolicy().hasHeightForWidth())
-        self.scrollArea.setSizePolicy(sizePolicy)
-        self.scrollArea.setMinimumSize(QtCore.QSize(0, 0))
-        self.scrollArea.setMaximumSize(QtCore.QSize(16777215, 16777215))
-        self.scrollArea.setAutoFillBackground(False)
-        self.scrollArea.setStyleSheet("\n"
+"\n"
 "/* VERTICAL SCROLLBAR */\n"
 "QScrollBar:vertical\n"
 " {\n"
@@ -339,14 +247,100 @@ class Ui_MainPage(object):
 "QScrollBar::sub-line:vertical {\n"
 "      border: none;\n"
 "      background: none;\n"
-"}")
+"}\n"
+"QSlider::groove:horizontal {\n"
+"    background: white;\n"
+"    height: 5px;\n"
+"}\n"
+"\n"
+"QSlider::sub-page:horizontal {\n"
+"background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #49BF88, stop: 1 #7289DA);\n"
+"border: 0px solid #777;\n"
+"height: 10px;\n"
+"border-radius: 7px;\n"
+"}\n"
+"\n"
+"QSlider::add-page:horizontal {\n"
+"background: #fff;\n"
+"border: 1px solid #777;\n"
+"height: 10px;\n"
+"border-radius: 7px;\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal {\n"
+"background: qlineargradient(x1:0, y1:0, x2:1, y2:1,\n"
+"    stop:0 #eee, stop:1 #ccc);\n"
+"border: 1px solid #777;\n"
+"width: 13px;\n"
+"margin-top: -5px;\n"
+"margin-bottom: -5px;\n"
+"border-radius: 7px;\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal:hover {\n"
+"background: qlineargradient(x1:0, y1:0, x2:1, y2:1,\n"
+"    stop:0 #fff, stop:1 #ddd);\n"
+"border: 1px solid #444;\n"
+"border-radius: 7px;\n"
+"}\n"
+"\n"
+"QSlider::sub-page:horizontal:disabled {\n"
+"background: #bbb;\n"
+"border-color: #999;\n"
+"}\n"
+"\n"
+"QSlider::add-page:horizontal:disabled {\n"
+"background: #eee;\n"
+"border-color: #999;\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal:disabled {\n"
+"background: #eee;\n"
+"border: 1px solid #aaa;\n"
+"border-radius: 7px;\n"
+"}\n"
+"\n"
+"QGroupBox {\n"
+"    border: 1px solid gray;\n"
+"    border-radius:10;\n"
+"    margin-top: 0.5em;\n"
+"}\n"
+"\n"
+"QGroupBox::title {\n"
+"    color: white;\n"
+"    subcontrol-origin: margin;\n"
+"    left: 10px;\n"
+"    padding: -3 3px 0 3px;\n"
+"}\n"
+"\n"
+"QFrame{\n"
+"    border-top-left-radius:0;\n"
+"    border-top-right-radius:0;\n"
+"}\n"
+"")
+        self.frame_9.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_9.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_9.setObjectName("frame_9")
+        self.verticalLayout_3 = QtWidgets.QVBoxLayout(self.frame_9)
+        self.verticalLayout_3.setContentsMargins(9, -1, -1, -1)
+        self.verticalLayout_3.setObjectName("verticalLayout_3")
+        self.scrollArea = QtWidgets.QScrollArea(self.frame_9)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.scrollArea.sizePolicy().hasHeightForWidth())
+        self.scrollArea.setSizePolicy(sizePolicy)
+        self.scrollArea.setMinimumSize(QtCore.QSize(0, 0))
+        self.scrollArea.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.scrollArea.setAutoFillBackground(False)
+        self.scrollArea.setStyleSheet("")
         self.scrollArea.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         self.scrollArea.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 530, 613))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, -61, 532, 609))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -593,28 +587,13 @@ class Ui_MainPage(object):
         self.frame_10.setAutoFillBackground(False)
         self.frame_10.setStyleSheet("*{\n"
 "    background-color: rgb(61, 65, 71);\n"
+"    color: white;\n"
 "}\n"
 "QFrame{\n"
 "    border-top-left-radius:0;\n"
 "    border-top-right-radius:0;\n"
 "}\n"
-"")
-        self.frame_10.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_10.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_10.setObjectName("frame_10")
-        self.verticalLayout_17 = QtWidgets.QVBoxLayout(self.frame_10)
-        self.verticalLayout_17.setContentsMargins(9, -1, -1, -1)
-        self.verticalLayout_17.setObjectName("verticalLayout_17")
-        self.scrollArea_2 = QtWidgets.QScrollArea(self.frame_10)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.scrollArea_2.sizePolicy().hasHeightForWidth())
-        self.scrollArea_2.setSizePolicy(sizePolicy)
-        self.scrollArea_2.setMinimumSize(QtCore.QSize(0, 0))
-        self.scrollArea_2.setMaximumSize(QtCore.QSize(16777215, 16777215))
-        self.scrollArea_2.setAutoFillBackground(False)
-        self.scrollArea_2.setStyleSheet("\n"
+"\n"
 "/* VERTICAL SCROLLBAR */\n"
 "QScrollBar:vertical\n"
 " {\n"
@@ -661,13 +640,29 @@ class Ui_MainPage(object):
 "      border: none;\n"
 "      background: none;\n"
 "}")
+        self.frame_10.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_10.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_10.setObjectName("frame_10")
+        self.verticalLayout_17 = QtWidgets.QVBoxLayout(self.frame_10)
+        self.verticalLayout_17.setContentsMargins(9, -1, -1, -1)
+        self.verticalLayout_17.setObjectName("verticalLayout_17")
+        self.scrollArea_2 = QtWidgets.QScrollArea(self.frame_10)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.scrollArea_2.sizePolicy().hasHeightForWidth())
+        self.scrollArea_2.setSizePolicy(sizePolicy)
+        self.scrollArea_2.setMinimumSize(QtCore.QSize(0, 0))
+        self.scrollArea_2.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.scrollArea_2.setAutoFillBackground(False)
+        self.scrollArea_2.setStyleSheet("")
         self.scrollArea_2.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAsNeeded)
         self.scrollArea_2.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOff)
         self.scrollArea_2.setWidgetResizable(True)
         self.scrollArea_2.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.scrollArea_2.setObjectName("scrollArea_2")
         self.scrollAreaWidgetContents_2 = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 545, 546))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 547, 548))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -690,12 +685,140 @@ class Ui_MainPage(object):
         self.verticalLayout_19.setObjectName("verticalLayout_19")
         self.verticalLayout_18.addWidget(self.frame_11, 0, QtCore.Qt.AlignTop)
         self.toolBox = QtWidgets.QToolBox(self.scrollAreaWidgetContents_2)
-        self.toolBox.setStyleSheet("")
+        self.toolBox.setStyleSheet("QToolBox::tab{\n"
+"    background-color: rgb(41,45,51);\n"
+"    border-radius:10px;\n"
+"    padding-left:5;\n"
+"    font-size: 14px;\n"
+"}\n"
+"\n"
+"*{\n"
+"    background-color: rgb(61, 65, 71);\n"
+"    color: white;\n"
+"}\n"
+"\n"
+"/* VERTICAL SCROLLBAR */\n"
+"QScrollBar:vertical\n"
+" {\n"
+"     background-color: gray;\n"
+"     width: 15px;\n"
+"     margin: 15px 3px 15px 3px;\n"
+"     border: 1px transparent #2A2929;\n"
+"     border-radius: 4px;\n"
+" }\n"
+"\n"
+"/*  HANDLE BAR VERTICAL */\n"
+" QScrollBar::handle:vertical\n"
+" {\n"
+"     background-color: rgb(35, 35, 38);         /* Handle color */\n"
+"     min-height: 5px;\n"
+"     border-radius: 4px;\n"
+" }\n"
+"\n"
+"QScrollBar::handle:vertical:hover{    \n"
+"    background-color: #0D0D0D;\n"
+"}\n"
+"QScrollBar::handle:vertical:pressed {    \n"
+"    background-color: #0D0D0D;\n"
+"}\n"
+"\n"
+" QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical\n"
+" {\n"
+"     background: none;\n"
+" }\n"
+"\n"
+"\n"
+" QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical\n"
+" {\n"
+"     background: none;\n"
+" }\n"
+"\n"
+"/* Disable top and bottom arrows*/\n"
+"QScrollBar::add-line:vertical {\n"
+"      border: none;\n"
+"      background: none;\n"
+"}\n"
+"\n"
+"QScrollBar::sub-line:vertical {\n"
+"      border: none;\n"
+"      background: none;\n"
+"}\n"
+"QSlider::groove:horizontal {\n"
+"    background: white;\n"
+"    height: 5px;\n"
+"}\n"
+"\n"
+"QSlider::sub-page:horizontal {\n"
+"background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #49BF88, stop: 1 #7289DA);\n"
+"border: 0px solid #777;\n"
+"height: 10px;\n"
+"border-radius: 7px;\n"
+"}\n"
+"\n"
+"QSlider::add-page:horizontal {\n"
+"background: #fff;\n"
+"border: 1px solid #777;\n"
+"height: 10px;\n"
+"border-radius: 7px;\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal {\n"
+"background: qlineargradient(x1:0, y1:0, x2:1, y2:1,\n"
+"    stop:0 #eee, stop:1 #ccc);\n"
+"border: 1px solid #777;\n"
+"width: 13px;\n"
+"margin-top: -5px;\n"
+"margin-bottom: -5px;\n"
+"border-radius: 7px;\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal:hover {\n"
+"background: qlineargradient(x1:0, y1:0, x2:1, y2:1,\n"
+"    stop:0 #fff, stop:1 #ddd);\n"
+"border: 1px solid #444;\n"
+"border-radius: 7px;\n"
+"}\n"
+"\n"
+"QSlider::sub-page:horizontal:disabled {\n"
+"background: #bbb;\n"
+"border-color: #999;\n"
+"}\n"
+"\n"
+"QSlider::add-page:horizontal:disabled {\n"
+"background: #eee;\n"
+"border-color: #999;\n"
+"}\n"
+"\n"
+"QSlider::handle:horizontal:disabled {\n"
+"background: #eee;\n"
+"border: 1px solid #aaa;\n"
+"border-radius: 7px;\n"
+"}\n"
+"\n"
+"QGroupBox {\n"
+"    border: 1px solid gray;\n"
+"    border-radius:10;\n"
+"    margin-top: 0.5em;\n"
+"}\n"
+"\n"
+"QGroupBox::title {\n"
+"    color: white;\n"
+"    subcontrol-origin: margin;\n"
+"    left: 10px;\n"
+"    padding: -3 3px 0 3px;\n"
+"}\n"
+"\n"
+"QFrame{\n"
+"    border-top-left-radius:0;\n"
+"    border-top-right-radius:0;\n"
+"}")
         self.toolBox.setObjectName("toolBox")
         self.page = QtWidgets.QWidget()
-        self.page.setGeometry(QtCore.QRect(0, -103, 512, 569))
+        self.page.setGeometry(QtCore.QRect(0, 0, 514, 562))
         self.page.setObjectName("page")
         self.verticalLayout_21 = QtWidgets.QVBoxLayout(self.page)
+        self.verticalLayout_21.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout_21.setSpacing(10)
         self.verticalLayout_21.setObjectName("verticalLayout_21")
         self.groupBox_HC_Cars = QtWidgets.QGroupBox(self.page)
         self.groupBox_HC_Cars.setEnabled(False)
@@ -705,6 +828,7 @@ class Ui_MainPage(object):
         self.groupBox_HC_Cars.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.groupBox_HC_Cars.setObjectName("groupBox_HC_Cars")
         self.verticalLayout_25 = QtWidgets.QVBoxLayout(self.groupBox_HC_Cars)
+        self.verticalLayout_25.setContentsMargins(-1, -1, -1, 9)
         self.verticalLayout_25.setSpacing(40)
         self.verticalLayout_25.setObjectName("verticalLayout_25")
         self.frame_5 = QtWidgets.QFrame(self.groupBox_HC_Cars)
@@ -713,6 +837,7 @@ class Ui_MainPage(object):
         self.frame_5.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_5.setObjectName("frame_5")
         self.verticalLayout_22 = QtWidgets.QVBoxLayout(self.frame_5)
+        self.verticalLayout_22.setSpacing(6)
         self.verticalLayout_22.setObjectName("verticalLayout_22")
         self.frame_14 = QtWidgets.QFrame(self.frame_5)
         self.frame_14.setLayoutDirection(QtCore.Qt.RightToLeft)
@@ -923,7 +1048,7 @@ class Ui_MainPage(object):
         self.verticalLayout_21.addWidget(self.groupBox_HC_Cars, 0, QtCore.Qt.AlignTop)
         self.toolBox.addItem(self.page, "")
         self.page_2 = QtWidgets.QWidget()
-        self.page_2.setGeometry(QtCore.QRect(0, 0, 527, 402))
+        self.page_2.setGeometry(QtCore.QRect(0, 0, 529, 404))
         self.page_2.setObjectName("page_2")
         self.toolBox.addItem(self.page_2, "")
         self.page_3 = QtWidgets.QWidget()

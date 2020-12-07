@@ -20,76 +20,9 @@
 	color:white;
 }
 
-QGroupBox {
-    border: 1px solid gray;
-	border-radius:10;
-    margin-top: 0.5em;
-}
-
-QGroupBox::title {
-	color: white;
-	subcontrol-origin: margin;
-    left: 10px;
-    padding: -3 3px 0 3px;
-}
-
 QScrollArea{
 	border: 0;
 }
-
-
-QSlider::groove:horizontal {
-	background: white;
-	height: 5px;
-}
-
-QSlider::sub-page:horizontal {
-background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #49BF88, stop: 1 #7289DA);
-border: 0px solid #777;
-height: 10px;
-border-radius: 7px;
-}
-
-QSlider::add-page:horizontal {
-background: #fff;
-border: 1px solid #777;
-height: 10px;
-border-radius: 7px;
-}
-
-QSlider::handle:horizontal {
-background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
-    stop:0 #eee, stop:1 #ccc);
-border: 1px solid #777;
-width: 13px;
-margin-top: -5px;
-margin-bottom: -5px;
-border-radius: 7px;
-}
-
-QSlider::handle:horizontal:hover {
-background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
-    stop:0 #fff, stop:1 #ddd);
-border: 1px solid #444;
-border-radius: 7px;
-}
-
-QSlider::sub-page:horizontal:disabled {
-background: #bbb;
-border-color: #999;
-}
-
-QSlider::add-page:horizontal:disabled {
-background: #eee;
-border-color: #999;
-}
-
-QSlider::handle:horizontal:disabled {
-background: #eee;
-border: 1px solid #aaa;
-border-radius: 7px;
-}
-
 
 /*Buttons*/
 
@@ -139,129 +72,120 @@ QPushButton:pressed {
         <height>16777215</height>
        </size>
       </property>
+      <property name="styleSheet">
+       <string notr="true">border: none;</string>
+      </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
       </property>
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout">
-       <property name="spacing">
-        <number>0</number>
-       </property>
-       <property name="leftMargin">
-        <number>9</number>
-       </property>
-       <property name="topMargin">
-        <number>9</number>
-       </property>
-       <property name="rightMargin">
-        <number>0</number>
-       </property>
-       <property name="bottomMargin">
-        <number>20</number>
-       </property>
+      <layout class="QVBoxLayout" name="verticalLayout_15">
        <item>
-        <widget class="QLabel" name="image_label">
-         <property name="enabled">
-          <bool>true</bool>
+        <widget class="QSplitter" name="splitter">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
          </property>
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="minimumSize">
-          <size>
-           <width>1</width>
-           <height>1</height>
-          </size>
-         </property>
-         <property name="font">
-          <font>
-           <family>Segoe UI</family>
-           <pointsize>14</pointsize>
-          </font>
-         </property>
-         <property name="autoFillBackground">
-          <bool>false</bool>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">color: rgb(0, 255, 127)</string>
-         </property>
-         <property name="text">
-          <string>PRESS &quot;Start&quot; TO START WEBCAM</string>
-         </property>
-         <property name="scaledContents">
-          <bool>false</bool>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-         <property name="margin">
-          <number>0</number>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QFrame" name="frame_8">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>50</height>
-          </size>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::StyledPanel</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Raised</enum>
-         </property>
-         <layout class="QVBoxLayout" name="verticalLayout_15">
-          <item alignment="Qt::AlignHCenter">
-           <widget class="QPushButton" name="Button_startCam">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>100</width>
-              <height>30</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <family>Rockwell</family>
-              <pointsize>12</pointsize>
-              <weight>50</weight>
-              <bold>false</bold>
-             </font>
-            </property>
-            <property name="layoutDirection">
-             <enum>Qt::LeftToRight</enum>
-            </property>
-            <property name="styleSheet">
-             <string notr="true">color:black;</string>
-            </property>
-            <property name="text">
-             <string>Start</string>
-            </property>
-           </widget>
-          </item>
-         </layout>
+         <widget class="QLabel" name="image_label">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>1</width>
+            <height>1</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>Segoe UI</family>
+            <pointsize>14</pointsize>
+           </font>
+          </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">color: rgb(0, 255, 127)</string>
+          </property>
+          <property name="text">
+           <string>PRESS &quot;Start&quot; TO START WEBCAM</string>
+          </property>
+          <property name="scaledContents">
+           <bool>false</bool>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+          <property name="wordWrap">
+           <bool>false</bool>
+          </property>
+          <property name="margin">
+           <number>0</number>
+          </property>
+         </widget>
+         <widget class="QFrame" name="frame_8">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>50</height>
+           </size>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item alignment="Qt::AlignHCenter">
+            <widget class="QPushButton" name="Button_startCam">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="font">
+              <font>
+               <family>Rockwell</family>
+               <pointsize>12</pointsize>
+               <weight>50</weight>
+               <bold>false</bold>
+              </font>
+             </property>
+             <property name="layoutDirection">
+              <enum>Qt::LeftToRight</enum>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color:black;</string>
+             </property>
+             <property name="text">
+              <string>Start</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </widget>
        </item>
       </layout>
@@ -289,7 +213,7 @@ QPushButton:pressed {
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true"/>
+       <string notr="true">border: none;</string>
       </property>
       <property name="frameShape">
        <enum>QFrame::StyledPanel</enum>
@@ -380,13 +304,6 @@ QTabBar::tab:!selected{
 	color: rgb(200, 200, 200);
 }
 
-QToolBox::tab{
-	background-color: rgb(41,45,51);
-	border-radius:10px;
-	padding-left:5;
-	font-size: 14px;
-	
-}
 
 </string>
           </property>
@@ -469,48 +386,9 @@ QToolBox::tab{
                  <property name="styleSheet">
                   <string notr="true">*{
 	background-color: rgb(61, 65, 71);
+	color: white;
 }
-QFrame{
-	border-top-left-radius:0;
-	border-top-right-radius:0;
-}
-</string>
-                 </property>
-                 <property name="frameShape">
-                  <enum>QFrame::StyledPanel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Raised</enum>
-                 </property>
-                 <layout class="QVBoxLayout" name="verticalLayout_3">
-                  <property name="leftMargin">
-                   <number>9</number>
-                  </property>
-                  <item>
-                   <widget class="QScrollArea" name="scrollArea">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>0</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>16777215</width>
-                      <height>16777215</height>
-                     </size>
-                    </property>
-                    <property name="autoFillBackground">
-                     <bool>false</bool>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">
+
 /* VERTICAL SCROLLBAR */
 QScrollBar:vertical
  {
@@ -556,7 +434,113 @@ QScrollBar::add-line:vertical {
 QScrollBar::sub-line:vertical {
       border: none;
       background: none;
-}</string>
+}
+QSlider::groove:horizontal {
+	background: white;
+	height: 5px;
+}
+
+QSlider::sub-page:horizontal {
+background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #49BF88, stop: 1 #7289DA);
+border: 0px solid #777;
+height: 10px;
+border-radius: 7px;
+}
+
+QSlider::add-page:horizontal {
+background: #fff;
+border: 1px solid #777;
+height: 10px;
+border-radius: 7px;
+}
+
+QSlider::handle:horizontal {
+background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+    stop:0 #eee, stop:1 #ccc);
+border: 1px solid #777;
+width: 13px;
+margin-top: -5px;
+margin-bottom: -5px;
+border-radius: 7px;
+}
+
+QSlider::handle:horizontal:hover {
+background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+    stop:0 #fff, stop:1 #ddd);
+border: 1px solid #444;
+border-radius: 7px;
+}
+
+QSlider::sub-page:horizontal:disabled {
+background: #bbb;
+border-color: #999;
+}
+
+QSlider::add-page:horizontal:disabled {
+background: #eee;
+border-color: #999;
+}
+
+QSlider::handle:horizontal:disabled {
+background: #eee;
+border: 1px solid #aaa;
+border-radius: 7px;
+}
+
+QGroupBox {
+    border: 1px solid gray;
+	border-radius:10;
+    margin-top: 0.5em;
+}
+
+QGroupBox::title {
+	color: white;
+	subcontrol-origin: margin;
+    left: 10px;
+    padding: -3 3px 0 3px;
+}
+
+QFrame{
+	border-top-left-radius:0;
+	border-top-right-radius:0;
+}
+</string>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_3">
+                  <property name="leftMargin">
+                   <number>9</number>
+                  </property>
+                  <item>
+                   <widget class="QScrollArea" name="scrollArea">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                    <property name="autoFillBackground">
+                     <bool>false</bool>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true"/>
                     </property>
                     <property name="verticalScrollBarPolicy">
                      <enum>Qt::ScrollBarAsNeeded</enum>
@@ -574,9 +558,9 @@ QScrollBar::sub-line:vertical {
                      <property name="geometry">
                       <rect>
                        <x>0</x>
-                       <y>0</y>
-                       <width>530</width>
-                       <height>613</height>
+                       <y>-61</y>
+                       <width>532</width>
+                       <height>609</height>
                       </rect>
                      </property>
                      <property name="sizePolicy">
@@ -1155,48 +1139,13 @@ QPushButton:pressed {
                  <property name="styleSheet">
                   <string notr="true">*{
 	background-color: rgb(61, 65, 71);
+	color: white;
 }
 QFrame{
 	border-top-left-radius:0;
 	border-top-right-radius:0;
 }
-</string>
-                 </property>
-                 <property name="frameShape">
-                  <enum>QFrame::StyledPanel</enum>
-                 </property>
-                 <property name="frameShadow">
-                  <enum>QFrame::Raised</enum>
-                 </property>
-                 <layout class="QVBoxLayout" name="verticalLayout_17">
-                  <property name="leftMargin">
-                   <number>9</number>
-                  </property>
-                  <item>
-                   <widget class="QScrollArea" name="scrollArea_2">
-                    <property name="sizePolicy">
-                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
-                      <horstretch>0</horstretch>
-                      <verstretch>0</verstretch>
-                     </sizepolicy>
-                    </property>
-                    <property name="minimumSize">
-                     <size>
-                      <width>0</width>
-                      <height>0</height>
-                     </size>
-                    </property>
-                    <property name="maximumSize">
-                     <size>
-                      <width>16777215</width>
-                      <height>16777215</height>
-                     </size>
-                    </property>
-                    <property name="autoFillBackground">
-                     <bool>false</bool>
-                    </property>
-                    <property name="styleSheet">
-                     <string notr="true">
+
 /* VERTICAL SCROLLBAR */
 QScrollBar:vertical
  {
@@ -1243,6 +1192,42 @@ QScrollBar::sub-line:vertical {
       border: none;
       background: none;
 }</string>
+                 </property>
+                 <property name="frameShape">
+                  <enum>QFrame::StyledPanel</enum>
+                 </property>
+                 <property name="frameShadow">
+                  <enum>QFrame::Raised</enum>
+                 </property>
+                 <layout class="QVBoxLayout" name="verticalLayout_17">
+                  <property name="leftMargin">
+                   <number>9</number>
+                  </property>
+                  <item>
+                   <widget class="QScrollArea" name="scrollArea_2">
+                    <property name="sizePolicy">
+                     <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                      <horstretch>0</horstretch>
+                      <verstretch>0</verstretch>
+                     </sizepolicy>
+                    </property>
+                    <property name="minimumSize">
+                     <size>
+                      <width>0</width>
+                      <height>0</height>
+                     </size>
+                    </property>
+                    <property name="maximumSize">
+                     <size>
+                      <width>16777215</width>
+                      <height>16777215</height>
+                     </size>
+                    </property>
+                    <property name="autoFillBackground">
+                     <bool>false</bool>
+                    </property>
+                    <property name="styleSheet">
+                     <string notr="true"/>
                     </property>
                     <property name="verticalScrollBarPolicy">
                      <enum>Qt::ScrollBarAsNeeded</enum>
@@ -1261,8 +1246,8 @@ QScrollBar::sub-line:vertical {
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>545</width>
-                       <height>546</height>
+                       <width>547</width>
+                       <height>548</height>
                       </rect>
                      </property>
                      <property name="sizePolicy">
@@ -1320,7 +1305,133 @@ QScrollBar::sub-line:vertical {
                       <item>
                        <widget class="QToolBox" name="toolBox">
                         <property name="styleSheet">
-                         <string notr="true"/>
+                         <string notr="true">QToolBox::tab{
+	background-color: rgb(41,45,51);
+	border-radius:10px;
+	padding-left:5;
+	font-size: 14px;
+}
+
+*{
+	background-color: rgb(61, 65, 71);
+	color: white;
+}
+
+/* VERTICAL SCROLLBAR */
+QScrollBar:vertical
+ {
+     background-color: gray;
+     width: 15px;
+     margin: 15px 3px 15px 3px;
+     border: 1px transparent #2A2929;
+     border-radius: 4px;
+ }
+
+/*  HANDLE BAR VERTICAL */
+ QScrollBar::handle:vertical
+ {
+     background-color: rgb(35, 35, 38);         /* Handle color */
+     min-height: 5px;
+     border-radius: 4px;
+ }
+
+QScrollBar::handle:vertical:hover{	
+	background-color: #0D0D0D;
+}
+QScrollBar::handle:vertical:pressed {	
+	background-color: #0D0D0D;
+}
+
+ QScrollBar::up-arrow:vertical, QScrollBar::down-arrow:vertical
+ {
+     background: none;
+ }
+
+
+ QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical
+ {
+     background: none;
+ }
+
+/* Disable top and bottom arrows*/
+QScrollBar::add-line:vertical {
+      border: none;
+      background: none;
+}
+
+QScrollBar::sub-line:vertical {
+      border: none;
+      background: none;
+}
+QSlider::groove:horizontal {
+	background: white;
+	height: 5px;
+}
+
+QSlider::sub-page:horizontal {
+background: qlineargradient(x1: 0, y1: 0, x2: 1, y2: 1, stop: 0 #49BF88, stop: 1 #7289DA);
+border: 0px solid #777;
+height: 10px;
+border-radius: 7px;
+}
+
+QSlider::add-page:horizontal {
+background: #fff;
+border: 1px solid #777;
+height: 10px;
+border-radius: 7px;
+}
+
+QSlider::handle:horizontal {
+background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+    stop:0 #eee, stop:1 #ccc);
+border: 1px solid #777;
+width: 13px;
+margin-top: -5px;
+margin-bottom: -5px;
+border-radius: 7px;
+}
+
+QSlider::handle:horizontal:hover {
+background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+    stop:0 #fff, stop:1 #ddd);
+border: 1px solid #444;
+border-radius: 7px;
+}
+
+QSlider::sub-page:horizontal:disabled {
+background: #bbb;
+border-color: #999;
+}
+
+QSlider::add-page:horizontal:disabled {
+background: #eee;
+border-color: #999;
+}
+
+QSlider::handle:horizontal:disabled {
+background: #eee;
+border: 1px solid #aaa;
+border-radius: 7px;
+}
+
+QGroupBox {
+    border: 1px solid gray;
+	border-radius:10;
+    margin-top: 0.5em;
+}
+
+QGroupBox::title {
+	color: white;
+	subcontrol-origin: margin;
+    left: 10px;
+    padding: -3 3px 0 3px;
+}
+
+QFrame{
+	border-top-left-radius:0;
+	border-top-right-radius:0;
+}</string>
                         </property>
                         <property name="currentIndex">
                          <number>0</number>
@@ -1329,15 +1440,30 @@ QScrollBar::sub-line:vertical {
                          <property name="geometry">
                           <rect>
                            <x>0</x>
-                           <y>-103</y>
-                           <width>512</width>
-                           <height>569</height>
+                           <y>0</y>
+                           <width>514</width>
+                           <height>562</height>
                           </rect>
                          </property>
                          <attribute name="label">
                           <string>Haar Cascade</string>
                          </attribute>
                          <layout class="QVBoxLayout" name="verticalLayout_21">
+                          <property name="spacing">
+                           <number>10</number>
+                          </property>
+                          <property name="leftMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="topMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="rightMargin">
+                           <number>0</number>
+                          </property>
+                          <property name="bottomMargin">
+                           <number>0</number>
+                          </property>
                           <item alignment="Qt::AlignTop">
                            <widget class="QGroupBox" name="groupBox_HC_Cars">
                             <property name="enabled">
@@ -1358,6 +1484,9 @@ QScrollBar::sub-line:vertical {
                              <property name="spacing">
                               <number>40</number>
                              </property>
+                             <property name="bottomMargin">
+                              <number>9</number>
+                             </property>
                              <item>
                               <widget class="QFrame" name="frame_5">
                                <property name="minimumSize">
@@ -1373,6 +1502,9 @@ QScrollBar::sub-line:vertical {
                                 <enum>QFrame::Raised</enum>
                                </property>
                                <layout class="QVBoxLayout" name="verticalLayout_22">
+                                <property name="spacing">
+                                 <number>6</number>
+                                </property>
                                 <item>
                                  <widget class="QFrame" name="frame_14">
                                   <property name="layoutDirection">
@@ -1831,8 +1963,8 @@ QPushButton:pressed {
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>527</width>
-                           <height>402</height>
+                           <width>529</width>
+                           <height>404</height>
                           </rect>
                          </property>
                          <attribute name="label">
