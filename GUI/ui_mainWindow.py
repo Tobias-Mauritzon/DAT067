@@ -21,22 +21,7 @@ class Ui_MainWindow(object):
 "    background-color: rgb(35, 35, 38);\n"
 "}\n"
 "\n"
-"QMenuBar{\n"
-"    background-color: rgb(35, 35, 38);\n"
-"    color: white;\n"
-"}\n"
 "\n"
-"QMenuBar::item::selected {\n"
-"    background-color: rgb(51, 55, 61);\n"
-"}\n"
-"\n"
-"/*QMenu*/\n"
-"QMenu{\n"
-"    background-color: rgb(51, 55, 61);\n"
-"    color: white;\n"
-"    selection-color: black;\n"
-"    selection-background-color: #E4E4E5;\n"
-"}\n"
 "\n"
 "\n"
 "/* VERTICAL SCROLLBAR */\n"
@@ -185,8 +170,25 @@ class Ui_MainWindow(object):
         self.gridLayout_2.addWidget(self.stackedWidget, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 867, 22))
-        self.menubar.setStyleSheet("")
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 867, 26))
+        self.menubar.setStyleSheet("/*QMenu*/\n"
+"QMenu{\n"
+"    background-color: rgb(51, 55, 61);\n"
+"    color: white;\n"
+"    selection-color: black;\n"
+"    selection-background-color: #E4E4E5;\n"
+"}\n"
+"\n"
+"QMenuBar::item{\n"
+"    background-color: rgb(35, 35, 38);\n"
+"    color: white;\n"
+"}\n"
+"\n"
+"QMenuBar::item::selected {\n"
+"    background-color: rgb(51, 55, 61);\n"
+"}\n"
+"\n"
+"")
         self.menubar.setObjectName("menubar")
         self.menuView = QtWidgets.QMenu(self.menubar)
         self.menuView.setAutoFillBackground(False)
@@ -246,22 +248,30 @@ class Ui_MainWindow(object):
         self.action_Calibration = QtWidgets.QAction(MainWindow)
         self.action_Calibration.setObjectName("action_Calibration")
         self.action_HaarCascade_Cars = QtWidgets.QAction(MainWindow)
+        self.action_HaarCascade_Cars.setCheckable(True)
         self.action_HaarCascade_Cars.setObjectName("action_HaarCascade_Cars")
         self.actionYOLO = QtWidgets.QAction(MainWindow)
         self.actionYOLO.setObjectName("actionYOLO")
         self.actionSSD = QtWidgets.QAction(MainWindow)
         self.actionSSD.setObjectName("actionSSD")
         self.action_CustomModel = QtWidgets.QAction(MainWindow)
+        self.action_CustomModel.setCheckable(True)
         self.action_CustomModel.setObjectName("action_CustomModel")
+        self.action_HaarCascade_Licence_Plates = QtWidgets.QAction(MainWindow)
+        self.action_HaarCascade_Licence_Plates.setCheckable(True)
+        self.action_HaarCascade_Licence_Plates.setObjectName("action_HaarCascade_Licence_Plates")
+        self.action_Full_Screen = QtWidgets.QAction(MainWindow)
+        self.action_Full_Screen.setCheckable(True)
+        self.action_Full_Screen.setObjectName("action_Full_Screen")
         self.menuView.addAction(self.action_Camera)
         self.menuView.addAction(self.action_SidePanel)
         self.menuView.addAction(self.action_Settings)
         self.menuView.addAction(self.action_Output)
+        self.menuView.addAction(self.action_Full_Screen)
         self.menuHelp.addAction(self.action_HowToUse)
         self.menuHelp.addAction(self.action_About)
         self.menuHelp.addSeparator()
         self.menuHaar_Cascade.addAction(self.action_HaarCascade_Cars)
-        self.menuObject_detection.addAction(self.actionCar_detection)
         self.menuObject_detection.addAction(self.menuHaar_Cascade.menuAction())
         self.menuObject_detection.addAction(self.actionYOLO)
         self.menuObject_detection.addAction(self.actionSSD)
@@ -295,7 +305,7 @@ class Ui_MainWindow(object):
         self.actionSettings_2.setText(_translate("MainWindow", "Settings"))
         self.actionOutput_2.setText(_translate("MainWindow", "Output"))
         self.action_SidePanel.setText(_translate("MainWindow", "Side panel"))
-        self.actionCar_detection.setText(_translate("MainWindow", "CNN"))
+        self.actionCar_detection.setText(_translate("MainWindow", "TensorFlow"))
         self.action_Settings.setText(_translate("MainWindow", "Settings"))
         self.action_Output.setText(_translate("MainWindow", "Output"))
         self.action_MainScreen.setText(_translate("MainWindow", "Main"))
@@ -304,6 +314,8 @@ class Ui_MainWindow(object):
         self.actionYOLO.setText(_translate("MainWindow", "YOLO"))
         self.actionSSD.setText(_translate("MainWindow", "SSD"))
         self.action_CustomModel.setText(_translate("MainWindow", "Custom Model"))
+        self.action_HaarCascade_Licence_Plates.setText(_translate("MainWindow", "Licence Plates"))
+        self.action_Full_Screen.setText(_translate("MainWindow", "Full Screen"))
 
 
 if __name__ == "__main__":

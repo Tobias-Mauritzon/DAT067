@@ -25,11 +25,12 @@ class CalibrationPage(QtWidgets.QWidget):
         super().__init__()
         self.mainWindow = mainWindow # the main window of the application
         self.ui = Ui_CalibrationPage() # create ui
-        self.ui.setupUi(self) # call setup funktion in ui
+        self.ui.setupUi(self) # call setup function in ui
         self.timer = QTimer() # create a timer
         self.timer.timeout.connect(self.__update) # set timer timeout callback function
         self.__initLineEdits() # initialize the line edits
         self.ui.stackedWidget.setCurrentIndex(0) # start with page 0 (insert values page)
+        self.ui.splitter.setSizes([1000,300]) # set start position for sidepanel
         self.__setActions() # set actions
         # checkerboard values
         self.objectWidth = 0

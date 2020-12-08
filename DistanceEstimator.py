@@ -9,7 +9,6 @@ import numpy as numpy
 from typing import Tuple
 from typing import List
 
-
 class DistanceEstimator:
     """
     This class handles estimating the distance to an object in an image.

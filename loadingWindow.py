@@ -17,6 +17,8 @@ applicationWindow = None
 """
 LoadingWindow is class that handles the loading window that opens the program. 
 It starts the loading window, imports modules used by the application, checks if calibration is needed and boots up the main application.
+OBS! IF YOU ARE ON A RASPBERRY PI, YOU NEED TO REMOVE cv2.CAP_DSHOW in mainPage row 85! 
+OBS! IF YOU WANT TO START WITH THE LOADING SCREEN CHANGE timer start time TO 100 in loadingwindow row 42.
 """
 class LoadingWindow(QtWidgets.QMainWindow):
     def __init__(self):

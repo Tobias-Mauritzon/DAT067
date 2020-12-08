@@ -274,7 +274,7 @@ border-radius: 7px;
       </property>
       <property name="maximumSize">
        <size>
-        <width>280</width>
+        <width>16777215</width>
         <height>16777215</height>
        </size>
       </property>
@@ -443,7 +443,7 @@ QGroupBox::title {
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>300</width>
+                      <width>16777215</width>
                       <height>16777215</height>
                      </size>
                     </property>
@@ -603,7 +603,7 @@ QGroupBox::title {
                     </property>
                     <property name="maximumSize">
                      <size>
-                      <width>300</width>
+                      <width>16777215</width>
                       <height>16777215</height>
                      </size>
                     </property>
@@ -669,7 +669,7 @@ QGroupBox::title {
                   <item alignment="Qt::AlignHCenter">
                    <widget class="QPushButton" name="Button_Calibrate">
                     <property name="sizePolicy">
-                     <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                     <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
                       <horstretch>0</horstretch>
                       <verstretch>0</verstretch>
                      </sizepolicy>
@@ -858,7 +858,7 @@ QPushButton:pressed {
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>300</width>
+                     <width>16777215</width>
                      <height>16777215</height>
                     </size>
                    </property>
@@ -929,7 +929,7 @@ QPushButton:pressed {
                    </property>
                    <property name="maximumSize">
                     <size>
-                     <width>300</width>
+                     <width>16777215</width>
                      <height>16777215</height>
                     </size>
                    </property>
