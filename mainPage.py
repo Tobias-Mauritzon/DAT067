@@ -64,7 +64,6 @@ class MainPage(QtWidgets.QWidget):
 
 		#Models:
 		self.customTensorFlowModel = None
-		self.HaarCascade_Cars_Model = HaarCascade_Model("Car")
 		#Models activation booleans:
 		self.usingHaarCascade_Cars = False # boolean to activate/deactivate Haar Cascade Cars
 		self.customModelIsActive = False # boolean to activate/deactivate custom model
@@ -364,6 +363,7 @@ class MainPage(QtWidgets.QWidget):
 				self.usingHaarCascade_Cars = False
 				self.ui.groupBox_HC_Cars.setEnabled(False)
 			else:
+				self.HaarCascade_Cars_Model = HaarCascade_Model("Car")
 				self.ui.groupBox_HC_Cars.setEnabled(True)
 				self.usingHaarCascade_Cars = True
 
