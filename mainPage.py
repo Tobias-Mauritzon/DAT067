@@ -6,7 +6,6 @@ from PyQt5.QtWidgets import QWidget
 from PyQt5.QtGui import QImage
 from PyQt5.QtGui import QPixmap
 from PyQt5.QtCore import QTimer
-from DistanceEstimator import DistanceEstimator
 import numpy as np
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import img_to_array
@@ -29,7 +28,7 @@ from HaarCascade_Model import *
 """
 MainPage inherits QWidget and creates the main page with the ui(ui_mainPage.py) made with Qt designer.
 The class creates a page with all the object detection functions.
-OBS! IF YOU ARE ON A RASPBERRY PI, YOU NEED TO REMOVE cv2.CAP_DSHOW in mainPage row 85! 
+OBS! IF YOU ARE ON A RASPBERRY PI, YOU NEED TO REMOVE cv2.CAP_DSHOW in mainPage row 85!
 OBS! IF YOU WANT TO START WITH THE LOADING SCREEN CHANGE timer start time TO 100 in loadingwindow row 42.
 """
 class MainPage(QtWidgets.QWidget):
@@ -65,7 +64,6 @@ class MainPage(QtWidgets.QWidget):
 
 		#Models:
 		self.customTensorFlowModel = None
-		self.HaarCascade_Cars_Model = HaarCascade_Model("Car")
 		#Models activation booleans:
 		self.usingHaarCascade_Cars = False # boolean to activate/deactivate Haar Cascade Cars
 		self.customModelIsActive = False # boolean to activate/deactivate custom model
@@ -365,6 +363,7 @@ class MainPage(QtWidgets.QWidget):
 				self.usingHaarCascade_Cars = False
 				self.ui.groupBox_HC_Cars.setEnabled(False)
 			else:
+				self.HaarCascade_Cars_Model = HaarCascade_Model("Car")
 				self.ui.groupBox_HC_Cars.setEnabled(True)
 				self.usingHaarCascade_Cars = True
 
