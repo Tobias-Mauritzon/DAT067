@@ -69,6 +69,7 @@ class MainWindow(QtWidgets.QMainWindow):
 		self.ui.action_Calibration.triggered.connect(lambda: self.openPage(1))
 		"""Object Detection"""
 		self.ui.action_HaarCascade_Cars.triggered.connect(lambda: self.page_0.activateHaarCascade("Car"))
+		self.ui.action_YOLO.triggered.connect(lambda: self.page_0.activateYOLO())
 		self.ui.action_CustomModel.triggered.connect(self.page_0.activateCustomModel)
 		"""Help"""
 		self.ui.action_HowToUse.triggered.connect(self.__showHowToUse)

@@ -15,6 +15,7 @@ from GUI.ui_mainPage import *
 #Models:
 from TensorFlow_Custom_Model import *
 from HaarCascade_Model import *
+from Yolov3_Model import *
 
 
 # Author: Philip
@@ -66,6 +67,7 @@ class MainPage(QtWidgets.QWidget):
 		self.customTensorFlowModel = None
 		#Models activation booleans:
 		self.usingHaarCascade_Cars = False # boolean to activate/deactivate Haar Cascade Cars
+		self.YoloIsActive = False # boolean to activate/deactivate Yolo
 		self.customModelIsActive = False # boolean to activate/deactivate custom model
 
 	# Sets start sizes for widgets in page
@@ -231,6 +233,8 @@ class MainPage(QtWidgets.QWidget):
 	def __setObjectDetectionType(self):
 		if self.usingHaarCascade_Cars:
 			self.HaarCascade_Cars_Model.findCars(self.image)
+		if self.YoloIsActive:
+			self.Yolo_model.findObjects(self.image)
 		if self.customModelIsActive:
 			self.customTensorFlowModel.findObject(self.image)
 		if self.frameRateIsShown:
@@ -387,6 +391,16 @@ class MainPage(QtWidgets.QWidget):
 			self.ui.label_HC_LicencePlates_MinSize.setNum(self.HaarCascade_Cars_Model.minSize_def)
 
 	"""Haar Cascade detection END"""
+
+	"""YOLO detection START"""
+	def activateYOLO(self):
+		if self.YoloIsActive:
+			self.YoloIsActive = False
+		else:
+			self.Yolo_model = Yolo_Model()
+			self.YoloIsActive = True
+
+	"""YOLO detection END"""
 
 	""" Custom TensorFlow Model START"""
 	# Activates the custom tensorFlow model

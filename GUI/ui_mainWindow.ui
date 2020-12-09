@@ -193,7 +193,7 @@ QPushButton:pressed {
      <x>0</x>
      <y>0</y>
      <width>867</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
    <property name="styleSheet">
@@ -248,8 +248,8 @@ QMenuBar::item::selected {
      <addaction name="action_HaarCascade_Cars"/>
     </widget>
     <addaction name="menuHaar_Cascade"/>
-    <addaction name="actionYOLO"/>
-    <addaction name="actionSSD"/>
+    <addaction name="action_YOLO"/>
+    <addaction name="action_SSD"/>
     <addaction name="action_CustomModel"/>
    </widget>
    <widget class="QMenu" name="menuNavigation">
@@ -392,12 +392,15 @@ QMenuBar::item::selected {
     <string>Cars</string>
    </property>
   </action>
-  <action name="actionYOLO">
+  <action name="action_YOLO">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>YOLO</string>
    </property>
   </action>
-  <action name="actionSSD">
+  <action name="action_SSD">
    <property name="text">
     <string>SSD</string>
    </property>
