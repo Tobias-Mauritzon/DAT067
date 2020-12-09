@@ -80,7 +80,7 @@ class HaarCascade_Model():
 			cv2.putText(objectRectangle,self.objectName + " " + str(round(carWeights[i][0],2)),(x, y-10), font, 0.5, self.carFontColor, 2, cv2.LINE_AA)
 			i+=1
 			if self.detectPlates:
-				plates = self.plateCascade.detectMultiScale3(gray, scaleFactor=self.scaleFactor_1, minNeighbors=self.minNeighbors_1, minSize=(self.minSize_1,self.minSize_1),outputRejectLevels = True)
+				plates = self.plateCascade.detectMultiScale3(gray, scaleFactor=self.scaleFactor_1, minNeighbors=self.minNeighbors_1,flags=cv2.CASCADE_FIND_BIGGEST_OBJECT, minSize=(self.minSize_1,self.minSize_1),outputRejectLevels = True)
 				j=0
 				for(px,py,pw,ph) in plates[0]:
 					end_cord_px = px + pw
