@@ -7,3 +7,4 @@ camera_info.ini
 *.pb
 *.data-00000-of-00001
 *.index
+*.pyc
