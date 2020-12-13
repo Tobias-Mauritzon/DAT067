@@ -11,6 +11,7 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing.image import img_to_array
 from dialogMenu import *
 from GUI.ui_mainPage import *
+from sys import platform
 
 #Models:
 from TensorFlow_Custom_Model import *
@@ -81,8 +82,10 @@ class MainPage(QtWidgets.QWidget):
 
 	# Load this page
 	def loadPage(self):
-		print("load p0")
-		self.cap = cv2.VideoCapture(0,cv2.CAP_DSHOW) # create video capture
+		if platform == "win32":
+			self.cap = cv2.VideoCapture(0,cv2.CAP_DSHOW) # create video fast with windows
+		else:
+			self.cap = cv2.VideoCapture(0) # create video capture for Raspberry and other OS:s
 		self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 3) # set buffer size
 		self.cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'))
 		self.cap.set(cv2.CAP_PROP_FPS, 30) # set fps

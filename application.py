@@ -10,8 +10,6 @@ from calibrationPage import *
 MainWindow creates the main window for the application. It has a topbar and a stack widget where different "pages" can be shown.
 This class inherits QMainWindow and creates a window with the ui(ui_mainWindow.py) made with Qt designer.
 Notice that a "page" is reffered to as a QWidget that is used on the MainWindow's stack widget.
-OBS! IF YOU ARE ON A RASPBERRY PI, YOU NEED TO REMOVE cv2.CAP_DSHOW in mainPage row 85! 
-OBS! IF YOU WANT TO START WITH THE LOADING SCREEN CHANGE timer start time TO 100 in loadingwindow row 42.
 """
 class MainWindow(QtWidgets.QMainWindow):
 	# class constructor
