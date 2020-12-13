@@ -11,7 +11,7 @@ class Yolo_Model():
         self.ObjectsFile = 'Yolo_v3_tiny/coco.names'
         self.objectNames = []
         self.CONFTRESHOLD = 0.5
-        self.nms_threshold = 0.35
+        self.nms_threshold = 0.2 # less means less boxes
         self.__loadObjectNames()
         self.__readNet()
 
@@ -51,7 +51,7 @@ class Yolo_Model():
                     classIds.append(classId)
                     confidenceValues.append(float(confidence))
 
-        indices = cv2.dnn.NMSBoxes(boundingBox,confidenceValues,self.CONFTRESHOLD,self.nms_threshold)
+        indices = cv2.dnn.NMSBoxes(boundingBox,confidenceValues,self.CONFTRESHOLD,self.nms_threshold) # Eliminates overlaping boxes
 
         for i in indices:
             i = i[0]
