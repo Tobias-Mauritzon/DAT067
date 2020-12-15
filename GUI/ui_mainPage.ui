@@ -558,9 +558,9 @@ QFrame{
                      <property name="geometry">
                       <rect>
                        <x>0</x>
-                       <y>-56</y>
-                       <width>523</width>
-                       <height>604</height>
+                       <y>0</y>
+                       <width>143</width>
+                       <height>569</height>
                       </rect>
                      </property>
                      <property name="sizePolicy">
@@ -1434,13 +1434,13 @@ QFrame{
 }</string>
                         </property>
                         <property name="currentIndex">
-                         <number>0</number>
+                         <number>2</number>
                         </property>
                         <widget class="QWidget" name="page">
                          <property name="geometry">
                           <rect>
                            <x>0</x>
-                           <y>-94</y>
+                           <y>0</y>
                            <width>505</width>
                            <height>534</height>
                           </rect>
@@ -1963,8 +1963,8 @@ QPushButton:pressed {
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>520</width>
-                           <height>440</height>
+                           <width>100</width>
+                           <height>30</height>
                           </rect>
                          </property>
                          <attribute name="label">
@@ -1977,7 +1977,7 @@ QPushButton:pressed {
                            <x>0</x>
                            <y>0</y>
                            <width>520</width>
-                           <height>412</height>
+                           <height>440</height>
                           </rect>
                          </property>
                          <attribute name="label">

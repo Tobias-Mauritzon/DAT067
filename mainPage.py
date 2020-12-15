@@ -97,7 +97,6 @@ class MainPage(QtWidgets.QWidget):
 	# Close this page
 	def closePage(self):
 		if self.timer.isActive:
-			print("close p0")
 			# stop timer
 			self.timer.stop()
 			if self.cap is not None:

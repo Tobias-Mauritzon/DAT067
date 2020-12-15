@@ -249,7 +249,6 @@ QMenuBar::item::selected {
     </widget>
     <addaction name="menuHaar_Cascade"/>
     <addaction name="action_YOLO"/>
-    <addaction name="action_SSD"/>
     <addaction name="action_CustomModel"/>
    </widget>
    <widget class="QMenu" name="menuNavigation">

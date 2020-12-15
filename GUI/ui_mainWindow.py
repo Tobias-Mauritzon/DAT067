@@ -275,7 +275,6 @@ class Ui_MainWindow(object):
         self.menuHaar_Cascade.addAction(self.action_HaarCascade_Cars)
         self.menuObject_detection.addAction(self.menuHaar_Cascade.menuAction())
         self.menuObject_detection.addAction(self.action_YOLO)
-        self.menuObject_detection.addAction(self.action_SSD)
         self.menuObject_detection.addAction(self.action_CustomModel)
         self.menuNavigation.addAction(self.action_MainScreen)
         self.menuNavigation.addAction(self.action_Calibration)
