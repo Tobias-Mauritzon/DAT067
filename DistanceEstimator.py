@@ -18,9 +18,12 @@ class DistanceEstimator:
         """
         Initiates DistanceEstimator object with focal length data and the real dimension of object. 
         """
-        self.focal = self.__read_from_file()[1]
         self.real_size = real_size
 
+        try:
+            self.focal = self.__read_from_file()[1]
+        except Exception:
+            self.focal = 500 #Placeholder
     def estimate_distance(self, dimension: int) -> str:
         """
         Estimates the distance to every object in the rectangle list 'objects' by 
