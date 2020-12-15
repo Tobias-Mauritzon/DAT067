@@ -4,6 +4,12 @@
 #Reviewed on: 2020-12-04
 """
 
+"""
+#Author: Joachim Antfolk
+#Reviewed by: 
+#Reviewed on: 2020-12-15
+"""
+
 from cv2 import cv2
 import numpy as numpy
 from typing import Tuple
@@ -24,6 +30,7 @@ class DistanceEstimator:
             self.focal = self.__read_from_file()[1]
         except Exception:
             self.focal = 500 #Placeholder
+
     def estimate_distance(self, dimension: int) -> str:
         """
         Estimates the distance to every object in the rectangle list 'objects' by 
