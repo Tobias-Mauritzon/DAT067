@@ -55,7 +55,7 @@ class TensorFlow_Custom_Model():
             y = Y1 - 10 if Y1 - 10 > 10 else Y1 + 10
 
             if self.carEstimator is not None:
-                distance = self.carEstimator.estimate_distance(w)
+                distance = self.carEstimator.estimate_distance(X2)
                 cv2.rectangle(image, (X1, Y2), (X2, Y2 + 40), (0, 255, 0), -1)
                 cv2.putText(image, distance, (X1 + 10, Y2 + 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255))
             cv2.putText(image, "Car", (X1, y), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 255, 0), 2)
@@ -87,7 +87,7 @@ class TensorFlow_Custom_Model():
 
             if label == "Car":
                 if self.carEstimator is not None:
-                    distance = self.carEstimator.estimate_distance(w)
+                    distance = self.carEstimator.estimate_distance(X2)
                     cv2.rectangle(image, (X1, Y2), (X2, Y2 + 40), (0, 255, 0), -1)
                     cv2.putText(image, distance, (X1 + 10, Y2 + 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255))
                 cv2.rectangle(image, (X1, Y1), (X2, Y2), (0, 255, 0), 2)
