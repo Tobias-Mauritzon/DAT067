@@ -17,7 +17,7 @@ interpreter.allocate_tensors()
 print(interpreter)
 def predictNprepare_image(filepath):
     img = load_img(filepath, target_size=(128, 128))
-    img = img_to_array(img)
+    img = img_to_array(img) / 255.0
     img = img.reshape([1, 128, 128, 3])
     img_np = np.array(img, dtype=np.float32)
     print(img_np.dtype)
