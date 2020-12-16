@@ -17,7 +17,7 @@ interpreter.allocate_tensors()
 print(interpreter)
 def predictNprepare_image(filepath):
     img = load_img(filepath, target_size=(128, 128))
-    img = img_to_array(img)
+    img = img_to_array(img)/255.0
     img = img.reshape([1, 128, 128, 3])
     img_np = np.array(img, dtype=np.float32)
     print(img_np.dtype)
@@ -41,6 +41,14 @@ def predictNprepare_image(filepath):
     (h, w) = img_array.shape[:2]
     # scale the predicted bounding box coordinates based on the image
     # dimensions
+    print("--------------------------------")
+    print(X1)
+    print(X2)
+    print(Y1)
+    print(Y2)
+    print(w)
+    print(h)
+    print("--------------------------------")
     X1 = int(X1 * w)
     Y1 = int(Y1 * h)
     X2 = int(X2 * w)
@@ -49,6 +57,7 @@ def predictNprepare_image(filepath):
     print(X2)
     print(Y1)
     print(Y2)
+    print("--------------------------------")
     # draw the predicted bounding box and class label on the image
     y = Y1 - 10 if Y1 - 10 > 10 else Y1 + 10
     cv2.putText(img_array, label, (X1, y), cv2.FONT_HERSHEY_SIMPLEX,
@@ -59,4 +68,4 @@ def predictNprepare_image(filepath):
     cv2.imshow("Output", img_array)
     cv2.waitKey(0)
 
-predictNprepare_image("cat.jpg")
+predictNprepare_image("bil_bild.jpg")

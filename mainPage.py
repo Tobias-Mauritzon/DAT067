@@ -394,7 +394,7 @@ class MainPage(QtWidgets.QWidget):
 		# Loads the custom trained model.
 		print("LOADING CUSTOM TENSORFLOW MODEL")
 		#self.my_model = tf.keras.models.load_model("pretrained_car_localization")
-		self.customTensorFlowModel = TensorFlow_Custom_Model(0)
+		self.customTensorFlowModel = TensorFlow_Custom_Model(2)
 		if self.customModelIsActive:
 			self.customModelIsActive = False
 		else:
