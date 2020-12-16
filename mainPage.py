@@ -61,6 +61,8 @@ class MainPage(QtWidgets.QWidget):
 		self.fpsInc = 0
 		self.fps_color = (0, 255, 127)
 
+		self.activeCount = 0 # amount of activated models
+
 		#Models:
 		self.customTensorFlowModel = None
 		#Models activation booleans:
@@ -76,12 +78,15 @@ class MainPage(QtWidgets.QWidget):
 		self.ui.label_HC_Cars_MinNeighbors.setNum(self.ui.horizontalSlider_HC_Cars_MinNeighbors.value())
 		self.ui.label_HC_LicencePlates_ScaleFactor.setNum(self.ui.horizontalSlider_HC_LicencePlates_ScaleFactor.value()/100)
 		self.ui.label_HC_LicencePlates_MinNeighbors.setNum(self.ui.horizontalSlider_HC_LicencePlates_MinNeighbors.value())
+		self.ui.label_active_HC.setVisible(False)
+		self.ui.label_active_YOLO.setVisible(False)
+		self.ui.label_active_CM.setVisible(False)
 
 	# Load this page
 	def loadPage(self):
-		if platform == "win32":
+		if platform == "win32": # if on windows...
 			self.cap = cv2.VideoCapture(0,cv2.CAP_DSHOW) # create video fast with windows
-		else:
+		else: # if on Raspberry Pi etc
 			self.cap = cv2.VideoCapture(0) # create video capture for Raspberry and other OS:s
 		self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 3) # set buffer size
 		self.cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'))
@@ -314,10 +319,17 @@ class MainPage(QtWidgets.QWidget):
 			if self.usingHaarCascade_Cars:
 				self.usingHaarCascade_Cars = False
 				self.ui.groupBox_HC_Cars.setEnabled(False)
+				self.ui.label_active_HC.setVisible(False)
+				self.activeCount -=1
+				if self.activeCount == 0:
+					self.ui.label_active_None.setVisible(True)
 			else:
 				self.HaarCascade_Cars_Model = HaarCascade_Model("Car")
 				self.ui.groupBox_HC_Cars.setEnabled(True)
 				self.usingHaarCascade_Cars = True
+				self.ui.label_active_None.setVisible(False)
+				self.ui.label_active_HC.setVisible(True)
+				self.activeCount +=1
 
 	# Sets the haar cascade values, labels and sliders to default values
 	def __reset_HC_Values(self, index):
@@ -344,20 +356,34 @@ class MainPage(QtWidgets.QWidget):
 	def activateYOLO(self):
 		if self.YoloIsActive:
 			self.YoloIsActive = False
+			self.ui.label_active_YOLO.setVisible(False)
+			self.activeCount -=1
+			if self.activeCount == 0:
+					self.ui.label_active_None.setVisible(True)
 		else:
 			self.Yolo_model = Yolo_Model()
 			self.YoloIsActive = True
+			self.ui.label_active_None.setVisible(False)
+			self.ui.label_active_YOLO.setVisible(True)
+			self.activeCount +=1
 
 	"""YOLO detection END"""
 
 	""" Custom TensorFlow Model START"""
 	# Activates the custom tensorFlow model
-	def activateCustomModel(self):
+	def activateCustomModel(self, index):
 		# Loads the custom trained model.
 		print("LOADING CUSTOM TENSORFLOW MODEL")
 		#self.my_model = tf.keras.models.load_model("pretrained_car_localization")
-		self.customTensorFlowModel = TensorFlow_Custom_Model(2)
+		self.customTensorFlowModel = TensorFlow_Custom_Model(index)
 		if self.customModelIsActive:
 			self.customModelIsActive = False
+			self.ui.label_active_CM.setVisible(False)
+			self.activeCount -=1
+			if self.activeCount == 0:
+					self.ui.label_active_None.setVisible(True)
 		else:
 			self.customModelIsActive = True
+			self.ui.label_active_None.setVisible(False)
+			self.ui.label_active_CM.setVisible(True)
+			self.activeCount+=1

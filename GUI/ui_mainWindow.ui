@@ -241,15 +241,42 @@ QMenuBar::item::selected {
     <property name="title">
      <string>Object Detection</string>
     </property>
-    <widget class="QMenu" name="menuHaar_Cascade">
+    <widget class="QMenu" name="menu_HC">
      <property name="title">
       <string>Haar Cascade</string>
      </property>
-     <addaction name="action_HaarCascade_Cars"/>
+     <addaction name="action_HC_Cars"/>
     </widget>
-    <addaction name="menuHaar_Cascade"/>
-    <addaction name="action_YOLO"/>
-    <addaction name="action_CustomModel"/>
+    <widget class="QMenu" name="menu_CM">
+     <property name="title">
+      <string>Custom Model</string>
+     </property>
+     <widget class="QMenu" name="menu_CM_TF">
+      <property name="title">
+       <string>Tensorflow</string>
+      </property>
+      <addaction name="action_CM_TF_Cars"/>
+      <addaction name="action_CM_TF_Cars_etc"/>
+     </widget>
+     <widget class="QMenu" name="menu_CM_TF_Lite">
+      <property name="title">
+       <string>Tensorflow Lite</string>
+      </property>
+      <addaction name="action_CM_TF_Lite_Cars"/>
+      <addaction name="action_CM_TF_Lite_Cars_etc"/>
+     </widget>
+     <addaction name="menu_CM_TF"/>
+     <addaction name="menu_CM_TF_Lite"/>
+    </widget>
+    <widget class="QMenu" name="menu_YOLO">
+     <property name="title">
+      <string>YOLO</string>
+     </property>
+     <addaction name="action_YOLO_80_objects"/>
+    </widget>
+    <addaction name="menu_HC"/>
+    <addaction name="menu_YOLO"/>
+    <addaction name="menu_CM"/>
    </widget>
    <widget class="QMenu" name="menuNavigation">
     <property name="tearOffEnabled">
@@ -383,7 +410,7 @@ QMenuBar::item::selected {
     <string>Calibration</string>
    </property>
   </action>
-  <action name="action_HaarCascade_Cars">
+  <action name="action_HC_Cars">
    <property name="checkable">
     <bool>true</bool>
    </property>
@@ -391,25 +418,9 @@ QMenuBar::item::selected {
     <string>Cars</string>
    </property>
   </action>
-  <action name="action_YOLO">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>YOLO</string>
-   </property>
-  </action>
   <action name="action_SSD">
    <property name="text">
     <string>SSD</string>
-   </property>
-  </action>
-  <action name="action_CustomModel">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
-   <property name="text">
-    <string>Custom Model</string>
    </property>
   </action>
   <action name="action_HaarCascade_Licence_Plates">
@@ -426,6 +437,46 @@ QMenuBar::item::selected {
    </property>
    <property name="text">
     <string>Full Screen</string>
+   </property>
+  </action>
+  <action name="action_CM_TF_Cars">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Cars</string>
+   </property>
+  </action>
+  <action name="action_CM_TF_Cars_etc">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Cars, signs and lampposts</string>
+   </property>
+  </action>
+  <action name="action_CM_TF_Lite_Cars">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Cars</string>
+   </property>
+  </action>
+  <action name="action_CM_TF_Lite_Cars_etc">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Cars, signs and lampposts</string>
+   </property>
+  </action>
+  <action name="action_YOLO_80_objects">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>80 different objects</string>
    </property>
   </action>
  </widget>

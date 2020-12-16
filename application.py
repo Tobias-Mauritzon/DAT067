@@ -66,9 +66,11 @@ class MainWindow(QtWidgets.QMainWindow):
 		self.ui.action_MainScreen.triggered.connect(lambda: self.openPage(0))
 		self.ui.action_Calibration.triggered.connect(lambda: self.openPage(1))
 		"""Object Detection"""
-		self.ui.action_HaarCascade_Cars.triggered.connect(lambda: self.page_0.activateHaarCascade("Car"))
-		self.ui.action_YOLO.triggered.connect(lambda: self.page_0.activateYOLO())
-		self.ui.action_CustomModel.triggered.connect(self.page_0.activateCustomModel)
+		self.ui.action_HC_Cars.triggered.connect(lambda: self.page_0.activateHaarCascade("Car"))
+		self.ui.action_YOLO_80_objects.triggered.connect(lambda: self.page_0.activateYOLO())
+		self.ui.action_CM_TF_Cars.triggered.connect(lambda: self.page_0.activateCustomModel(0))
+		self.ui.action_CM_TF_Cars_etc.triggered.connect(lambda: self.page_0.activateCustomModel(1))
+		self.ui.action_CM_TF_Lite_Cars.triggered.connect(lambda: self.page_0.activateCustomModel(2))
 		"""Help"""
 		self.ui.action_HowToUse.triggered.connect(self.__showHowToUse)
 		self.ui.action_About.triggered.connect(self.__showAbout)

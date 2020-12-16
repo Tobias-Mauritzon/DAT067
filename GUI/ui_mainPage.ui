@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1116</width>
-    <height>760</height>
+    <width>1329</width>
+    <height>745</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -35,7 +35,10 @@ QPushButton:pressed {
 	background-color: #bcbcbc;
 }</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QHBoxLayout" name="horizontalLayout">
+   <property name="spacing">
+    <number>0</number>
+   </property>
    <property name="leftMargin">
     <number>0</number>
    </property>
@@ -48,11 +51,8 @@ QPushButton:pressed {
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item row="0" column="0">
+   <item>
     <widget class="QSplitter" name="Splitter_frame">
-     <property name="styleSheet">
-      <string notr="true"/>
-     </property>
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
@@ -81,12 +81,146 @@ QPushButton:pressed {
       <property name="frameShadow">
        <enum>QFrame::Raised</enum>
       </property>
-      <layout class="QVBoxLayout" name="verticalLayout_15">
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <property name="topMargin">
+        <number>0</number>
+       </property>
        <item>
-        <widget class="QSplitter" name="splitter">
+        <widget class="QSplitter" name="Splitter_cameraFrame">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
+         <widget class="QFrame" name="frame_3">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>16777215</width>
+            <height>30</height>
+           </size>
+          </property>
+          <property name="font">
+           <font>
+            <family>Segoe UI</family>
+           </font>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="styleSheet">
+           <string notr="true"/>
+          </property>
+          <property name="frameShape">
+           <enum>QFrame::StyledPanel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Raised</enum>
+          </property>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <property name="spacing">
+            <number>10</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>0</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_4">
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+              </font>
+             </property>
+             <property name="text">
+              <string>Activated: </string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_active_None">
+             <property name="text">
+              <string>None</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_active_HC">
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: #FF8B87;</string>
+             </property>
+             <property name="text">
+              <string>Haar Cascade</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_active_YOLO">
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: #7BE8BF;</string>
+             </property>
+             <property name="text">
+              <string>YOLO</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_active_CM">
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+              </font>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">color: #95BDFF;</string>
+             </property>
+             <property name="text">
+              <string>Custom Model</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
          <widget class="QLabel" name="image_label">
           <property name="enabled">
            <bool>true</bool>
@@ -131,9 +265,9 @@ QPushButton:pressed {
            <number>0</number>
           </property>
          </widget>
-         <widget class="QFrame" name="frame_8">
+         <widget class="QFrame" name="frame_4">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+           <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -141,7 +275,7 @@ QPushButton:pressed {
           <property name="maximumSize">
            <size>
             <width>16777215</width>
-            <height>50</height>
+            <height>39</height>
            </size>
           </property>
           <property name="frameShape">
@@ -150,8 +284,23 @@ QPushButton:pressed {
           <property name="frameShadow">
            <enum>QFrame::Raised</enum>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout">
-           <item alignment="Qt::AlignHCenter">
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <property name="spacing">
+            <number>0</number>
+           </property>
+           <property name="leftMargin">
+            <number>0</number>
+           </property>
+           <property name="topMargin">
+            <number>9</number>
+           </property>
+           <property name="rightMargin">
+            <number>0</number>
+           </property>
+           <property name="bottomMargin">
+            <number>0</number>
+           </property>
+           <item>
             <widget class="QPushButton" name="Button_startCam">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
@@ -160,6 +309,12 @@ QPushButton:pressed {
               </sizepolicy>
              </property>
              <property name="minimumSize">
+              <size>
+               <width>100</width>
+               <height>30</height>
+              </size>
+             </property>
+             <property name="maximumSize">
               <size>
                <width>100</width>
                <height>30</height>
@@ -340,6 +495,12 @@ QTabBar::tab:!selected{
                <height>0</height>
               </size>
              </property>
+             <property name="font">
+              <font>
+               <family>Segoe UI</family>
+               <pointsize>8</pointsize>
+              </font>
+             </property>
              <property name="autoFillBackground">
               <bool>false</bool>
              </property>
@@ -387,6 +548,9 @@ QTabBar::tab:!selected{
                   <string notr="true">*{
 	background-color: rgb(61, 65, 71);
 	color: white;
+}
+QFrame{
+	border-radius:10;
 }
 
 /* VERTICAL SCROLLBAR */
@@ -487,17 +651,30 @@ border: 1px solid #aaa;
 border-radius: 7px;
 }
 
-QGroupBox {
-    border: 1px solid gray;
-	border-radius:10;
-    margin-top: 0.5em;
+QLabel{
+	background-color: #2F3136;
+	color: white;
+	border-radius:0;
+	padding:5px;
 }
 
-QGroupBox::title {
-	color: white;
-	subcontrol-origin: margin;
-    left: 10px;
-    padding: -3 3px 0 3px;
+QRadioButton{
+	background-color: transparent;
+}
+
+QGroupBox {
+	border: 1px solid;
+    border-color: transparent;
+	background-color: transparent;
+	border-radius:10;
+	padding-top:15px; 
+	margin-top:-15px
+}
+
+QRadioButton::indicator
+{
+	width : 20px;
+	height : 20px;
 }
 
 QFrame{
@@ -513,7 +690,19 @@ QFrame{
                   <enum>QFrame::Raised</enum>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_3">
+                  <property name="spacing">
+                   <number>6</number>
+                  </property>
                   <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>25</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
                    <number>9</number>
                   </property>
                   <item>
@@ -559,8 +748,8 @@ QFrame{
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>538</width>
-                       <height>548</height>
+                       <width>611</width>
+                       <height>526</height>
                       </rect>
                      </property>
                      <property name="sizePolicy">
@@ -573,6 +762,21 @@ QFrame{
                       <string notr="true"/>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_4">
+                      <property name="spacing">
+                       <number>15</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>0</number>
+                      </property>
                       <item alignment="Qt::AlignTop">
                        <widget class="QFrame" name="frame_2">
                         <property name="minimumSize">
@@ -598,7 +802,7 @@ QFrame{
                         </property>
                         <layout class="QVBoxLayout" name="verticalLayout_5">
                          <property name="spacing">
-                          <number>10</number>
+                          <number>5</number>
                          </property>
                          <property name="leftMargin">
                           <number>0</number>
@@ -613,29 +817,56 @@ QFrame{
                           <number>0</number>
                          </property>
                          <item>
-                          <widget class="QGroupBox" name="groupBox_5">
+                          <widget class="QLabel" name="label">
                            <property name="font">
                             <font>
-                             <pointsize>10</pointsize>
+                             <family>Segoe UI</family>
+                             <pointsize>8</pointsize>
                             </font>
                            </property>
-                           <property name="title">
+                           <property name="styleSheet">
+                            <string notr="true"/>
+                           </property>
+                           <property name="text">
                             <string>Frame Rate</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QGroupBox" name="groupBox_5">
+                           <property name="title">
+                            <string/>
                            </property>
                            <layout class="QVBoxLayout" name="verticalLayout_13">
                             <property name="spacing">
                              <number>15</number>
                             </property>
+                            <property name="leftMargin">
+                             <number>9</number>
+                            </property>
                             <property name="topMargin">
-                             <number>20</number>
+                             <number>9</number>
                             </property>
                             <item>
                              <widget class="QRadioButton" name="radioButton_showFrameRate">
+                              <property name="font">
+                               <font>
+                                <family>Segoe UI</family>
+                                <pointsize>8</pointsize>
+                                <kerning>false</kerning>
+                               </font>
+                              </property>
                               <property name="styleSheet">
                                <string notr="true"/>
                               </property>
                               <property name="text">
                                <string>Show frame rate</string>
+                              </property>
+                              <property name="iconSize">
+                               <size>
+                                <width>16</width>
+                                <height>16</height>
+                               </size>
                               </property>
                              </widget>
                             </item>
@@ -643,27 +874,47 @@ QFrame{
                           </widget>
                          </item>
                          <item>
-                          <widget class="QGroupBox" name="groupBox">
+                          <widget class="QLabel" name="label_3">
                            <property name="font">
                             <font>
-                             <pointsize>10</pointsize>
+                             <family>Segoe UI</family>
+                             <pointsize>8</pointsize>
                             </font>
                            </property>
                            <property name="styleSheet">
                             <string notr="true"/>
                            </property>
-                           <property name="title">
+                           <property name="text">
                             <string>Resolution</string>
+                           </property>
+                          </widget>
+                         </item>
+                         <item>
+                          <widget class="QGroupBox" name="groupBox">
+                           <property name="styleSheet">
+                            <string notr="true"/>
+                           </property>
+                           <property name="title">
+                            <string/>
                            </property>
                            <layout class="QVBoxLayout" name="verticalLayout_11">
                             <property name="spacing">
                              <number>15</number>
                             </property>
+                            <property name="leftMargin">
+                             <number>9</number>
+                            </property>
                             <property name="topMargin">
-                             <number>20</number>
+                             <number>9</number>
                             </property>
                             <item>
                              <widget class="QRadioButton" name="radioButton_res_0">
+                              <property name="font">
+                               <font>
+                                <family>Segoe UI</family>
+                                <pointsize>8</pointsize>
+                               </font>
+                              </property>
                               <property name="styleSheet">
                                <string notr="true"/>
                               </property>
@@ -674,6 +925,12 @@ QFrame{
                             </item>
                             <item>
                              <widget class="QRadioButton" name="radioButton_res_1">
+                              <property name="font">
+                               <font>
+                                <family>Segoe UI</family>
+                                <pointsize>8</pointsize>
+                               </font>
+                              </property>
                               <property name="styleSheet">
                                <string notr="true"/>
                               </property>
@@ -684,6 +941,12 @@ QFrame{
                             </item>
                             <item>
                              <widget class="QRadioButton" name="radioButton_res_2">
+                              <property name="font">
+                               <font>
+                                <family>Segoe UI</family>
+                                <pointsize>8</pointsize>
+                               </font>
+                              </property>
                               <property name="styleSheet">
                                <string notr="true"/>
                               </property>
@@ -697,6 +960,12 @@ QFrame{
                             </item>
                             <item>
                              <widget class="QRadioButton" name="radioButton_res_3">
+                              <property name="font">
+                               <font>
+                                <family>Segoe UI</family>
+                                <pointsize>8</pointsize>
+                               </font>
+                              </property>
                               <property name="styleSheet">
                                <string notr="true"/>
                               </property>
@@ -707,6 +976,12 @@ QFrame{
                             </item>
                             <item>
                              <widget class="QRadioButton" name="radioButton_res_4">
+                              <property name="font">
+                               <font>
+                                <family>Segoe UI</family>
+                                <pointsize>8</pointsize>
+                               </font>
+                              </property>
                               <property name="styleSheet">
                                <string notr="true"/>
                               </property>
@@ -760,6 +1035,7 @@ QFrame{
 	background-color: rgb(61, 65, 71);
 	color: white;
 }
+
 QFrame{
 	border-top-left-radius:0;
 	border-top-right-radius:0;
@@ -819,7 +1095,19 @@ QScrollBar::sub-line:vertical {
                   <enum>QFrame::Raised</enum>
                  </property>
                  <layout class="QVBoxLayout" name="verticalLayout_17">
+                  <property name="spacing">
+                   <number>0</number>
+                  </property>
                   <property name="leftMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="topMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="rightMargin">
+                   <number>0</number>
+                  </property>
+                  <property name="bottomMargin">
                    <number>9</number>
                   </property>
                   <item>
@@ -865,8 +1153,8 @@ QScrollBar::sub-line:vertical {
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>538</width>
-                       <height>548</height>
+                       <width>85</width>
+                       <height>169</height>
                       </rect>
                      </property>
                      <property name="sizePolicy">
@@ -879,6 +1167,21 @@ QScrollBar::sub-line:vertical {
                       <string notr="true"/>
                      </property>
                      <layout class="QVBoxLayout" name="verticalLayout_18">
+                      <property name="spacing">
+                       <number>25</number>
+                      </property>
+                      <property name="leftMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="topMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="rightMargin">
+                       <number>0</number>
+                      </property>
+                      <property name="bottomMargin">
+                       <number>0</number>
+                      </property>
                       <item alignment="Qt::AlignTop">
                        <widget class="QFrame" name="frame_11">
                         <property name="minimumSize">
@@ -924,16 +1227,16 @@ QScrollBar::sub-line:vertical {
                       <item>
                        <widget class="QToolBox" name="toolBox">
                         <property name="styleSheet">
-                         <string notr="true">QToolBox::tab{
-	background-color: rgb(41,45,51);
-	border-radius:10px;
-	padding-left:5;
-	font-size: 14px;
-}
-
-*{
+                         <string notr="true">*{
 	background-color: rgb(61, 65, 71);
 	color: white;
+}
+
+QToolBox::tab{
+	background-color: #2F3136;
+	color: white;
+	border-radius:0;
+	padding:5px;
 }
 
 /* VERTICAL SCROLLBAR */
@@ -1035,33 +1338,41 @@ border-radius: 7px;
 }
 
 QGroupBox {
-    border: 1px solid gray;
-	border-radius:10;
-    margin-top: 0.5em;
+    border: 2px solid;
+    border-color: #2F3136;
+    margin-top: 27px;
+    border-radius: 10;
 }
 
-QGroupBox::title {
-	color: white;
+QGroupBox:title{
 	subcontrol-origin: margin;
-    left: 10px;
-    padding: -3 3px 0 3px;
+    subcontrol-position: top center;
+	padding: 6 10 6 10;
+    background-color: #2F3136;
+	border-top-left-radius: 10;
+	border-top-right-radius: 10;
+    color: rgb(255, 255, 255);
 }
 
 QFrame{
+	background-color: transparent;
 	border-top-left-radius:0;
 	border-top-right-radius:0;
 }</string>
                         </property>
                         <property name="currentIndex">
-                         <number>2</number>
+                         <number>0</number>
+                        </property>
+                        <property name="tabSpacing">
+                         <number>6</number>
                         </property>
                         <widget class="QWidget" name="page">
                          <property name="geometry">
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>505</width>
-                           <height>534</height>
+                           <width>178</width>
+                           <height>543</height>
                           </rect>
                          </property>
                          <attribute name="label">
@@ -1072,16 +1383,16 @@ QFrame{
                            <number>10</number>
                           </property>
                           <property name="leftMargin">
-                           <number>0</number>
+                           <number>9</number>
                           </property>
                           <property name="topMargin">
-                           <number>0</number>
+                           <number>9</number>
                           </property>
                           <property name="rightMargin">
-                           <number>0</number>
+                           <number>9</number>
                           </property>
                           <property name="bottomMargin">
-                           <number>0</number>
+                           <number>9</number>
                           </property>
                           <item alignment="Qt::AlignTop">
                            <widget class="QGroupBox" name="groupBox_HC_Cars">
@@ -1090,7 +1401,7 @@ QFrame{
                             </property>
                             <property name="font">
                              <font>
-                              <pointsize>10</pointsize>
+                              <pointsize>8</pointsize>
                              </font>
                             </property>
                             <property name="layoutDirection">
@@ -1102,6 +1413,15 @@ QFrame{
                             <layout class="QVBoxLayout" name="verticalLayout_25">
                              <property name="spacing">
                               <number>40</number>
+                             </property>
+                             <property name="leftMargin">
+                              <number>9</number>
+                             </property>
+                             <property name="topMargin">
+                              <number>9</number>
+                             </property>
+                             <property name="rightMargin">
+                              <number>9</number>
                              </property>
                              <property name="bottomMargin">
                               <number>9</number>
@@ -1122,7 +1442,19 @@ QFrame{
                                </property>
                                <layout class="QVBoxLayout" name="verticalLayout_22">
                                 <property name="spacing">
-                                 <number>6</number>
+                                 <number>15</number>
+                                </property>
+                                <property name="leftMargin">
+                                 <number>0</number>
+                                </property>
+                                <property name="topMargin">
+                                 <number>0</number>
+                                </property>
+                                <property name="rightMargin">
+                                 <number>0</number>
+                                </property>
+                                <property name="bottomMargin">
+                                 <number>0</number>
                                 </property>
                                 <item>
                                  <widget class="QFrame" name="frame_14">
@@ -1136,6 +1468,24 @@ QFrame{
                                    <enum>QFrame::Raised</enum>
                                   </property>
                                   <layout class="QFormLayout" name="formLayout_8">
+                                   <property name="horizontalSpacing">
+                                    <number>10</number>
+                                   </property>
+                                   <property name="verticalSpacing">
+                                    <number>10</number>
+                                   </property>
+                                   <property name="leftMargin">
+                                    <number>0</number>
+                                   </property>
+                                   <property name="topMargin">
+                                    <number>0</number>
+                                   </property>
+                                   <property name="rightMargin">
+                                    <number>0</number>
+                                   </property>
+                                   <property name="bottomMargin">
+                                    <number>0</number>
+                                   </property>
                                    <item row="2" column="1">
                                     <widget class="QSlider" name="horizontalSlider_HC_Cars_ScaleFactor">
                                      <property name="layoutDirection">
@@ -1202,6 +1552,24 @@ QFrame{
                                    <enum>QFrame::Raised</enum>
                                   </property>
                                   <layout class="QFormLayout" name="formLayout_9">
+                                   <property name="horizontalSpacing">
+                                    <number>10</number>
+                                   </property>
+                                   <property name="verticalSpacing">
+                                    <number>10</number>
+                                   </property>
+                                   <property name="leftMargin">
+                                    <number>0</number>
+                                   </property>
+                                   <property name="topMargin">
+                                    <number>0</number>
+                                   </property>
+                                   <property name="rightMargin">
+                                    <number>0</number>
+                                   </property>
+                                   <property name="bottomMargin">
+                                    <number>0</number>
+                                   </property>
                                    <item row="0" column="1">
                                     <widget class="QLabel" name="label_11">
                                      <property name="styleSheet">
@@ -1259,6 +1627,24 @@ QFrame{
                                    <enum>QFrame::Raised</enum>
                                   </property>
                                   <layout class="QFormLayout" name="formLayout_10">
+                                   <property name="horizontalSpacing">
+                                    <number>10</number>
+                                   </property>
+                                   <property name="verticalSpacing">
+                                    <number>10</number>
+                                   </property>
+                                   <property name="leftMargin">
+                                    <number>0</number>
+                                   </property>
+                                   <property name="topMargin">
+                                    <number>0</number>
+                                   </property>
+                                   <property name="rightMargin">
+                                    <number>0</number>
+                                   </property>
+                                   <property name="bottomMargin">
+                                    <number>0</number>
+                                   </property>
                                    <item row="1" column="1">
                                     <widget class="QSlider" name="horizontalSlider_HC_Cars_MinSize">
                                      <property name="layoutDirection">
@@ -1345,7 +1731,7 @@ QPushButton:pressed {
                              <item>
                               <widget class="QGroupBox" name="groupBox_HC_LicencePlates">
                                <property name="title">
-                                <string>Licence Plates</string>
+                                <string>Licence plates</string>
                                </property>
                                <property name="checkable">
                                 <bool>true</bool>
@@ -1595,8 +1981,8 @@ QPushButton:pressed {
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>520</width>
-                           <height>440</height>
+                           <width>100</width>
+                           <height>30</height>
                           </rect>
                          </property>
                          <attribute name="label">
@@ -1621,7 +2007,9 @@ QPushButton:pressed {
          <widget class="QFrame" name="outputFrame">
           <property name="styleSheet">
            <string notr="true">background-color: rgb(61, 65, 71);
-border-radius: 10;\n\n</string>
+border-top-left-radius: 10;
+border-top-right-radius: 10;
+border-bottom-left-radius: 10;</string>
           </property>
           <property name="frameShape">
            <enum>QFrame::StyledPanel</enum>
@@ -1643,8 +2031,8 @@ border-radius: 10;\n\n</string>
              </property>
              <property name="font">
               <font>
-               <family>Rockwell</family>
-               <pointsize>16</pointsize>
+               <family>Segoe UI</family>
+               <pointsize>10</pointsize>
               </font>
              </property>
              <property name="styleSheet">

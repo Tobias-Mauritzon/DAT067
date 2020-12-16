@@ -93,7 +93,7 @@ class TensorFlow_Custom_Model():
             # draw the predicted bounding box and class label on the image
             y = Y1 - 10 if Y1 - 10 > 10 else Y1 + 10
 
-            if label == "Car":
+            if label == "Car" or label == "Dog" or label == "Cat":
                 cv2.rectangle(image, (X1, Y1), (X2, Y2), (0, 255, 0), 2)
                 cv2.putText(image, label, (X1, y), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 255, 0), 2)
 
