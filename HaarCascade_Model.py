@@ -41,6 +41,7 @@ class HaarCascade_Model():
 		elif self.objectName =="OTHER":
 			pass
 
+	# Sets font and border color
 	def __setColors(self):
 		if self.objectName == "Car":
 			self.carBorderColor = (255,0,0)
@@ -49,12 +50,13 @@ class HaarCascade_Model():
 			self.plateFontColor = (255,11,255)
 		elif self.objectName == "OTHER":
 			pass
-
+	
+	# Sets width of obejct to measure distance to. //1.8 for car //0.52 for num.plate //0.15 for face
 	def setDistanceEtimators(self):
-		# sets width of obejct to measure distance to. //1.8 for car //0.52 for num.plate //0.15 for face
 		self.regEstimator = DistanceEstimator(0.52)
 		self.carEstimator = DistanceEstimator(1.8)
 
+	# Finds cars
 	def findCars(self,image):
 		#Convert to gray
 		gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -125,13 +127,14 @@ class HaarCascade_Model():
 			cv2.putText(objectRectangle,self.objectName + " " + str(round(weights[i][0],2)),(x, y-10), font, 0.5, self.fontColor, 2, cv2.LINE_AA)
 			i+=1
 	"""
+	# Sets the detectPlates boolean to true/false
 	def setDetectPlates(self):
 		if self.detectPlates:
 			self.detectPlates = False
 		else:
 			self.detectPlates = True
 
-	# sets the scaleFactor
+	# Sets the scaleFactor
 	def setScaleFactor(self, factor, index):
 		if index == 0:
 			self.scaleFactor_0 = factor
@@ -139,21 +142,21 @@ class HaarCascade_Model():
 			self.scaleFactor_1 = factor
 
 
-	# sets the minNeghbors
+	# Sets the minNeghbors
 	def setMinNeighbors(self, number, index):
 		if index == 0:
 			self.minNeighbors_0 = number
 		elif index == 1:
 			self.minNeighbors_1 = number
 
-	# sets the min size
+	# Sets the min size
 	def setMinsize(self, number, index):
 		if index == 0:
 			self.minSize_0 = number
 		elif index == 1:
 			self.minSize_1 = number
 
-	# resets all values to default
+	# Resets all values to default
 	def resetValues(self,index):
 		if index == 0:
 			self.scaleFactor_0 = self.scaleFactor_def

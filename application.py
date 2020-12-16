@@ -10,8 +10,6 @@ from calibrationPage import *
 MainWindow creates the main window for the application. It has a topbar and a stack widget where different "pages" can be shown.
 This class inherits QMainWindow and creates a window with the ui(ui_mainWindow.py) made with Qt designer.
 Notice that a "page" is reffered to as a QWidget that is used on the MainWindow's stack widget.
-OBS! IF YOU ARE ON A RASPBERRY PI, YOU NEED TO REMOVE cv2.CAP_DSHOW in mainPage row 85! 
-OBS! IF YOU WANT TO START WITH THE LOADING SCREEN CHANGE timer start time TO 100 in loadingwindow row 42.
 """
 class MainWindow(QtWidgets.QMainWindow):
 	# class constructor
@@ -69,6 +67,7 @@ class MainWindow(QtWidgets.QMainWindow):
 		self.ui.action_Calibration.triggered.connect(lambda: self.openPage(1))
 		"""Object Detection"""
 		self.ui.action_HaarCascade_Cars.triggered.connect(lambda: self.page_0.activateHaarCascade("Car"))
+		self.ui.action_YOLO.triggered.connect(lambda: self.page_0.activateYOLO())
 		self.ui.action_CustomModel.triggered.connect(self.page_0.activateCustomModel)
 		"""Help"""
 		self.ui.action_HowToUse.triggered.connect(self.__showHowToUse)

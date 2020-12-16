@@ -11,10 +11,12 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing.image import img_to_array
 from dialogMenu import *
 from GUI.ui_mainPage import *
+from sys import platform
 
 #Models:
 from TensorFlow_Custom_Model import *
 from HaarCascade_Model import *
+from Yolov3_Model import *
 
 
 # Author: Philip
@@ -50,12 +52,9 @@ class MainPage(QtWidgets.QWidget):
 		self.sidePanelIsActive = True
 		self.settingsIsActive = True
 		self.outputIsActive = True
-		self.imageColor = "RGB" # start color of image
 		self.frameRateIsShown = False
 		self.prev_frame_time = 0
 		# Start values:
-		self.START_BRIGHTNESS = 0
-		self.START_CONTRAST = 10
 		self.capSize = (640,480)
 
 		self.fps = 0
@@ -66,6 +65,7 @@ class MainPage(QtWidgets.QWidget):
 		self.customTensorFlowModel = None
 		#Models activation booleans:
 		self.usingHaarCascade_Cars = False # boolean to activate/deactivate Haar Cascade Cars
+		self.YoloIsActive = False # boolean to activate/deactivate Yolo
 		self.customModelIsActive = False # boolean to activate/deactivate custom model
 
 	# Sets start sizes for widgets in page
@@ -79,8 +79,10 @@ class MainPage(QtWidgets.QWidget):
 
 	# Load this page
 	def loadPage(self):
-		print("load p0")
-		self.cap = cv2.VideoCapture(0,cv2.CAP_DSHOW) # create video capture
+		if platform == "win32":
+			self.cap = cv2.VideoCapture(0,cv2.CAP_DSHOW) # create video fast with windows
+		else:
+			self.cap = cv2.VideoCapture(0) # create video capture for Raspberry and other OS:s
 		self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 3) # set buffer size
 		self.cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'))
 		self.cap.set(cv2.CAP_PROP_FPS, 30) # set fps
@@ -92,7 +94,6 @@ class MainPage(QtWidgets.QWidget):
 	# Close this page
 	def closePage(self):
 		if self.timer.isActive:
-			print("close p0")
 			# stop timer
 			self.timer.stop()
 			if self.cap is not None:
@@ -110,10 +111,6 @@ class MainPage(QtWidgets.QWidget):
 	def __setActions(self):
 		# Set action for start button
 		self.ui.Button_startCam.clicked.connect(self.__controlTimer)
-		# Set action for radioButtons
-		self.ui.radioButton_RGB.toggled.connect(lambda: self.__changeImageAppearance("RGB"))
-		self.ui.radioButton_Grayscale.toggled.connect(lambda: self.__changeImageAppearance("Grayscale"))
-		self.ui.radioButton_Edged.toggled.connect(lambda: self.__changeImageAppearance("Edged"))
 		# Set actions for radioButtons
 		self.ui.radioButton_showFrameRate.toggled.connect(self.__setFrameRateVisibility)
 		self.ui.radioButton_res_0.toggled.connect(lambda: self.__setResolution(160,120))
@@ -122,7 +119,6 @@ class MainPage(QtWidgets.QWidget):
 		self.ui.radioButton_res_3.toggled.connect(lambda: self.__setResolution(800,600))
 		self.ui.radioButton_res_4.toggled.connect(lambda: self.__setResolution(1280,720))
 		# Set action for reset button
-		self.ui.Button_reset.clicked.connect(self.__resetSettingValues)
 		self.ui.Button_HC_Cars_Reset.clicked.connect(lambda: self.__reset_HC_Values(0))
 		self.ui.Button_HC_LicencePlates_Reset.clicked.connect(lambda: self.__reset_HC_Values(1))
 
@@ -148,14 +144,6 @@ class MainPage(QtWidgets.QWidget):
 		if self.pix is not None:
 			self.w = self.ui.image_label.width()
 			self.h = self.ui.image_label.height()
-
-	# Sets all ui-objects to default values
-	def __resetSettingValues(self):
-		self.ui.Slider_brightness.setValue(self.START_BRIGHTNESS)
-		self.ui.Label_brightnessValue.setNum(self.START_CONTRAST)
-		self.ui.Slider_contrast.setValue(self.START_CONTRAST)
-		self.ui.Label_contrastValue.setNum(self.START_CONTRAST)
-		self.ui.radioButton_RGB.toggle()
 
 	# Sets the resolution of the webcam
 	def __setResolution(self,width,height):
@@ -183,54 +171,22 @@ class MainPage(QtWidgets.QWidget):
 		if not success:
 			self.__no_camera_available_popUp()
 			return
+		self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
+		self.height, self.width, self.channel = self.image.shape
+		self.qiFormat = QImage.Format_RGB888
 
-		self.__setImageManipulation() # sets the chosen image manipulation
-		self.__setContrastAndBrightness() # sets the chosen contrast and brightness
 		self.__setObjectDetectionType() # sets the chosen object detection type
 
 		self.__convertToQImage() # convert to QImage that can be used on the QLabel
 		self.__resize_camFrame() # resize the image
 		self.ui.image_label.setPixmap(self.pix.scaled(self.w, self.h,QtCore.Qt.KeepAspectRatio)) # set image to image label
 
-	# Sets the chosen image manipulation
-	def __setImageManipulation(self):
-		# convert image to RGB format
-		if self.imageColor == "RGB":
-			self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
-			self.height, self.width, self.channel = self.image.shape
-			self.qiFormat = QImage.Format_RGB888
-		# convert image to Grayscale format
-		elif self.imageColor == "Grayscale":
-			self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
-			self.image = cv2.cvtColor(self.image,cv2.COLOR_BGR2GRAY)
-			self.height, self.width = self.image.shape
-			self.channel = 1
-			self.qiFormat = QImage.Format_Grayscale8
-		# convert image to Edged format
-		elif self.imageColor == "Edged":
-			self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
-			gray = cv2.cvtColor(self.image,cv2.COLOR_BGR2GRAY)
-			blur = cv2.GaussianBlur(gray,(5,5),0)
-			edged = cv2.Canny(blur,35,125)
-			self.image = edged
-			self.height, self.width = self.image.shape
-			self.channel = 1
-			self.qiFormat = QImage.Format_Grayscale8
-
-	# Sets the chosen contrast and brightness on the image
-	def __setContrastAndBrightness(self):
-		# set contrast
-		contrast = self.ui.Slider_contrast.value()/10
-		self.ui.Label_contrastValue.setNum(contrast)
-		# set brightness
-		brightness = self.ui.Slider_brightness.value()
-		self.ui.Label_brightnessValue.setNum(brightness)
-		self.image = cv2.addWeighted(self.image,contrast,np.zeros(self.image.shape, self.image.dtype),0,brightness)
-
 	# Sets the chosen object detection type
 	def __setObjectDetectionType(self):
 		if self.usingHaarCascade_Cars:
 			self.HaarCascade_Cars_Model.findCars(self.image)
+		if self.YoloIsActive:
+			self.Yolo_model.findObjects(self.image)
 		if self.customModelIsActive:
 			self.customTensorFlowModel.findObject(self.image)
 		if self.frameRateIsShown:
@@ -250,10 +206,6 @@ class MainPage(QtWidgets.QWidget):
 	def __saveImages(self, img, amount):
 		for i in range(amount):
 			cv2.imwrite("image-" + str(i) + ".jpg", img)
-
-	# Function to change the image appearance
-	def __changeImageAppearance(self, appearance):
-			self.imageColor = appearance
 
 	# Function that displays the frame rate
 	def __showFrameRate(self):
@@ -387,6 +339,16 @@ class MainPage(QtWidgets.QWidget):
 			self.ui.label_HC_LicencePlates_MinSize.setNum(self.HaarCascade_Cars_Model.minSize_def)
 
 	"""Haar Cascade detection END"""
+
+	"""YOLO detection START"""
+	def activateYOLO(self):
+		if self.YoloIsActive:
+			self.YoloIsActive = False
+		else:
+			self.Yolo_model = Yolo_Model()
+			self.YoloIsActive = True
+
+	"""YOLO detection END"""
 
 	""" Custom TensorFlow Model START"""
 	# Activates the custom tensorFlow model

@@ -4,6 +4,7 @@ from PyQt5.QtWidgets import QApplication
 from GUI.ui_loadingWindow import *
 from dialogMenu import *
 from pathlib import Path
+from sys import platform
 
 # Author: Philip
 # Reviewed by: Andreas
@@ -17,8 +18,6 @@ applicationWindow = None
 """
 LoadingWindow is class that handles the loading window that opens the program. 
 It starts the loading window, imports modules used by the application, checks if calibration is needed and boots up the main application.
-OBS! IF YOU ARE ON A RASPBERRY PI, YOU NEED TO REMOVE cv2.CAP_DSHOW in mainPage row 85! 
-OBS! IF YOU WANT TO START WITH THE LOADING SCREEN CHANGE timer start time TO 100 in loadingwindow row 42.
 """
 class LoadingWindow(QtWidgets.QMainWindow):
     def __init__(self):
@@ -46,7 +45,7 @@ class LoadingWindow(QtWidgets.QMainWindow):
         self.calibrationIsNeeded = False # boolean for checking if calibration is needed
         self.show()
     
-    # Funktion that loops and shows the progress of the imports
+    # Function that loops and shows the progress of the imports
     def __progress(self):
         global counter,increments
         self.ui.progressBar.setValue(int(counter))
@@ -66,9 +65,9 @@ class LoadingWindow(QtWidgets.QMainWindow):
     def __importModules(self):
         global applicationWindow,increments
         self.ui.Label_information.setText("Importing modules...")
-        increments = 0.5
+        increments = 0.2
         from application import MainWindow as applicationWindow
-        increments = 3.5
+        increments = 2.5
         self.ui.Label_information.setText("Checking if calibration is needed...")
         if not Path("camera_info.ini").is_file():
             self.calibrationIsNeeded = True

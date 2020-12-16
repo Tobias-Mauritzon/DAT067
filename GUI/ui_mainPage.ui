@@ -558,9 +558,9 @@ QFrame{
                      <property name="geometry">
                       <rect>
                        <x>0</x>
-                       <y>-61</y>
-                       <width>532</width>
-                       <height>609</height>
+                       <y>0</y>
+                       <width>538</width>
+                       <height>548</height>
                       </rect>
                      </property>
                      <property name="sizePolicy">
@@ -612,257 +612,6 @@ QFrame{
                          <property name="bottomMargin">
                           <number>0</number>
                          </property>
-                         <item>
-                          <widget class="QGroupBox" name="groupBox_3">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                           <property name="minimumSize">
-                            <size>
-                             <width>0</width>
-                             <height>0</height>
-                            </size>
-                           </property>
-                           <property name="maximumSize">
-                            <size>
-                             <width>16777215</width>
-                             <height>16777215</height>
-                            </size>
-                           </property>
-                           <property name="font">
-                            <font>
-                             <pointsize>10</pointsize>
-                            </font>
-                           </property>
-                           <property name="autoFillBackground">
-                            <bool>false</bool>
-                           </property>
-                           <property name="styleSheet">
-                            <string notr="true"/>
-                           </property>
-                           <property name="title">
-                            <string>Brightness</string>
-                           </property>
-                           <property name="alignment">
-                            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-                           </property>
-                           <property name="flat">
-                            <bool>false</bool>
-                           </property>
-                           <property name="checkable">
-                            <bool>false</bool>
-                           </property>
-                           <layout class="QVBoxLayout" name="verticalLayout_7">
-                            <property name="spacing">
-                             <number>15</number>
-                            </property>
-                            <property name="sizeConstraint">
-                             <enum>QLayout::SetDefaultConstraint</enum>
-                            </property>
-                            <property name="leftMargin">
-                             <number>9</number>
-                            </property>
-                            <property name="topMargin">
-                             <number>20</number>
-                            </property>
-                            <item>
-                             <widget class="QFrame" name="frame_3">
-                              <property name="layoutDirection">
-                               <enum>Qt::RightToLeft</enum>
-                              </property>
-                              <property name="frameShape">
-                               <enum>QFrame::StyledPanel</enum>
-                              </property>
-                              <property name="frameShadow">
-                               <enum>QFrame::Raised</enum>
-                              </property>
-                              <layout class="QFormLayout" name="formLayout_2">
-                               <item row="1" column="0">
-                                <widget class="QLabel" name="Label_brightnessValue">
-                                 <property name="styleSheet">
-                                  <string notr="true">color: white;</string>
-                                 </property>
-                                 <property name="text">
-                                  <string>0</string>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item row="1" column="1">
-                                <widget class="QSlider" name="Slider_brightness">
-                                 <property name="layoutDirection">
-                                  <enum>Qt::LeftToRight</enum>
-                                 </property>
-                                 <property name="styleSheet">
-                                  <string notr="true"/>
-                                 </property>
-                                 <property name="minimum">
-                                  <number>-255</number>
-                                 </property>
-                                 <property name="maximum">
-                                  <number>255</number>
-                                 </property>
-                                 <property name="pageStep">
-                                  <number>1</number>
-                                 </property>
-                                 <property name="value">
-                                  <number>0</number>
-                                 </property>
-                                 <property name="sliderPosition">
-                                  <number>0</number>
-                                 </property>
-                                 <property name="orientation">
-                                  <enum>Qt::Horizontal</enum>
-                                 </property>
-                                 <property name="invertedAppearance">
-                                  <bool>false</bool>
-                                 </property>
-                                 <property name="invertedControls">
-                                  <bool>false</bool>
-                                 </property>
-                                 <property name="tickPosition">
-                                  <enum>QSlider::NoTicks</enum>
-                                 </property>
-                                 <property name="tickInterval">
-                                  <number>1</number>
-                                 </property>
-                                </widget>
-                               </item>
-                              </layout>
-                             </widget>
-                            </item>
-                           </layout>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QGroupBox" name="groupBox_4">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                           <property name="minimumSize">
-                            <size>
-                             <width>0</width>
-                             <height>0</height>
-                            </size>
-                           </property>
-                           <property name="maximumSize">
-                            <size>
-                             <width>16777215</width>
-                             <height>16777215</height>
-                            </size>
-                           </property>
-                           <property name="font">
-                            <font>
-                             <pointsize>10</pointsize>
-                            </font>
-                           </property>
-                           <property name="autoFillBackground">
-                            <bool>false</bool>
-                           </property>
-                           <property name="styleSheet">
-                            <string notr="true"/>
-                           </property>
-                           <property name="title">
-                            <string>Contrast</string>
-                           </property>
-                           <property name="alignment">
-                            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-                           </property>
-                           <property name="flat">
-                            <bool>false</bool>
-                           </property>
-                           <property name="checkable">
-                            <bool>false</bool>
-                           </property>
-                           <layout class="QVBoxLayout" name="verticalLayout_8">
-                            <property name="spacing">
-                             <number>15</number>
-                            </property>
-                            <property name="sizeConstraint">
-                             <enum>QLayout::SetDefaultConstraint</enum>
-                            </property>
-                            <property name="leftMargin">
-                             <number>9</number>
-                            </property>
-                            <property name="topMargin">
-                             <number>20</number>
-                            </property>
-                            <item>
-                             <widget class="QFrame" name="frame_4">
-                              <property name="layoutDirection">
-                               <enum>Qt::RightToLeft</enum>
-                              </property>
-                              <property name="frameShape">
-                               <enum>QFrame::StyledPanel</enum>
-                              </property>
-                              <property name="frameShadow">
-                               <enum>QFrame::Raised</enum>
-                              </property>
-                              <layout class="QFormLayout" name="formLayout_3">
-                               <item row="1" column="0">
-                                <widget class="QLabel" name="Label_contrastValue">
-                                 <property name="styleSheet">
-                                  <string notr="true">color: white;</string>
-                                 </property>
-                                 <property name="text">
-                                  <string>1</string>
-                                 </property>
-                                </widget>
-                               </item>
-                               <item row="1" column="1">
-                                <widget class="QSlider" name="Slider_contrast">
-                                 <property name="layoutDirection">
-                                  <enum>Qt::LeftToRight</enum>
-                                 </property>
-                                 <property name="styleSheet">
-                                  <string notr="true"/>
-                                 </property>
-                                 <property name="minimum">
-                                  <number>0</number>
-                                 </property>
-                                 <property name="maximum">
-                                  <number>100</number>
-                                 </property>
-                                 <property name="pageStep">
-                                  <number>1</number>
-                                 </property>
-                                 <property name="value">
-                                  <number>10</number>
-                                 </property>
-                                 <property name="sliderPosition">
-                                  <number>10</number>
-                                 </property>
-                                 <property name="tracking">
-                                  <bool>true</bool>
-                                 </property>
-                                 <property name="orientation">
-                                  <enum>Qt::Horizontal</enum>
-                                 </property>
-                                 <property name="invertedAppearance">
-                                  <bool>false</bool>
-                                 </property>
-                                 <property name="invertedControls">
-                                  <bool>false</bool>
-                                 </property>
-                                 <property name="tickPosition">
-                                  <enum>QSlider::NoTicks</enum>
-                                 </property>
-                                 <property name="tickInterval">
-                                  <number>1</number>
-                                 </property>
-                                </widget>
-                               </item>
-                              </layout>
-                             </widget>
-                            </item>
-                           </layout>
-                          </widget>
-                         </item>
                          <item>
                           <widget class="QGroupBox" name="groupBox_5">
                            <property name="font">
@@ -967,136 +716,6 @@ QFrame{
                              </widget>
                             </item>
                            </layout>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QGroupBox" name="groupBox_2">
-                           <property name="sizePolicy">
-                            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                             <horstretch>0</horstretch>
-                             <verstretch>0</verstretch>
-                            </sizepolicy>
-                           </property>
-                           <property name="minimumSize">
-                            <size>
-                             <width>0</width>
-                             <height>0</height>
-                            </size>
-                           </property>
-                           <property name="maximumSize">
-                            <size>
-                             <width>16777215</width>
-                             <height>16777215</height>
-                            </size>
-                           </property>
-                           <property name="font">
-                            <font>
-                             <pointsize>10</pointsize>
-                            </font>
-                           </property>
-                           <property name="autoFillBackground">
-                            <bool>false</bool>
-                           </property>
-                           <property name="styleSheet">
-                            <string notr="true"/>
-                           </property>
-                           <property name="title">
-                            <string>Image</string>
-                           </property>
-                           <property name="alignment">
-                            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-                           </property>
-                           <property name="flat">
-                            <bool>false</bool>
-                           </property>
-                           <property name="checkable">
-                            <bool>false</bool>
-                           </property>
-                           <layout class="QVBoxLayout" name="verticalLayout_6">
-                            <property name="spacing">
-                             <number>15</number>
-                            </property>
-                            <property name="sizeConstraint">
-                             <enum>QLayout::SetDefaultConstraint</enum>
-                            </property>
-                            <property name="leftMargin">
-                             <number>9</number>
-                            </property>
-                            <property name="topMargin">
-                             <number>20</number>
-                            </property>
-                            <item>
-                             <widget class="QRadioButton" name="radioButton_RGB">
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="styleSheet">
-                               <string notr="true"/>
-                              </property>
-                              <property name="text">
-                               <string>RGB</string>
-                              </property>
-                              <property name="checked">
-                               <bool>true</bool>
-                              </property>
-                             </widget>
-                            </item>
-                            <item>
-                             <widget class="QRadioButton" name="radioButton_Grayscale">
-                              <property name="sizePolicy">
-                               <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
-                                <horstretch>0</horstretch>
-                                <verstretch>0</verstretch>
-                               </sizepolicy>
-                              </property>
-                              <property name="styleSheet">
-                               <string notr="true"/>
-                              </property>
-                              <property name="text">
-                               <string>Grayscale</string>
-                              </property>
-                             </widget>
-                            </item>
-                            <item>
-                             <widget class="QRadioButton" name="radioButton_Edged">
-                              <property name="styleSheet">
-                               <string notr="true"/>
-                              </property>
-                              <property name="text">
-                               <string>Edged</string>
-                              </property>
-                             </widget>
-                            </item>
-                           </layout>
-                          </widget>
-                         </item>
-                         <item>
-                          <widget class="QPushButton" name="Button_reset">
-                           <property name="font">
-                            <font>
-                             <family>Rockwell</family>
-                             <pointsize>12</pointsize>
-                            </font>
-                           </property>
-                           <property name="styleSheet">
-                            <string notr="true">/*Buttons*/
-
-QPushButton{
-	background-color: white;
-	color: black;
-	border-radius: 10;
-}
-
-QPushButton:pressed {	
-	background-color: #bcbcbc;
-}</string>
-                           </property>
-                           <property name="text">
-                            <string>Reset</string>
-                           </property>
                           </widget>
                          </item>
                         </layout>
@@ -1246,7 +865,7 @@ QScrollBar::sub-line:vertical {
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>547</width>
+                       <width>538</width>
                        <height>548</height>
                       </rect>
                      </property>
@@ -1434,15 +1053,15 @@ QFrame{
 }</string>
                         </property>
                         <property name="currentIndex">
-                         <number>0</number>
+                         <number>2</number>
                         </property>
                         <widget class="QWidget" name="page">
                          <property name="geometry">
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>514</width>
-                           <height>562</height>
+                           <width>505</width>
+                           <height>534</height>
                           </rect>
                          </property>
                          <attribute name="label">
@@ -1963,20 +1582,23 @@ QPushButton:pressed {
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>529</width>
-                           <height>404</height>
+                           <width>100</width>
+                           <height>30</height>
                           </rect>
                          </property>
                          <attribute name="label">
                           <string>Yolo</string>
                          </attribute>
                         </widget>
-                        <widget class="QWidget" name="page_3">
-                         <attribute name="label">
-                          <string>SSD</string>
-                         </attribute>
-                        </widget>
                         <widget class="QWidget" name="page_4">
+                         <property name="geometry">
+                          <rect>
+                           <x>0</x>
+                           <y>0</y>
+                           <width>520</width>
+                           <height>440</height>
+                          </rect>
+                         </property>
                          <attribute name="label">
                           <string>Custom Model</string>
                          </attribute>
