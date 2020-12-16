@@ -52,12 +52,9 @@ class MainPage(QtWidgets.QWidget):
 		self.sidePanelIsActive = True
 		self.settingsIsActive = True
 		self.outputIsActive = True
-		self.imageColor = "RGB" # start color of image
 		self.frameRateIsShown = False
 		self.prev_frame_time = 0
 		# Start values:
-		self.START_BRIGHTNESS = 0
-		self.START_CONTRAST = 10
 		self.capSize = (640,480)
 
 		self.fps = 0
@@ -114,10 +111,6 @@ class MainPage(QtWidgets.QWidget):
 	def __setActions(self):
 		# Set action for start button
 		self.ui.Button_startCam.clicked.connect(self.__controlTimer)
-		# Set action for radioButtons
-		self.ui.radioButton_RGB.toggled.connect(lambda: self.__changeImageAppearance("RGB"))
-		self.ui.radioButton_Grayscale.toggled.connect(lambda: self.__changeImageAppearance("Grayscale"))
-		self.ui.radioButton_Edged.toggled.connect(lambda: self.__changeImageAppearance("Edged"))
 		# Set actions for radioButtons
 		self.ui.radioButton_showFrameRate.toggled.connect(self.__setFrameRateVisibility)
 		self.ui.radioButton_res_0.toggled.connect(lambda: self.__setResolution(160,120))
@@ -126,7 +119,6 @@ class MainPage(QtWidgets.QWidget):
 		self.ui.radioButton_res_3.toggled.connect(lambda: self.__setResolution(800,600))
 		self.ui.radioButton_res_4.toggled.connect(lambda: self.__setResolution(1280,720))
 		# Set action for reset button
-		self.ui.Button_reset.clicked.connect(self.__resetSettingValues)
 		self.ui.Button_HC_Cars_Reset.clicked.connect(lambda: self.__reset_HC_Values(0))
 		self.ui.Button_HC_LicencePlates_Reset.clicked.connect(lambda: self.__reset_HC_Values(1))
 
@@ -152,14 +144,6 @@ class MainPage(QtWidgets.QWidget):
 		if self.pix is not None:
 			self.w = self.ui.image_label.width()
 			self.h = self.ui.image_label.height()
-
-	# Sets all ui-objects to default values
-	def __resetSettingValues(self):
-		self.ui.Slider_brightness.setValue(self.START_BRIGHTNESS)
-		self.ui.Label_brightnessValue.setNum(self.START_CONTRAST)
-		self.ui.Slider_contrast.setValue(self.START_CONTRAST)
-		self.ui.Label_contrastValue.setNum(self.START_CONTRAST)
-		self.ui.radioButton_RGB.toggle()
 
 	# Sets the resolution of the webcam
 	def __setResolution(self,width,height):
@@ -187,49 +171,15 @@ class MainPage(QtWidgets.QWidget):
 		if not success:
 			self.__no_camera_available_popUp()
 			return
+		self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
+		self.height, self.width, self.channel = self.image.shape
+		self.qiFormat = QImage.Format_RGB888
 
-		self.__setImageManipulation() # sets the chosen image manipulation
-		self.__setContrastAndBrightness() # sets the chosen contrast and brightness
 		self.__setObjectDetectionType() # sets the chosen object detection type
 
 		self.__convertToQImage() # convert to QImage that can be used on the QLabel
 		self.__resize_camFrame() # resize the image
 		self.ui.image_label.setPixmap(self.pix.scaled(self.w, self.h,QtCore.Qt.KeepAspectRatio)) # set image to image label
-
-	# Sets the chosen image manipulation
-	def __setImageManipulation(self):
-		# convert image to RGB format
-		if self.imageColor == "RGB":
-			self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
-			self.height, self.width, self.channel = self.image.shape
-			self.qiFormat = QImage.Format_RGB888
-		# convert image to Grayscale format
-		elif self.imageColor == "Grayscale":
-			self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
-			self.image = cv2.cvtColor(self.image,cv2.COLOR_BGR2GRAY)
-			self.height, self.width = self.image.shape
-			self.channel = 1
-			self.qiFormat = QImage.Format_Grayscale8
-		# convert image to Edged format
-		elif self.imageColor == "Edged":
-			self.image = cv2.cvtColor(self.image, cv2.COLOR_BGR2RGB)
-			gray = cv2.cvtColor(self.image,cv2.COLOR_BGR2GRAY)
-			blur = cv2.GaussianBlur(gray,(5,5),0)
-			edged = cv2.Canny(blur,35,125)
-			self.image = edged
-			self.height, self.width = self.image.shape
-			self.channel = 1
-			self.qiFormat = QImage.Format_Grayscale8
-
-	# Sets the chosen contrast and brightness on the image
-	def __setContrastAndBrightness(self):
-		# set contrast
-		contrast = self.ui.Slider_contrast.value()/10
-		self.ui.Label_contrastValue.setNum(contrast)
-		# set brightness
-		brightness = self.ui.Slider_brightness.value()
-		self.ui.Label_brightnessValue.setNum(brightness)
-		self.image = cv2.addWeighted(self.image,contrast,np.zeros(self.image.shape, self.image.dtype),0,brightness)
 
 	# Sets the chosen object detection type
 	def __setObjectDetectionType(self):
@@ -256,10 +206,6 @@ class MainPage(QtWidgets.QWidget):
 	def __saveImages(self, img, amount):
 		for i in range(amount):
 			cv2.imwrite("image-" + str(i) + ".jpg", img)
-
-	# Function to change the image appearance
-	def __changeImageAppearance(self, appearance):
-			self.imageColor = appearance
 
 	# Function that displays the frame rate
 	def __showFrameRate(self):
