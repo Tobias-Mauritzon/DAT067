@@ -10,8 +10,14 @@ from pathlib import Path
 # Date: 2020-12-05
 
 # Author: Joachim Antfolk
-# Reviewed by:
 # Date: 2020-12-15
+# Reviewed by: William Jönsson
+# Reviewed on: 2020-12-18
+
+# Author: William Jönsson
+# Date: 2020-12-18
+# Reviewed by:
+# Reviewed on:
 
 """This class loads a specific pretrained model and uses it to find an object with the function findObject"""
 class TensorFlow_Custom_Model():
@@ -38,6 +44,10 @@ class TensorFlow_Custom_Model():
             self.interpreter.resize_tensor_input(self.input_det[0]['index'],(1,128,128,3))
             self.interpreter.resize_tensor_input(self.output_det[0]['index'],(4,3))
             self.interpreter.allocate_tensors()
+        
+        self.carEstimator = None
+        if Path("camera_info.ini").is_file():
+            self.setDistanceEtimators()
 
     def __resizeImage(self,image):
         resizedImage = None
@@ -53,10 +63,6 @@ class TensorFlow_Custom_Model():
             resizedImage = resizedImage.reshape([1, IMG_SIZE, IMG_SIZE, 3])
 
         return resizedImage
-
-        self.carEstimator = None
-        if Path("camera_info.ini").is_file():
-            self.setDistanceEtimators()
 
     # Finds where the object is and draws a rectangle
     def findObject(self, image):
@@ -116,6 +122,8 @@ class TensorFlow_Custom_Model():
             y = Y1 - 10 if Y1 - 10 > 10 else Y1 + 10
 
             if label == "Car" or label == "Dog" or label == "Cat":
+                if label == "Car":
+                    self.carFound = True
                 cv2.rectangle(image, (X1, Y1), (X2, Y2), (0, 255, 0), 2)
                 cv2.putText(image, label, (X1, y), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 255, 0), 2)
 
@@ -142,6 +150,8 @@ class TensorFlow_Custom_Model():
             Y2 = int(Y2 * h)
             # draw the predicted bounding box and class label on the image
             y = Y1 - 10 if Y1 - 10 > 10 else Y1 + 10
+            # distance estimation with label
+            self.carFound = True
             cv2.putText(image, "Car", (X1, y), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 255, 0), 2)
             cv2.rectangle(image, (X1, Y1), (X2, Y2), (0, 255, 0), 2)
 
@@ -173,12 +183,15 @@ class TensorFlow_Custom_Model():
             # draw the predicted bounding box and class label on the image
             y = Y1 - 10 if Y1 - 10 > 10 else Y1 + 10
             if label == "Car":
-                if self.carEstimator is not None:
-                    distance = self.carEstimator.estimate_distance(X2)
-                    cv2.rectangle(image, (X1, Y2), (X2, Y2 + 40), (0, 255, 0), -1)
-                    cv2.putText(image, distance, (X1 + 10, Y2 + 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255))
+                self.carFound = True
                 cv2.putText(image, label, (X1, y), cv2.FONT_HERSHEY_SIMPLEX,0.65, (0, 255, 0), 2)
                 cv2.rectangle(image, (X1, Y1), (X2, Y2),(0, 255, 0), 2)
+        
+        if self.carFound is True and self.carEstimator is not None:
+            distance = self.carEstimator.estimate_distance(X2)
+            cv2.rectangle(image, (X1, Y2), (X2, Y2 + 40), (0, 255, 0), -1)
+            cv2.putText(image, distance, (X1 + 10, Y2 + 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255))
+                
 
     def setDistanceEtimators(self):
         # sets width of obejct to measure distance to. //1.8 for car //0.52 for num.plate //0.15 for face
