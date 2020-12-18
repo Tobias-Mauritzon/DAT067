@@ -66,7 +66,7 @@ class TensorFlow_Custom_Model():
 
     # Finds where the object is and draws a rectangle
     def findObject(self, image):
-
+        self.carFound = False
         if self.modelType == 0: # TF car
             resizedImage = self.__resizeImage(image)
             prediction = self.my_model.predict(resizedImage)[0]
@@ -89,10 +89,8 @@ class TensorFlow_Custom_Model():
             # draw the predicted bounding box and class label on the image
             y = Y1 - 10 if Y1 - 10 > 10 else Y1 + 10
 
-            if self.carEstimator is not None:
-                distance = self.carEstimator.estimate_distance(X2)
-                cv2.rectangle(image, (X1, Y2), (X2, Y2 + 40), (0, 255, 0), -1)
-                cv2.putText(image, distance, (X1 + 10, Y2 + 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255))
+            self.carFound = True
+
             cv2.putText(image, "Car", (X1, y), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 255, 0), 2)
             cv2.rectangle(image, (X1, Y1), (X2, Y2), (0, 255, 0), 2)
             
