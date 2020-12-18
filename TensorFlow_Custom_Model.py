@@ -2,10 +2,16 @@ import tensorflow as tf
 from tensorflow.keras.preprocessing.image import img_to_array
 import cv2
 import numpy as np
+from DistanceEstimator import DistanceEstimator
+from pathlib import Path
 
 # Author: Philip
 # Reviewed by: 
 # Date: 2020-12-05
+
+# Author: Joachim Antfolk
+# Reviewed by:
+# Date: 2020-12-15
 
 """This class loads a specific pretrained model and uses it to find an object with the function findObject"""
 class TensorFlow_Custom_Model():
@@ -48,6 +54,10 @@ class TensorFlow_Custom_Model():
 
         return resizedImage
 
+        self.carEstimator = None
+        if Path("camera_info.ini").is_file():
+            self.setDistanceEtimators()
+
     # Finds where the object is and draws a rectangle
     def findObject(self, image):
 
@@ -72,6 +82,11 @@ class TensorFlow_Custom_Model():
             Y2 = int(Y2 * h)
             # draw the predicted bounding box and class label on the image
             y = Y1 - 10 if Y1 - 10 > 10 else Y1 + 10
+
+            if self.carEstimator is not None:
+                distance = self.carEstimator.estimate_distance(X2)
+                cv2.rectangle(image, (X1, Y2), (X2, Y2 + 40), (0, 255, 0), -1)
+                cv2.putText(image, distance, (X1 + 10, Y2 + 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255))
             cv2.putText(image, "Car", (X1, y), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 255, 0), 2)
             cv2.rectangle(image, (X1, Y1), (X2, Y2), (0, 255, 0), 2)
             
@@ -158,5 +173,13 @@ class TensorFlow_Custom_Model():
             # draw the predicted bounding box and class label on the image
             y = Y1 - 10 if Y1 - 10 > 10 else Y1 + 10
             if label == "Car":
+                if self.carEstimator is not None:
+                    distance = self.carEstimator.estimate_distance(X2)
+                    cv2.rectangle(image, (X1, Y2), (X2, Y2 + 40), (0, 255, 0), -1)
+                    cv2.putText(image, distance, (X1 + 10, Y2 + 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255))
                 cv2.putText(image, label, (X1, y), cv2.FONT_HERSHEY_SIMPLEX,0.65, (0, 255, 0), 2)
                 cv2.rectangle(image, (X1, Y1), (X2, Y2),(0, 255, 0), 2)
+
+    def setDistanceEtimators(self):
+        # sets width of obejct to measure distance to. //1.8 for car //0.52 for num.plate //0.15 for face
+        self.carEstimator = DistanceEstimator(1.8)

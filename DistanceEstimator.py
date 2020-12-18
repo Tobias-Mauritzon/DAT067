@@ -4,6 +4,12 @@
 #Reviewed on: 2020-12-04
 """
 
+"""
+#Author: Joachim Antfolk
+#Reviewed by: 
+#Reviewed on: 2020-12-15
+"""
+
 from cv2 import cv2
 import numpy as numpy
 from typing import Tuple
@@ -18,8 +24,12 @@ class DistanceEstimator:
         """
         Initiates DistanceEstimator object with focal length data and the real dimension of object. 
         """
-        self.focal = self.__read_from_file()[1]
         self.real_size = real_size
+
+        try:
+            self.focal = self.__read_from_file()[1]
+        except Exception:
+            self.focal = 500 #Placeholder
 
     def estimate_distance(self, dimension: int) -> str:
         """
