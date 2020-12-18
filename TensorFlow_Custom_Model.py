@@ -15,25 +15,32 @@ class TensorFlow_Custom_Model():
             self.my_model = tf.keras.models.load_model("pretrained_car_localization") # only box (will always show box)
         elif self.modelType == 1:
             self.my_model = tf.keras.models.load_model("pretrained_localization_model") # with label and box
-        elif self.modelType == 2: # Tensorflow Lite
+        elif self.modelType == 2:
+            print("TF_LITE TEST!")
+            MODELPATH = "Cl_tflite"
+            self.interpreter = tf.lite.Interpreter(model_path=MODELPATH)
+            self.input_det = self.interpreter.get_input_details()
+            self.output_det = self.interpreter.get_output_details()
+            self.interpreter.resize_tensor_input(self.input_det[0]['index'],(1,224,224,3))
+            self.interpreter.resize_tensor_input(self.output_det[0]['index'],(4,3))
+            self.interpreter.allocate_tensors()
+        elif self.modelType == 3: # Tensorflow Lite multiple 
             MODELPATH = "Cl_tflite_OI"
             self.interpreter = tf.lite.Interpreter(model_path=MODELPATH)
             self.input_det = self.interpreter.get_input_details()
             self.output_det = self.interpreter.get_output_details()
-
             self.interpreter.resize_tensor_input(self.input_det[0]['index'],(1,128,128,3))
             self.interpreter.resize_tensor_input(self.output_det[0]['index'],(4,3))
-
             self.interpreter.allocate_tensors()
 
     def __resizeImage(self,image):
         resizedImage = None
-        if self.modelType == 0 or self.modelType == 1:
+        if self.modelType == 0 or self.modelType == 1 or self.modelType == 2:
             IMG_SIZE = 224
             resizedImage = cv2.resize(image, (IMG_SIZE, IMG_SIZE))
             resizedImage = img_to_array(resizedImage) / 255.0
-            resizedImage = np.expand_dims(resizedImage, axis=0)
-        elif self.modelType == 2:
+            resizedImage = resizedImage.reshape([1, IMG_SIZE, IMG_SIZE, 3])
+        elif self.modelType == 3:
             IMG_SIZE = 128
             resizedImage = cv2.resize(image, (IMG_SIZE, IMG_SIZE))
             resizedImage = img_to_array(resizedImage) / 255.0
@@ -44,7 +51,7 @@ class TensorFlow_Custom_Model():
     # Finds where the object is and draws a rectangle
     def findObject(self, image):
 
-        if self.modelType == 0:
+        if self.modelType == 0: # TF car
             resizedImage = self.__resizeImage(image)
             prediction = self.my_model.predict(resizedImage)[0]
             (x1, y1, x2, y2) = prediction
@@ -68,7 +75,7 @@ class TensorFlow_Custom_Model():
             cv2.putText(image, "Car", (X1, y), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 255, 0), 2)
             cv2.rectangle(image, (X1, Y1), (X2, Y2), (0, 255, 0), 2)
             
-        elif self.modelType == 1:
+        elif self.modelType == 1: # TF Car and more
             resizedImage = self.__resizeImage(image)
             prediction = self.my_model.predict(resizedImage)
             (boxPreds, labelPreds) = prediction    
@@ -97,8 +104,33 @@ class TensorFlow_Custom_Model():
                 cv2.rectangle(image, (X1, Y1), (X2, Y2), (0, 255, 0), 2)
                 cv2.putText(image, label, (X1, y), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 255, 0), 2)
 
-        elif self.modelType == 2:
-            
+        elif self.modelType == 2: # TF Lite Car
+            resizedImage = self.__resizeImage(image)
+            img_np = np.array(resizedImage, dtype=np.float32)
+            self.interpreter.set_tensor(self.input_det[0]['index'], img_np)
+            self.interpreter.invoke()
+            predictions = self.interpreter.get_tensor(self.output_det[0]['index'])
+            X1 = predictions[0][0]
+            Y1 = predictions[0][1]
+            X2 = predictions[0][2]
+            Y2 = predictions[0][3]
+
+            # determine the class label with the largest predicted
+            # probability
+
+            (h, w) = image.shape[:2]
+            # scale the predicted bounding box coordinates based on the image
+            # dimensions
+            X1 = int(X1 * w)
+            Y1 = int(Y1 * h)
+            X2 = int(X2 * w)
+            Y2 = int(Y2 * h)
+            # draw the predicted bounding box and class label on the image
+            y = Y1 - 10 if Y1 - 10 > 10 else Y1 + 10
+            cv2.putText(image, "Car", (X1, y), cv2.FONT_HERSHEY_SIMPLEX, 0.65, (0, 255, 0), 2)
+            cv2.rectangle(image, (X1, Y1), (X2, Y2), (0, 255, 0), 2)
+
+        elif self.modelType == 3: # TF Lite Car and more
             CATEGORIES = ["Car", "Dog", "Cat"]
             resizedImage = self.__resizeImage(image)
             img_np = np.array(resizedImage, dtype=np.float32)

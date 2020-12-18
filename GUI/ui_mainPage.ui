@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1329</width>
-    <height>745</height>
+    <width>841</width>
+    <height>638</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -748,8 +748,8 @@ QFrame{
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>611</width>
-                       <height>526</height>
+                       <width>386</width>
+                       <height>440</height>
                       </rect>
                      </property>
                      <property name="sizePolicy">
@@ -1153,8 +1153,8 @@ QScrollBar::sub-line:vertical {
                       <rect>
                        <x>0</x>
                        <y>0</y>
-                       <width>85</width>
-                       <height>169</height>
+                       <width>386</width>
+                       <height>465</height>
                       </rect>
                      </property>
                      <property name="sizePolicy">
@@ -1371,8 +1371,8 @@ QFrame{
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>178</width>
-                           <height>543</height>
+                           <width>371</width>
+                           <height>567</height>
                           </rect>
                          </property>
                          <attribute name="label">

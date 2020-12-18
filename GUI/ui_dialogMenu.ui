@@ -282,8 +282,8 @@ border-radius: 7px;
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>731</width>
-              <height>540</height>
+              <width>746</width>
+              <height>351</height>
              </rect>
             </property>
             <property name="sizePolicy">
@@ -371,27 +371,7 @@ border-radius: 7px;
                    <string notr="true">color: white;</string>
                   </property>
                   <property name="text">
-                   <string>TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT Prerequisites:
-- A web-cam must be plugged in to your computer, if not, a popup window will be displayed telling the user to plug in a web-cam.
-
-MenuBar:
-- In the menuBar, located at the top of the window, one can change views, navigate between calibration and the main screen and choose different object detections.
-
-Video capture:
-- To start the video-stream, press the button &quot;Start&quot; located at the bottom of the window.
-- To stop the video-stream, press the button &quot;Stop&quot; located at the bottom of the window.
-
-Handling views:
-- One can simply toggle views by clicking the &quot;Views&quot; tab in the top-menubar.
-- Each view can be dragged to suit the users needs by hovering the mouse between the views.
-- It is also possible to close views by dragging them.
-
-Settings menu:
-- In the settings menu, the user can change the brightness, contrast, resolution. 
-  It is also possible to change to RGB, grayscale and edged video output.
-
-Output menu:
-- NOT IMPLEMENTED YET</string>
+                   <string/>
                   </property>
                   <property name="textFormat">
                    <enum>Qt::AutoText</enum>

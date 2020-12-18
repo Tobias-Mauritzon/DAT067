@@ -71,6 +71,7 @@ class MainWindow(QtWidgets.QMainWindow):
 		self.ui.action_CM_TF_Cars.triggered.connect(lambda: self.page_0.activateCustomModel(0))
 		self.ui.action_CM_TF_Cars_etc.triggered.connect(lambda: self.page_0.activateCustomModel(1))
 		self.ui.action_CM_TF_Lite_Cars.triggered.connect(lambda: self.page_0.activateCustomModel(2))
+		self.ui.action_CM_TF_Lite_Cars_etc.triggered.connect(lambda: self.page_0.activateCustomModel(3))
 		"""Help"""
 		self.ui.action_HowToUse.triggered.connect(self.__showHowToUse)
 		self.ui.action_About.triggered.connect(self.__showAbout)
