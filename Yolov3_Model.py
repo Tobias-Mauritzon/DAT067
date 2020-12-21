@@ -1,5 +1,7 @@
 import cv2
 import numpy as np
+from DistanceEstimator import DistanceEstimator
+from pathlib import Path
 
 # Author: Philip
 # Reviewed by:
@@ -15,8 +17,16 @@ class Yolo_Model():
         self.nms_threshold = 0.2 # less means less boxes
         self.textColor = (0, 255, 0)
         self.boxColor = (0, 255, 0)
+        self.distanceTextColor = (0,0,0)
         self.__loadObjectNames()
+        self.carEstimator = None
+        self.__distanceSetup()
         self.__readNet()
+
+    # Check if camera info file is available
+    def __distanceSetup(self):
+        if Path("camera_info.ini").is_file():
+            self.setDistanceEtimators()
 
     # Read file with object names
     def __loadObjectNames(self):
@@ -60,11 +70,19 @@ class Yolo_Model():
             i = i[0]
             box = boundingBox[i]
             x,y,w,h = box[0],box[1],box[2],box[3]
+            if self.carEstimator is not None:
+                distance = self.carEstimator.estimate_distance(w)
+                cv2.putText(image, distance, (x + 10, y + h + 30), cv2.FONT_HERSHEY_SIMPLEX, 0.6, self.textColor, 2)
+
             cv2.rectangle(image,(x,y),(x+w,y+h),self.boxColor,2)
             cv2.putText(image,f'{self.objectNames[classIds[i]].upper()} {int(confidenceValues[i]*100)}%', (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, self.textColor, 2)
     
     def setConfidenceTreshhold(self,number):
         self.CONFTRESHOLD = number/100
+
+    def setDistanceEtimators(self):
+        # sets width of obejct to measure distance to. //1.8 for car //0.52 for num.plate //0.15 for face
+        self.carEstimator = DistanceEstimator(1.8)
     
     def resetValues(self):
         self.CONFTRESHOLD = self.CONFTRESHOLD_def

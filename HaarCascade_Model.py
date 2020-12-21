@@ -70,7 +70,6 @@ class HaarCascade_Model():
 			#Calculate distance to car
 			if self.carEstimator is not None:
 				distance = self.carEstimator.estimate_distance(w)
-				cv2.rectangle(image, (x, end_cord_y), (end_cord_x, end_cord_y + 40), (self.carBorderColor), -1)
 
 			#Draws the rectangle around the object
 			objectRectangle = cv2.rectangle(image, (x, y), (end_cord_x, end_cord_y), self.carBorderColor, stroke)
@@ -103,7 +102,7 @@ class HaarCascade_Model():
 
 			if self.carEstimator is not None:
 				#Display the distance
-				cv2.putText(image, distance, (x + 10, end_cord_y + 30), font, 0.7, self.carFontColor)
+				cv2.putText(image, distance, (x + 10, end_cord_y + 30), font, 0.6, self.carFontColor, 2)
 
 
 

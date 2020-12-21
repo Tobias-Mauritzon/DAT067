@@ -147,8 +147,7 @@ class TensorFlow_Custom_Model():
 
         if self.carFound is True and self.carEstimator is not None:
             distance = self.carEstimator.estimate_distance(x2)
-            cv2.rectangle(image, (x1, y2), (x2, y2 + 40), self.boxColor, -1)
-            cv2.putText(image, distance, (x1 + 10, y2 + 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, self.distanceTextColor)
+            cv2.putText(image, distance, (x1 + 10, y2 + 30), cv2.FONT_HERSHEY_SIMPLEX, 0.65, self.distanceTextColor, 2)
             
     def setDistanceEtimators(self):
         # sets width of obejct to measure distance to. //1.8 for car //0.52 for num.plate //0.15 for face
