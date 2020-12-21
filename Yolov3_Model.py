@@ -10,8 +10,11 @@ class Yolo_Model():
     def __init__(self):
         self.ObjectsFile = 'Yolo_v3_tiny/coco.names'
         self.objectNames = []
-        self.CONFTRESHOLD = 0.5
+        self.CONFTRESHOLD_def = 0.5
+        self.CONFTRESHOLD = self.CONFTRESHOLD_def
         self.nms_threshold = 0.2 # less means less boxes
+        self.textColor = (0, 255, 0)
+        self.boxColor = (0, 255, 0)
         self.__loadObjectNames()
         self.__readNet()
 
@@ -57,9 +60,16 @@ class Yolo_Model():
             i = i[0]
             box = boundingBox[i]
             x,y,w,h = box[0],box[1],box[2],box[3]
-            cv2.rectangle(image,(x,y),(x+w,y+h),(255,0,255),2)
-            cv2.putText(image,f'{self.objectNames[classIds[i]].upper()} {int(confidenceValues[i]*100)}%', (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, (255,0,255), 2)
+            cv2.rectangle(image,(x,y),(x+w,y+h),self.boxColor,2)
+            cv2.putText(image,f'{self.objectNames[classIds[i]].upper()} {int(confidenceValues[i]*100)}%', (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, self.textColor, 2)
     
+    def setConfidenceTreshhold(self,number):
+        self.CONFTRESHOLD = number/100
+    
+    def resetValues(self):
+        self.CONFTRESHOLD = self.CONFTRESHOLD_def
+
+
     # Finds objects 
     def findObjects(self, image):
         self.__prepare(image)
@@ -68,10 +78,4 @@ class Yolo_Model():
         outputNames = [layerNames[i[0]-1] for i in self.net.getUnconnectedOutLayers()]
         outPuts = self.net.forward(outputNames)
         self.__find(outPuts,image)
-
-        
-"""THIS "main" IS ONLY USED FOR TESTING PURPOSES"""
-# Use this if you want to start without the loading window.
-if __name__ == '__main__':
-    test =  TensorFlow_Custom_Model()
         

@@ -23,6 +23,9 @@ from pathlib import Path
 class TensorFlow_Custom_Model():
     def __init__(self, modelType):
         self.modelType = modelType
+        self.boxColor = (0,0,255)
+        self.textColor = (0,0,255)
+        self.distanceTextColor = (0,255,0)
         self.__loadModel()
         self.carEstimator = None
         self.__distanceSetup()
@@ -136,16 +139,16 @@ class TensorFlow_Custom_Model():
         # distance estimation with label
         if label == "Car":
             self.carFound = True
-            cv2.putText(image, label, (x1, y), cv2.FONT_HERSHEY_SIMPLEX,0.65, (0, 255, 0), 2)
-            cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.putText(image, label, (x1, y), cv2.FONT_HERSHEY_SIMPLEX,0.65, self.textColor, 2)
+            cv2.rectangle(image, (x1, y1), (x2, y2), self.boxColor, 2)
         else:
-            cv2.putText(image, label, (x1, y), cv2.FONT_HERSHEY_SIMPLEX,0.65, (0, 255, 0), 2)
-            cv2.rectangle(image, (x1, y1), (x2, y2), (0, 255, 0), 2)
+            cv2.putText(image, label, (x1, y), cv2.FONT_HERSHEY_SIMPLEX,0.65, self.textColor, 2)
+            cv2.rectangle(image, (x1, y1), (x2, y2), self.boxColor, 2)
 
         if self.carFound is True and self.carEstimator is not None:
             distance = self.carEstimator.estimate_distance(x2)
-            cv2.rectangle(image, (x1, y2), (x2, y2 + 40), (0, 255, 0), -1)
-            cv2.putText(image, distance, (x1 + 10, y2 + 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, (255, 255, 255))
+            cv2.rectangle(image, (x1, y2), (x2, y2 + 40), self.boxColor, -1)
+            cv2.putText(image, distance, (x1 + 10, y2 + 30), cv2.FONT_HERSHEY_SIMPLEX, 0.7, self.distanceTextColor)
             
     def setDistanceEtimators(self):
         # sets width of obejct to measure distance to. //1.8 for car //0.52 for num.plate //0.15 for face

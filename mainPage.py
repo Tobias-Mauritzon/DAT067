@@ -126,6 +126,7 @@ class MainPage(QtWidgets.QWidget):
 		# Set action for reset button
 		self.ui.Button_HC_Cars_Reset.clicked.connect(lambda: self.__reset_HC_Values(0))
 		self.ui.Button_HC_LicencePlates_Reset.clicked.connect(lambda: self.__reset_HC_Values(1))
+		self.ui.Button_YOLO_Reset.clicked.connect(lambda: self.__reset_Yolo_values())
 
 		#MODELS SETTINGS
 		# Cars
@@ -143,6 +144,9 @@ class MainPage(QtWidgets.QWidget):
 		self.ui.horizontalSlider_HC_LicencePlates_MinSize.valueChanged.connect(lambda: self.HaarCascade_Cars_Model.setMinsize(self.ui.horizontalSlider_HC_LicencePlates_MinSize.value(),1))
 		self.ui.horizontalSlider_HC_LicencePlates_MinSize.valueChanged.connect(lambda: self.ui.label_HC_LicencePlates_MinSize.setNum(self.ui.horizontalSlider_HC_LicencePlates_MinSize.value()))
 		self.ui.groupBox_HC_LicencePlates.toggled.connect(lambda: self.HaarCascade_Cars_Model.setDetectPlates())
+		# YOLO
+		self.ui.horizontalSlider_YOLO_Treshold.valueChanged.connect(lambda: self.Yolo_model.setConfidenceTreshhold(self.ui.horizontalSlider_YOLO_Treshold.value()))
+		self.ui.horizontalSlider_YOLO_Treshold.valueChanged.connect(lambda: self.ui.label_YOLO_Treshold.setNum(self.ui.horizontalSlider_YOLO_Treshold.value()))
 
 	# Resizes the cam frame
 	def __resize_camFrame(self):
@@ -366,6 +370,12 @@ class MainPage(QtWidgets.QWidget):
 			self.ui.label_active_None.setVisible(False)
 			self.ui.label_active_YOLO.setVisible(True)
 			self.activeCount +=1
+	
+	def __reset_Yolo_values(self):
+		treshold = self.Yolo_model.CONFTRESHOLD_def*100
+		self.ui.horizontalSlider_YOLO_Treshold.setValue(treshold)
+		self.ui.label_YOLO_Treshold.setNum(treshold)
+		self.Yolo_model.resetValues()
 
 	"""YOLO detection END"""
 
