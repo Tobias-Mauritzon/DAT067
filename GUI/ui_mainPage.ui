@@ -749,7 +749,7 @@ QFrame{
                        <x>0</x>
                        <y>0</y>
                        <width>569</width>
-                       <height>568</height>
+                       <height>567</height>
                       </rect>
                      </property>
                      <property name="sizePolicy">
@@ -1154,7 +1154,7 @@ QScrollBar::sub-line:vertical {
                        <x>0</x>
                        <y>0</y>
                        <width>569</width>
-                       <height>593</height>
+                       <height>592</height>
                       </rect>
                      </property>
                      <property name="sizePolicy">
@@ -1362,7 +1362,7 @@ QFrame{
 </string>
                         </property>
                         <property name="currentIndex">
-                         <number>1</number>
+                         <number>0</number>
                         </property>
                         <property name="tabSpacing">
                          <number>6</number>
@@ -1372,8 +1372,8 @@ QFrame{
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>569</width>
-                           <height>676</height>
+                           <width>554</width>
+                           <height>567</height>
                           </rect>
                          </property>
                          <attribute name="label">
@@ -1970,7 +1970,7 @@ QPushButton:pressed {
                            <x>0</x>
                            <y>0</y>
                            <width>569</width>
-                           <height>484</height>
+                           <height>483</height>
                           </rect>
                          </property>
                          <attribute name="label">
@@ -1978,9 +1978,9 @@ QPushButton:pressed {
                          </attribute>
                          <layout class="QVBoxLayout" name="verticalLayout_6">
                           <item alignment="Qt::AlignTop">
-                           <widget class="QGroupBox" name="groupBox_HC_Cars_3">
+                           <widget class="QGroupBox" name="groupBox_Yolo">
                             <property name="enabled">
-                             <bool>true</bool>
+                             <bool>false</bool>
                             </property>
                             <property name="font">
                              <font>
@@ -1993,22 +1993,7 @@ QPushButton:pressed {
                             <property name="title">
                              <string/>
                             </property>
-                            <layout class="QVBoxLayout" name="verticalLayout_27">
-                             <property name="spacing">
-                              <number>40</number>
-                             </property>
-                             <property name="leftMargin">
-                              <number>9</number>
-                             </property>
-                             <property name="topMargin">
-                              <number>9</number>
-                             </property>
-                             <property name="rightMargin">
-                              <number>9</number>
-                             </property>
-                             <property name="bottomMargin">
-                              <number>9</number>
-                             </property>
+                            <layout class="QVBoxLayout" name="verticalLayout_7">
                              <item>
                               <widget class="QFrame" name="frame_7">
                                <property name="minimumSize">
@@ -2075,12 +2060,12 @@ QPushButton:pressed {
                                       <string notr="true"/>
                                      </property>
                                      <property name="text">
-                                      <string>Treshold</string>
+                                      <string>Confidence Treshold</string>
                                      </property>
                                     </widget>
                                    </item>
                                    <item row="1" column="0">
-                                    <widget class="QLabel" name="label_YOLO_Treshold">
+                                    <widget class="QLabel" name="label_YOLO_Confidence_Treshold">
                                      <property name="layoutDirection">
                                       <enum>Qt::RightToLeft</enum>
                                      </property>
@@ -2088,12 +2073,12 @@ QPushButton:pressed {
                                       <string notr="true"/>
                                      </property>
                                      <property name="text">
-                                      <string>50</string>
+                                      <string>50%</string>
                                      </property>
                                     </widget>
                                    </item>
                                    <item row="1" column="1">
-                                    <widget class="QSlider" name="horizontalSlider_YOLO_Treshold">
+                                    <widget class="QSlider" name="horizontalSlider_YOLO_Confidence_Treshold">
                                      <property name="layoutDirection">
                                       <enum>Qt::LeftToRight</enum>
                                      </property>
@@ -2108,6 +2093,84 @@ QPushButton:pressed {
                                      </property>
                                      <property name="sliderPosition">
                                       <number>50</number>
+                                     </property>
+                                     <property name="orientation">
+                                      <enum>Qt::Horizontal</enum>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                  </layout>
+                                 </widget>
+                                </item>
+                                <item>
+                                 <widget class="QFrame" name="frame_29">
+                                  <property name="layoutDirection">
+                                   <enum>Qt::RightToLeft</enum>
+                                  </property>
+                                  <property name="frameShape">
+                                   <enum>QFrame::StyledPanel</enum>
+                                  </property>
+                                  <property name="frameShadow">
+                                   <enum>QFrame::Raised</enum>
+                                  </property>
+                                  <layout class="QFormLayout" name="formLayout_23">
+                                   <property name="horizontalSpacing">
+                                    <number>10</number>
+                                   </property>
+                                   <property name="verticalSpacing">
+                                    <number>10</number>
+                                   </property>
+                                   <property name="leftMargin">
+                                    <number>0</number>
+                                   </property>
+                                   <property name="topMargin">
+                                    <number>0</number>
+                                   </property>
+                                   <property name="rightMargin">
+                                    <number>0</number>
+                                   </property>
+                                   <property name="bottomMargin">
+                                    <number>0</number>
+                                   </property>
+                                   <item row="0" column="1">
+                                    <widget class="QLabel" name="label_24">
+                                     <property name="styleSheet">
+                                      <string notr="true"/>
+                                     </property>
+                                     <property name="text">
+                                      <string>Box Treshold</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item row="2" column="0">
+                                    <widget class="QLabel" name="label_YOLO_Box_Treshold">
+                                     <property name="layoutDirection">
+                                      <enum>Qt::RightToLeft</enum>
+                                     </property>
+                                     <property name="styleSheet">
+                                      <string notr="true"/>
+                                     </property>
+                                     <property name="text">
+                                      <string>20%</string>
+                                     </property>
+                                    </widget>
+                                   </item>
+                                   <item row="2" column="1">
+                                    <widget class="QSlider" name="horizontalSlider_YOLO_Box_Treshold">
+                                     <property name="layoutDirection">
+                                      <enum>Qt::LeftToRight</enum>
+                                     </property>
+                                     <property name="maximum">
+                                      <number>100</number>
+                                     </property>
+                                     <property name="pageStep">
+                                      <number>1</number>
+                                     </property>
+                                     <property name="value">
+                                      <number>20</number>
+                                     </property>
+                                     <property name="sliderPosition">
+                                      <number>20</number>
                                      </property>
                                      <property name="orientation">
                                       <enum>Qt::Horizontal</enum>
@@ -2189,8 +2252,8 @@ QPushButton:pressed {
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>569</width>
-                           <height>676</height>
+                           <width>100</width>
+                           <height>30</height>
                           </rect>
                          </property>
                          <attribute name="label">

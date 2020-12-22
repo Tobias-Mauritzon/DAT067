@@ -89,9 +89,7 @@ class MainPage(QtWidgets.QWidget):
 		else: # if on Raspberry Pi etc
 			self.cap = cv2.VideoCapture(0) # create video capture for Raspberry and other OS:s
 		self.cap.set(cv2.CAP_PROP_BUFFERSIZE, 3) # set buffer size
-		self.cap.set(cv2.CAP_PROP_FOURCC, cv2.VideoWriter_fourcc('M', 'J', 'P', 'G'))
-		self.cap.set(cv2.CAP_PROP_FPS, 30) # set fps
-		self.timer.start(20) # start timer
+		self.timer.start() # start timer
 		self.ui.Button_startCam.setText("Stop") # update Button_startCam text
 		self.cap.set(3,self.capSize[0])
 		self.cap.set(4,self.capSize[1])
@@ -145,8 +143,10 @@ class MainPage(QtWidgets.QWidget):
 		self.ui.horizontalSlider_HC_LicencePlates_MinSize.valueChanged.connect(lambda: self.ui.label_HC_LicencePlates_MinSize.setNum(self.ui.horizontalSlider_HC_LicencePlates_MinSize.value()))
 		self.ui.groupBox_HC_LicencePlates.toggled.connect(lambda: self.HaarCascade_Cars_Model.setDetectPlates())
 		# YOLO
-		self.ui.horizontalSlider_YOLO_Treshold.valueChanged.connect(lambda: self.Yolo_model.setConfidenceTreshhold(self.ui.horizontalSlider_YOLO_Treshold.value()))
-		self.ui.horizontalSlider_YOLO_Treshold.valueChanged.connect(lambda: self.ui.label_YOLO_Treshold.setNum(self.ui.horizontalSlider_YOLO_Treshold.value()))
+		self.ui.horizontalSlider_YOLO_Confidence_Treshold.valueChanged.connect(lambda: self.Yolo_model.setConfidenceTreshold(self.ui.horizontalSlider_YOLO_Confidence_Treshold.value()))
+		self.ui.horizontalSlider_YOLO_Confidence_Treshold.valueChanged.connect(lambda: self.ui.label_YOLO_Confidence_Treshold.setText(str(int(self.ui.horizontalSlider_YOLO_Confidence_Treshold.value()))+"%"))
+		self.ui.horizontalSlider_YOLO_Box_Treshold.valueChanged.connect(lambda: self.Yolo_model.setBoxTreshold(self.ui.horizontalSlider_YOLO_Box_Treshold.value()))
+		self.ui.horizontalSlider_YOLO_Box_Treshold.valueChanged.connect(lambda: self.ui.label_YOLO_Box_Treshold.setText(str(int(self.ui.horizontalSlider_YOLO_Box_Treshold.value()))+"%"))
 
 	# Resizes the cam frame
 	def __resize_camFrame(self):
@@ -185,7 +185,6 @@ class MainPage(QtWidgets.QWidget):
 		self.qiFormat = QImage.Format_RGB888
 
 		self.__setObjectDetectionType() # sets the chosen object detection type
-
 		self.__convertToQImage() # convert to QImage that can be used on the QLabel
 		self.__resize_camFrame() # resize the image
 		self.ui.image_label.setPixmap(self.pix.scaled(self.w, self.h,QtCore.Qt.KeepAspectRatio)) # set image to image label
@@ -361,20 +360,26 @@ class MainPage(QtWidgets.QWidget):
 		if self.YoloIsActive:
 			self.YoloIsActive = False
 			self.ui.label_active_YOLO.setVisible(False)
+			self.ui.groupBox_Yolo.setEnabled(False)
 			self.activeCount -=1
 			if self.activeCount == 0:
 					self.ui.label_active_None.setVisible(True)
 		else:
 			self.Yolo_model = Yolo_Model()
 			self.YoloIsActive = True
+			self.ui.groupBox_Yolo.setEnabled(True)
 			self.ui.label_active_None.setVisible(False)
 			self.ui.label_active_YOLO.setVisible(True)
 			self.activeCount +=1
 	
 	def __reset_Yolo_values(self):
-		treshold = self.Yolo_model.CONFTRESHOLD_def*100
-		self.ui.horizontalSlider_YOLO_Treshold.setValue(treshold)
-		self.ui.label_YOLO_Treshold.setNum(treshold)
+		C_treshold = self.Yolo_model.confidenceTreshold_def*100
+		B_treshold = self.Yolo_model.boxTreshold_def*100
+		self.ui.horizontalSlider_YOLO_Confidence_Treshold.setValue(C_treshold)
+		self.ui.label_YOLO_Confidence_Treshold.setText(str(int(C_treshold))+"%")
+		self.ui.horizontalSlider_YOLO_Box_Treshold.setValue(B_treshold)
+		
+		self.ui.label_YOLO_Box_Treshold.setText(str(int(B_treshold))+"%")
 		self.Yolo_model.resetValues()
 
 	"""YOLO detection END"""

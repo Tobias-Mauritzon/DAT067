@@ -12,9 +12,10 @@ class Yolo_Model():
     def __init__(self):
         self.ObjectsFile = 'Yolo_v3_tiny/coco.names'
         self.objectNames = []
-        self.CONFTRESHOLD_def = 0.5
-        self.CONFTRESHOLD = self.CONFTRESHOLD_def
-        self.nms_threshold = 0.2 # less means less boxes
+        self.confidenceTreshold_def = 0.5
+        self.confidenceTreshold = self.confidenceTreshold_def
+        self.boxTreshold_def = 0.2 # less means less boxes
+        self.boxTreshold = self.boxTreshold_def
         self.textColor = (0, 255, 0)
         self.boxColor = (0, 255, 0)
         self.distanceTextColor = (0,0,0)
@@ -57,35 +58,39 @@ class Yolo_Model():
                 scores = detection[5:]
                 classId = np.argmax(scores)
                 confidence = scores[classId]
-                if confidence > self.CONFTRESHOLD:
+                if confidence > self.confidenceTreshold:
                     w,h = int(detection[2]*imgWidth), int(detection[3]*imgHeight)
                     x,y = int(detection[0]*imgWidth) - int(w/2), int(detection[1]*imgHeight) - int(h/2)
                     boundingBox.append([x,y,w,h])
                     classIds.append(classId)
                     confidenceValues.append(float(confidence))
 
-        indices = cv2.dnn.NMSBoxes(boundingBox,confidenceValues,self.CONFTRESHOLD,self.nms_threshold) # Eliminates overlaping boxes
+        indices = cv2.dnn.NMSBoxes(boundingBox,confidenceValues,self.confidenceTreshold,self.boxTreshold) # Eliminates overlaping boxes
 
         for i in indices:
             i = i[0]
             box = boundingBox[i]
             x,y,w,h = box[0],box[1],box[2],box[3]
-            if self.carEstimator is not None:
+            if self.carEstimator is not None and self.objectNames[classIds[i]].upper()=="CAR":
                 distance = self.carEstimator.estimate_distance(w)
                 cv2.putText(image, distance, (x + 10, y + h + 30), cv2.FONT_HERSHEY_SIMPLEX, 0.6, self.textColor, 2)
 
             cv2.rectangle(image,(x,y),(x+w,y+h),self.boxColor,2)
             cv2.putText(image,f'{self.objectNames[classIds[i]].upper()} {int(confidenceValues[i]*100)}%', (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.6, self.textColor, 2)
     
-    def setConfidenceTreshhold(self,number):
-        self.CONFTRESHOLD = number/100
+    def setConfidenceTreshold(self,number):
+        self.confidenceTreshold = number/100
+    
+    def setBoxTreshold(self,number):
+        self.boxTreshold = number/100
 
     def setDistanceEtimators(self):
         # sets width of obejct to measure distance to. //1.8 for car //0.52 for num.plate //0.15 for face
         self.carEstimator = DistanceEstimator(1.8)
     
     def resetValues(self):
-        self.CONFTRESHOLD = self.CONFTRESHOLD_def
+        self.confidenceTreshold = self.confidenceTreshold_def
+        self.boxTreshold = self.boxTreshold_def
 
 
     # Finds objects 
