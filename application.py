@@ -18,6 +18,7 @@ class MainWindow(QtWidgets.QMainWindow):
 		self.ui = Ui_MainWindow() # create ui
 		self.ui.setupUi(self) # set ui
 		self.setWindowTitle(windowName) # set window title
+		self.setWindowIcon(QtGui.QIcon('logo_256x256.PNG'))
 		self.resize(1200,800) # set start size of window
 		self.page_0 = MainPage(self) # create page 0
 		self.ui.stackedWidget.addWidget(self.page_0) # add page 0
@@ -119,6 +120,6 @@ class MainWindow(QtWidgets.QMainWindow):
 if __name__ == '__main__':
 	app = QApplication(sys.argv)
 	# create and show mainWindow
-	mainWindow = MainWindow("TEST OF APPLICATION")
+	mainWindow = MainWindow("Obect Detector")
 	mainWindow.show()
 	sys.exit(app.exec_())

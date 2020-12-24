@@ -2,7 +2,7 @@
 A webcam must be plugged in to your computer.
 
 <p><strong>MenuBar:</strong></p>
-In the menuBar, located at the top of the window, you can change views, navigate between calibration and the main screen and choose different object detections.
+In the menuBar, located at the top of the window, you can change views, navigate between calibration and the main screen and choose different methods for object detection.
 
 <p><strong>Video capture:</strong></p>
 <p>To start the video-stream, press the button "Start" located at the bottom of the window.</p>

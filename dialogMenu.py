@@ -1,6 +1,6 @@
 
 from PyQt5.QtWidgets import QGraphicsDropShadowEffect
-from PyQt5.QtGui import QColor
+from PyQt5.QtGui import QColor, QPixmap
 from GUI.ui_dialogMenu import *
 import numpy as np
 
@@ -20,6 +20,7 @@ class DialogMenu(QtWidgets.QDialog):
         self.window = window # the window that this dialog menu should be placed in
         self.setFixedWidth(500) # set default width
         self.setFixedHeight(300) # set default height
+        self.ui.image_label.setVisible(False)
         # remove title bar
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
@@ -65,6 +66,17 @@ class DialogMenu(QtWidgets.QDialog):
     # Sets the informationtext to be center aligned
     def centerText(self):
         self.ui.Label_informationText.setAlignment(QtCore.Qt.AlignCenter)
+        
+    # Sets the informationtext to be center aligned
+    def setImage(self,fileName):
+        try:
+            print(fileName)
+            pixMap = QPixmap(fileName)
+            self.ui.frame_text.setVisible(False)
+            self.ui.image_label.setVisible(True)
+            self.ui.image_label.setPixmap(pixMap)
+        except Exception:
+            raise Exception("Could not read image!")
 
     # Centers the dialog menu on the window
     def centerOnWindow(self):

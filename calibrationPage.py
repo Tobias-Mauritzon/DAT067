@@ -137,6 +137,7 @@ class CalibrationPage(QtWidgets.QWidget):
 	def __setActions(self):
 		self.ui.Button_Calibrate.clicked.connect(self.__startCalibration)
 		self.ui.Button_Capture.clicked.connect(self.__captureAction)
+		self.ui.Button_calibration_help.clicked.connect(self.__calibrationHelp)
 
 	# This function is called each time the user press the calirate button.
 	# If the program has found chessboard corners, information is stored.
@@ -156,7 +157,7 @@ class CalibrationPage(QtWidgets.QWidget):
 				ret, cameraMatrix, dist, rvecs, tvecs = cv2.calibrateCamera(self.objpoints, self.imgpoints, gray.shape[::-1],None,None)
 				self.cameraMatrix = cameraMatrix
 				self.__saveFile()
-				self.openFinnishedpopup()
+				self.__openFinnishedpopup()
 				
 	
 	# Checks and sets the inputvalues, all values must be numbers
@@ -196,7 +197,6 @@ class CalibrationPage(QtWidgets.QWidget):
 			self.REQUIRED_IMAGE_AMOUNT = 5
 
 			self.ui.Label_NeededCaptures.setNum(self.REQUIRED_IMAGE_AMOUNT)
-			print("Press space to use current image to calibrate. Need ", self.REQUIRED_IMAGE_AMOUNT - self.imageCounter, " more images.")
 			self.ui.stackedWidget.setCurrentIndex(1)
 			self.calibrating = True
 
@@ -237,8 +237,21 @@ class CalibrationPage(QtWidgets.QWidget):
 		dialogMenu.ui.PushButton_bottom.clicked.connect(dialogMenu.close)
 		dialogMenu.exec_()
 	
+	def __calibrationHelp(self):
+		dialogMenu = DialogMenu(self.mainWindow)
+		dialogMenu.setTitle("<strong>Help</strong>")
+		dialogMenu.setImage('CalibrationHelp.PNG')
+		dialogMenu.setTopButtonText("Ok")
+		dialogMenu.ui.PushButton_bottom.setVisible(False)
+		dialogMenu.setFixedHeight(600)
+		dialogMenu.setFixedWidth(700)
+		dialogMenu.centerOnWindow()
+		dialogMenu.ui.PushButton_top.clicked.connect(dialogMenu.close)
+		dialogMenu.exec_()
+
+	
 	# Show finnished calibration popup
-	def openFinnishedpopup(self):
+	def __openFinnishedpopup(self):
 		dialogMenu = DialogMenu(self.mainWindow)
 		dialogMenu.setTitle("<strong>Calibration was successful!</strong>")
 		dialogMenu.disableInformationText()

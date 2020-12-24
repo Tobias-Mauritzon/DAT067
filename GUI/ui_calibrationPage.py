@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_CalibrationPage(object):
     def setupUi(self, CalibrationPage):
         CalibrationPage.setObjectName("CalibrationPage")
-        CalibrationPage.resize(1078, 696)
+        CalibrationPage.resize(879, 702)
         CalibrationPage.setStyleSheet("*{\n"
 "    background-color: rgb(35, 35, 38);\n"
 "}\n"
@@ -260,7 +260,28 @@ class Ui_CalibrationPage(object):
         self.frame.setObjectName("frame")
         self.verticalLayout = QtWidgets.QVBoxLayout(self.frame)
         self.verticalLayout.setContentsMargins(0, -1, 9, -1)
+        self.verticalLayout.setSpacing(0)
         self.verticalLayout.setObjectName("verticalLayout")
+        self.Button_calibration_help = QtWidgets.QPushButton(self.frame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.Button_calibration_help.sizePolicy().hasHeightForWidth())
+        self.Button_calibration_help.setSizePolicy(sizePolicy)
+        self.Button_calibration_help.setMinimumSize(QtCore.QSize(20, 20))
+        self.Button_calibration_help.setMaximumSize(QtCore.QSize(20, 20))
+        self.Button_calibration_help.setStyleSheet("/*Buttons*/\n"
+"\n"
+"QPushButton{\n"
+"    background-color: white;\n"
+"    border-radius: 10;\n"
+"}\n"
+"\n"
+"QPushButton:pressed {    \n"
+"    background-color: #bcbcbc;\n"
+"}")
+        self.Button_calibration_help.setObjectName("Button_calibration_help")
+        self.verticalLayout.addWidget(self.Button_calibration_help, 0, QtCore.Qt.AlignRight)
         self.frame_2 = QtWidgets.QFrame(self.frame)
         self.frame_2.setMinimumSize(QtCore.QSize(0, 0))
         self.frame_2.setMaximumSize(QtCore.QSize(16777215, 16777215))
@@ -268,6 +289,7 @@ class Ui_CalibrationPage(object):
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
         self.frame_2.setObjectName("frame_2")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.frame_2)
+        self.verticalLayout_4.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout_4.setSpacing(15)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
         self.groupBox_3 = QtWidgets.QGroupBox(self.frame_2)
@@ -327,23 +349,10 @@ class Ui_CalibrationPage(object):
         self.lineEdit_Height.setText("")
         self.lineEdit_Height.setObjectName("lineEdit_Height")
         self.formLayout.setWidget(1, QtWidgets.QFormLayout.FieldRole, self.lineEdit_Height)
-        self.label_6 = QtWidgets.QLabel(self.groupBox_3)
-        self.label_6.setStyleSheet("color: white;")
-        self.label_6.setObjectName("label_6")
-        self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label_6)
-        self.lineEdit_SquareCorners = QtWidgets.QLineEdit(self.groupBox_3)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.lineEdit_SquareCorners.sizePolicy().hasHeightForWidth())
-        self.lineEdit_SquareCorners.setSizePolicy(sizePolicy)
-        self.lineEdit_SquareCorners.setText("")
-        self.lineEdit_SquareCorners.setObjectName("lineEdit_SquareCorners")
-        self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.lineEdit_SquareCorners)
         self.label_4 = QtWidgets.QLabel(self.groupBox_3)
         self.label_4.setStyleSheet("color: white;")
         self.label_4.setObjectName("label_4")
-        self.formLayout.setWidget(3, QtWidgets.QFormLayout.LabelRole, self.label_4)
+        self.formLayout.setWidget(2, QtWidgets.QFormLayout.LabelRole, self.label_4)
         self.lineEdit_SquareWidth = QtWidgets.QLineEdit(self.groupBox_3)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -352,7 +361,7 @@ class Ui_CalibrationPage(object):
         self.lineEdit_SquareWidth.setSizePolicy(sizePolicy)
         self.lineEdit_SquareWidth.setText("")
         self.lineEdit_SquareWidth.setObjectName("lineEdit_SquareWidth")
-        self.formLayout.setWidget(3, QtWidgets.QFormLayout.FieldRole, self.lineEdit_SquareWidth)
+        self.formLayout.setWidget(2, QtWidgets.QFormLayout.FieldRole, self.lineEdit_SquareWidth)
         self.verticalLayout_4.addWidget(self.groupBox_3)
         self.groupBox_4 = QtWidgets.QGroupBox(self.frame_2)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
@@ -611,10 +620,10 @@ class Ui_CalibrationPage(object):
         self.label_8.setText(_translate("CalibrationPage", "<strong>Calibration</strong>"))
         self.image_label.setText(_translate("CalibrationPage", "WEBCAM"))
         self.label_2.setText(_translate("CalibrationPage", "Insert known values"))
+        self.Button_calibration_help.setText(_translate("CalibrationPage", "?"))
         self.groupBox_3.setTitle(_translate("CalibrationPage", "Checkerboard values"))
         self.label.setText(_translate("CalibrationPage", "Width (m)"))
         self.label_3.setText(_translate("CalibrationPage", "Height (m)"))
-        self.label_6.setText(_translate("CalibrationPage", "Square corners (h,v)"))
         self.label_4.setText(_translate("CalibrationPage", "Square width (mm)"))
         self.groupBox_4.setTitle(_translate("CalibrationPage", "Distance to checkerboard"))
         self.label_5.setText(_translate("CalibrationPage", "Distance (m)"))

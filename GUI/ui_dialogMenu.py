@@ -186,21 +186,31 @@ class Ui_Dialog(object):
         self.Label_title.setStyleSheet("background-color: none; color: white;")
         self.Label_title.setObjectName("Label_title")
         self.verticalLayout_2.addWidget(self.Label_title, 0, QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
-        self.frame_3 = QtWidgets.QFrame(self.frame)
+        self.image_label = QtWidgets.QLabel(self.frame)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.frame_3.sizePolicy().hasHeightForWidth())
-        self.frame_3.setSizePolicy(sizePolicy)
-        self.frame_3.setMinimumSize(QtCore.QSize(0, 0))
-        self.frame_3.setMaximumSize(QtCore.QSize(16777215, 16777215))
-        self.frame_3.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_3.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_3.setObjectName("frame_3")
-        self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.frame_3)
+        sizePolicy.setHeightForWidth(self.image_label.sizePolicy().hasHeightForWidth())
+        self.image_label.setSizePolicy(sizePolicy)
+        self.image_label.setText("")
+        self.image_label.setScaledContents(True)
+        self.image_label.setObjectName("image_label")
+        self.verticalLayout_2.addWidget(self.image_label)
+        self.frame_text = QtWidgets.QFrame(self.frame)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.frame_text.sizePolicy().hasHeightForWidth())
+        self.frame_text.setSizePolicy(sizePolicy)
+        self.frame_text.setMinimumSize(QtCore.QSize(0, 0))
+        self.frame_text.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        self.frame_text.setFrameShape(QtWidgets.QFrame.StyledPanel)
+        self.frame_text.setFrameShadow(QtWidgets.QFrame.Raised)
+        self.frame_text.setObjectName("frame_text")
+        self.verticalLayout_5 = QtWidgets.QVBoxLayout(self.frame_text)
         self.verticalLayout_5.setContentsMargins(9, 40, -1, -1)
         self.verticalLayout_5.setObjectName("verticalLayout_5")
-        self.scrollArea = QtWidgets.QScrollArea(self.frame_3)
+        self.scrollArea = QtWidgets.QScrollArea(self.frame_text)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -216,7 +226,7 @@ class Ui_Dialog(object):
         self.scrollArea.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 731, 540))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 746, 148))
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -254,8 +264,9 @@ class Ui_Dialog(object):
         font.setPointSize(10)
         self.Label_informationText.setFont(font)
         self.Label_informationText.setStyleSheet("color: white;")
+        self.Label_informationText.setText("")
         self.Label_informationText.setTextFormat(QtCore.Qt.AutoText)
-        self.Label_informationText.setScaledContents(False)
+        self.Label_informationText.setScaledContents(True)
         self.Label_informationText.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignVCenter)
         self.Label_informationText.setWordWrap(True)
         self.Label_informationText.setTextInteractionFlags(QtCore.Qt.LinksAccessibleByMouse)
@@ -264,7 +275,7 @@ class Ui_Dialog(object):
         self.verticalLayout_6.addWidget(self.textFrame, 0, QtCore.Qt.AlignVCenter)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
         self.verticalLayout_5.addWidget(self.scrollArea)
-        self.verticalLayout_2.addWidget(self.frame_3)
+        self.verticalLayout_2.addWidget(self.frame_text)
         self.frame_2 = QtWidgets.QFrame(self.frame)
         self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
@@ -312,27 +323,6 @@ class Ui_Dialog(object):
         _translate = QtCore.QCoreApplication.translate
         Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
         self.Label_title.setText(_translate("Dialog", "<html><head/><body><p>TITLE</p></body></html>"))
-        self.Label_informationText.setText(_translate("Dialog", "TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT TEXT Prerequisites:\n"
-"- A web-cam must be plugged in to your computer, if not, a popup window will be displayed telling the user to plug in a web-cam.\n"
-"\n"
-"MenuBar:\n"
-"- In the menuBar, located at the top of the window, one can change views, navigate between calibration and the main screen and choose different object detections.\n"
-"\n"
-"Video capture:\n"
-"- To start the video-stream, press the button \"Start\" located at the bottom of the window.\n"
-"- To stop the video-stream, press the button \"Stop\" located at the bottom of the window.\n"
-"\n"
-"Handling views:\n"
-"- One can simply toggle views by clicking the \"Views\" tab in the top-menubar.\n"
-"- Each view can be dragged to suit the users needs by hovering the mouse between the views.\n"
-"- It is also possible to close views by dragging them.\n"
-"\n"
-"Settings menu:\n"
-"- In the settings menu, the user can change the brightness, contrast, resolution. \n"
-"  It is also possible to change to RGB, grayscale and edged video output.\n"
-"\n"
-"Output menu:\n"
-"- NOT IMPLEMENTED YET"))
         self.PushButton_top.setText(_translate("Dialog", "Top Button"))
         self.PushButton_bottom.setText(_translate("Dialog", "Bottom Button"))
 
