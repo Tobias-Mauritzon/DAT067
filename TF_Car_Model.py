@@ -3,19 +3,23 @@ TF_CAR_Model.py
 Laddar in datan från den speciferade databasen och sparar labelsen och featuresen i pickle format som
 X.pickle för features
 y.pickle för labels.
+Använder Keras image augmentation för att utöka storleken på databasen.
 # Author: Greppe
 # Reviewed by:
 # Date: 2020-11-20
 """
-
+from numpy import expand_dims
+from tensorflow.keras.preprocessing.image import load_img
+from tensorflow.keras.preprocessing.image import img_to_array
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import numpy as np 
 import matplotlib.pyplot as plt
 import random
 import os
 import cv2
 
-DATADIR = "c:/Users/adde_/Documents/Python/CarData"
-CATEGORIES = ["Car", "Dog", "Cat"]
+DATADIR = "CNN_resized_database"
+CATEGORIES = ["Car", "Lamppost", "Sign"]
 
 #Skapar Arrayen för träningsdata
 training_data = []
@@ -37,10 +41,30 @@ def create_training_data():
         class_num = CATEGORIES.index(category)
         for img in os.listdir(path):
             try:
+                
+                #Loads in image
                 img_array = cv2.imread(os.path.join(path,img), cv2.IMREAD_COLOR)
                 new_array = cv2.resize(img_array, (IMG_SIZE, IMG_SIZE))
-                #print(new_array.shape)
-                training_data.append([new_array, class_num])
+
+                #Adds non modified image to training data
+                #training_data.append([new_array, class_num])
+
+                
+                #Prepares image for data augmentation
+                img_data = expand_dims(new_array, 0)
+                (h, w) = img_array.shape[:2]
+                datagen = ImageDataGenerator(horizontal_flip=True, rotation_range=90,zoom_range=[0.5,1.0])
+                it = datagen.flow(img_data, batch_size=1)
+
+                #Generates 9 aditional images with data augmentation.
+                for i in range(5):
+                    print("modifying image")
+                    batch = it.next()
+                    modimage = batch[0].astype('uint8')
+                    #Adds modified image to training data
+                    training_data.append([modimage, class_num])
+
+
             except Exception as e:
                 pass
 
@@ -85,3 +109,6 @@ pickle_in = open("X.pickle","rb")
 x = pickle.load(pickle_in)
 
 print("Done")
+
+print(X.size)
+print(y.size)

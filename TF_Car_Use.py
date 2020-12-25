@@ -10,7 +10,7 @@ import cv2
 import os
 import tensorflow as tf
     
-CATEGORIES = ["Car", "Dog", "Cat"]
+CATEGORIES = ["Car", "Lamppost", "Sign"]
 
 # Funktion för att ladda in bilder så det går att testa.
 def prepare(filepath):
@@ -23,14 +23,14 @@ def check_categeori(prediction):
     if (int(prediciton[0][0]) >= 0.5):
         print("Car")
     elif (int(prediciton[0][1]) >= 0.5):
-        print("Dog")
+        print("Lamppost")
     elif (int(prediciton[0][2]) >= 0.5):
-        print("Cat")
+        print("Sign")
     else:
-        print("Not a Car, Cat or a Dog")
+        print("Not a Car, Lampost or a Sign")
     return
 # Laddar in den tidigare tränade modellen.
-my_model = tf.keras.models.load_model("saved_model/car_model_v2")
+my_model = tf.keras.models.load_model('saved_model/Car_Sign_Lamp_Categorisation_augflipandrot4')
 
 # Testar modellen på en bild av en bil
 prediciton = my_model.predict([prepare('car.jpg')])
@@ -38,11 +38,11 @@ print('car.jpg')
 check_categeori(prediciton)
 
 # Testar modellen på en bild av en hund
-prediciton = my_model.predict([prepare('dog.jpg')])
-print('dog.jpg')
+prediciton = my_model.predict([prepare('lampa.jpg')])
+print('lampa.jpg')
 check_categeori(prediciton)
 
 # Testar modellen på en bild av en katt
-prediciton = my_model.predict([prepare('cat03.jpg')])
-print('cat03.jpg')
+prediciton = my_model.predict([prepare('skylt.jpg')])
+print('skylt.jpg')
 check_categeori(prediciton)

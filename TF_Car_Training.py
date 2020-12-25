@@ -40,7 +40,7 @@ model.summary()
 
 
 # Bygger ihop modelen, binary_crossentropy kan endast användas i binära fall, dvs två categorier.
-model.compile(optimizer=keras.optimizers.Adam(learning_rate=3e-4), 
+model.compile(optimizer="Adam", 
             loss = keras.losses.SparseCategoricalCrossentropy(from_logits=False),
             metrics=['accuracy'])
 
@@ -75,5 +75,5 @@ plt.xlabel('epoch')
 plt.show()
 
 #Sparar den tränade modellen så den kan användas.
-model.save('saved_model/car_model_v2')
+model.save('saved_model/Car_Sign_Lamp_Categorisation_augflip_Rot_zoom5')
 
