@@ -72,7 +72,6 @@ class CalibrationPage(QtWidgets.QWidget):
 		self.ui.lineEdit_Width.clear()
 		self.ui.lineEdit_Height.clear()
 		self.ui.lineEdit_Distance.clear()
-		self.ui.lineEdit_SquareCorners.clear()
 		self.ui.lineEdit_SquareWidth.clear()
 
 	"""Main camera loop START"""      
