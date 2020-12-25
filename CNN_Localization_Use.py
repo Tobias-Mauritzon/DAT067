@@ -15,9 +15,9 @@ Author: Greppe
 Reviewed by: William
 Reviewed on: 2020-12-04
 """""
-CATEGORIES = ["Car", "Dog", "Cat"]
+CATEGORIES = ["Car", "Lamppost", "Sign"]
 
-model = tf.keras.models.load_model("saved_model/localization_model")
+model = tf.keras.models.load_model('saved_model/Object_indentifcation_model')
 
 # loop over the images that we'll be testing using our bounding box
 # regression model
@@ -63,4 +63,4 @@ def predictNprepare_image(filepath):
     cv2.imshow("Output", img_array)
     cv2.waitKey(0)
 
-predictNprepare_image("dog8.jpg")
+predictNprepare_image("skylt.jpg")

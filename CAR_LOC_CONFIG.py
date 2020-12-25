@@ -19,8 +19,8 @@ import os
 
 
 #Define input paths
-DATADIR = "Car_Localization"
-IMAGE_SIZE = 224
+DATADIR = "Car_Localization/"
+IMAGE_SIZE = 128
 IMG_PATH = os.path.join(DATADIR, "cars_train")
 ANNO_PATH = os.path.join(DATADIR, "BoundingBoxes.csv")
 

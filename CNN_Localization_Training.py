@@ -67,7 +67,7 @@ split = train_test_split(data, labels, bboxes, imagePaths, test_size=0.20, rando
 (trainPaths, testPaths) = split[6:]
 
 #Loads our pretrained modell
-loaded_model = tf.keras.models.load_model('saved_model/car_model_v3')
+loaded_model = tf.keras.models.load_model('saved_model/Car_Sign_Lamp_Categorisation_augflipandRot4')
 car_model = Model(loaded_model.input, loaded_model.layers[-2].output)
 car_model.trainable = False
 car_model.summary()
@@ -112,7 +112,7 @@ testTargets = {"class_label": testLabels , "bounding_box": testBBoxes}
 history = loc_model.fit(trainImages, trainTargets,validation_data = (testImages, testTargets),batch_size=BATCH, epochs = EPOCHS,verbose=1)
 
 #Saves the model
-loc_model.save('saved_model/localization_model')
+loc_model.save('saved_model/Object_indentifcation_model')
 
 #Plots the data of the training
 

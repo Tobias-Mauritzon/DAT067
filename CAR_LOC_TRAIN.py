@@ -56,9 +56,10 @@ split = train_test_split(data, bboxes, imagePaths, test_size=0.20, random_state=
 (trainPaths, testPaths) = split[4:]
 
 #Loads the VGG16 network
-vgg = VGG16(weights="imagenet", include_top=False, input_tensor=Input(shape=(224, 224, 3)))
-vgg.summary()
-flatten_1 = vgg.output
+loaded_model = tf.keras.models.load_model('saved_model/Car_Sign_Lamp_Categorisation_augflipandRot4')
+loc_model = Model(loaded_model.input, loaded_model.layers[-2].output)
+loc_model.trainable = False
+flatten_1 = loc_model.output
 flatten_1 = Flatten(name="flatten_1") (flatten_1)
 
 #Estimation for bounding boxes
@@ -67,7 +68,7 @@ bboxHead = Dense(64, activation="relu")(bboxHead)
 bboxHead = Dense(32, activation="relu")(bboxHead)
 bboxHead = Dense(4, activation="sigmoid", name="bounding_box")(bboxHead)
 
-loc_model = Model(inputs=vgg.input, outputs=bboxHead)
+loc_model = Model(inputs=loc_model.input, outputs=bboxHead)
 loc_model.summary()
 
 #Defines the loss fucntion
@@ -87,7 +88,7 @@ print(loc_model.summary())
 history = loc_model.fit(trainImages, trainTargets,validation_data = (testImages, testTargets),batch_size=BATCH, epochs = EPOCHS,verbose=1, shuffle=True)
 
 #Saves the model
-loc_model.save('saved_model/pretrained_car_localization')
+loc_model.save('saved_model/Car_localization_new_model')
 
 # plot the model training history
 N = EPOCHS

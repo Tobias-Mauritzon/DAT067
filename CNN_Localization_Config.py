@@ -21,10 +21,10 @@ import os
 
 
 #Define input paths
-DATADIR = "BB_Dataset"
+DATADIR = "CNN_resized_database"
 IMAGE_SIZE = 128
 IMG_PATH = os.path.join(DATADIR, "images")
-ANNO_PATH = os.path.join(DATADIR, "annotations\labels.csv")
+ANNO_PATH = os.path.join(DATADIR, "BoundingBoxes.csv")
 
 # Init array for training
 data = []
@@ -59,7 +59,8 @@ labels_temp = annot_file.iloc[:, 5].values
 i = 0
 for filename in filenames:
         #Gets the path for the images from the csv file
-        imagePath = os.path.sep.join( [IMG_PATH, labels_temp[i], filename])
+        imagePath = os.path.sep.join( [IMG_PATH, filename])
+        print(imagePath)
         img = cv2.imread(imagePath)
        
         #Convert the coordinates to a usable values for the model
