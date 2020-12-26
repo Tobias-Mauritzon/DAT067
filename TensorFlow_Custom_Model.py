@@ -26,6 +26,7 @@ class TensorFlow_Custom_Model():
         self.boxColor = (0,0,255)
         self.textColor = (0,0,255)
         self.distanceTextColor = (0,255,0)
+        self.imageSize = 128
         self.__loadModel()
         self.carEstimator = None
         self.__distanceSetup()
@@ -33,17 +34,13 @@ class TensorFlow_Custom_Model():
     # Load custom model
     def __loadModel(self):
         if self.modelType == 0:
-            self.imageSize = 224
-            self.my_model = tf.keras.models.load_model("pretrained_car_localization") # Tensorflow Cars
+            self.my_model = tf.keras.models.load_model("Car_localization_new_model") # Tensorflow Cars
         elif self.modelType == 1:
-            self.imageSize = 224
-            self.my_model = tf.keras.models.load_model("pretrained_localization_model") # Tensorflow Cars and other
+            self.my_model = tf.keras.models.load_model("Object_indentifcation_model") # Tensorflow Cars and other
         elif self.modelType == 2: # Tensorflow Lite Cars
-            self.imageSize = 224
-            self.__loadTensorFlowLite("Cl_tflite")        
+            self.__loadTensorFlowLite("tflite_ObjLocalization")        
         elif self.modelType == 3: # Tensorflow Lite Cars and other 
-            self.imageSize = 128
-            self.__loadTensorFlowLite("Cl_tflite_OI")
+            self.__loadTensorFlowLite("tflite_ObjIdentification")
 
     # Load tensorflow lite model
     def __loadTensorFlowLite(self,modelPath):
@@ -83,7 +80,7 @@ class TensorFlow_Custom_Model():
             self.__showOutput(image,x1,x2,y1,y2,"Car")
             
         elif self.modelType == 1: # TF Car and more
-            CATEGORIES = ["Car", "Dog", "Cat"]
+            CATEGORIES = ["Car", "Lamppost", "Sign"]
             predictions = self.my_model.predict(resizedImage)
             (boxPreds, labelPreds) = predictions    
             x1 = boxPreds[0][0]
@@ -108,7 +105,7 @@ class TensorFlow_Custom_Model():
             self.__showOutput(image,x1,x2,y1,y2,"Car")
 
         elif self.modelType == 3: # TF Lite Car and more
-            CATEGORIES = ["Car", "Dog", "Cat"]
+            CATEGORIES = ["Car", "Lamppost", "Sign"]
             img_np = np.array(resizedImage, dtype=np.float32)
             self.interpreter.set_tensor(self.input_det[0]['index'], img_np)
             self.interpreter.invoke()
