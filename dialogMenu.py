@@ -1,4 +1,3 @@
-
 from PyQt5.QtWidgets import QGraphicsDropShadowEffect
 from PyQt5.QtGui import QColor, QPixmap
 from GUI.ui_dialogMenu import *
@@ -45,7 +44,7 @@ class DialogMenu(QtWidgets.QDialog):
     # Sets the informationtext from a file to be displayed in the dialog menu 
     def setInformationTextFromFile(self, fileName):
         try:
-            f = open(fileName,"r")
+            f = open(fileName,"r",encoding="utf-8")
             self.setInformationText(f.read())
         except Exception:
             raise Exception("Could not read file!")

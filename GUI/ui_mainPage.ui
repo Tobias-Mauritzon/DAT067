@@ -749,7 +749,7 @@ QFrame{
                        <x>0</x>
                        <y>0</y>
                        <width>569</width>
-                       <height>567</height>
+                       <height>568</height>
                       </rect>
                      </property>
                      <property name="sizePolicy">
@@ -1154,7 +1154,7 @@ QScrollBar::sub-line:vertical {
                        <x>0</x>
                        <y>0</y>
                        <width>569</width>
-                       <height>592</height>
+                       <height>593</height>
                       </rect>
                      </property>
                      <property name="sizePolicy">
@@ -1969,8 +1969,8 @@ QPushButton:pressed {
                           <rect>
                            <x>0</x>
                            <y>0</y>
-                           <width>569</width>
-                           <height>483</height>
+                           <width>172</width>
+                           <height>217</height>
                           </rect>
                          </property>
                          <attribute name="label">
@@ -2246,19 +2246,6 @@ QPushButton:pressed {
                            </widget>
                           </item>
                          </layout>
-                        </widget>
-                        <widget class="QWidget" name="page_4">
-                         <property name="geometry">
-                          <rect>
-                           <x>0</x>
-                           <y>0</y>
-                           <width>100</width>
-                           <height>30</height>
-                          </rect>
-                         </property>
-                         <attribute name="label">
-                          <string>Custom Model</string>
-                         </attribute>
                         </widget>
                        </widget>
                       </item>
